@@ -2746,27 +2746,33 @@ body[data-page="setup"] .section {
   .status-dot { animation: none; }
 }
 
-/* ===== Bryl-inspired: hero identity ===== */
+/* ===== Bryl-inspired: hero identity (large portrait-scale image) ===== */
 .hero-identity {
   display: flex;
-  align-items: flex-start;
-  gap: 1.25rem;
-  margin-bottom: 1.5rem;
+  align-items: center;
+  gap: 1.75rem;
+  margin-bottom: 1.75rem;
 }
+@media (min-width: 640px) {
+  .hero-identity {
+    gap: 2.25rem;
+  }
+}
+/* Monogram stands in for Bryl's large headshot (~280px class) */
 .hero-monogram {
   flex-shrink: 0;
-  width: 4.5rem;
-  height: 4.5rem;
-  border-radius: var(--r-lg);
+  width: clamp(11rem, 32vw, 17.5rem);
+  height: clamp(11rem, 32vw, 17.5rem);
+  border-radius: var(--r-xl);
   background: var(--ink);
   color: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 1.75rem;
+  font-size: clamp(3.5rem, 10vw, 5.5rem);
   font-weight: 500;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   position: relative;
   overflow: hidden;
 }
@@ -2775,21 +2781,36 @@ body[data-page="setup"] .section {
   position: absolute;
   inset: 0;
   background-image: radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
-  background-size: 4px 4px;
+  background-size: 5px 5px;
   pointer-events: none;
+}
+.hero-identity > div:last-child {
+  min-width: 0;
+  flex: 1;
 }
 .hero-name {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  margin: 0 0 0.35rem;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  margin: 0 0 0.4rem;
 }
 .hero-role-line {
-  font-size: 0.9375rem;
+  font-size: 1rem;
   color: var(--text-2);
   margin: 0;
+}
+/* Stack monogram above text on very small screens so name stays readable */
+@media (max-width: 420px) {
+  .hero-identity {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .hero-monogram {
+    width: min(100%, 14rem);
+    height: min(100vw - 2rem, 14rem);
+  }
 }
 .hero-body + .hero-body { margin-top: -0.75rem; }
 .hero-actions--quiet {
