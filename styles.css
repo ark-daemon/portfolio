@@ -125,34 +125,45 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 }
 
 /* ===== Layout ===== */
-/* Content column centered in the area after the fixed sidebar */
+/*
+  After the fixed sidebar, content starts with equal horizontal
+  padding (not centered in the leftover viewport — that makes
+  the left gap look huge and the right edge cramped).
+*/
 .main {
   min-height: 100vh;
   transition: margin var(--t-med);
-  padding-bottom: 5rem; /* breathing room at page end */
+  padding-bottom: 5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
 }
 @media (min-width: 1024px) {
   .main {
     padding-bottom: 6.5rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
 }
 
 .section {
   max-width: var(--content-max);
-  margin-left: auto;
+  margin-left: 0;
   margin-right: auto;
-  padding: 0 1rem;
+  padding: 0;
   padding-top: 4rem;
   scroll-margin-top: 2rem;
-}
-@media (min-width: 1024px) {
-  .section {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
+  width: 100%;
+  box-sizing: border-box;
 }
 .section-wide {
   max-width: var(--content-wide);
+}
+
+/* Experience: slightly wider so timeline + demos breathe evenly */
+body[data-page="experience"] .section,
+body[data-page="experience"] .page-header {
+  max-width: min(52rem, 100%);
 }
 
 /* ===== Section Label ===== */
@@ -185,15 +196,11 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 /* ===== Hero ===== */
 .hero {
   max-width: var(--content-max);
-  margin-left: auto;
+  margin-left: 0;
   margin-right: auto;
-  padding: 5rem 1rem 3rem;
-}
-@media (min-width: 1024px) {
-  .hero {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
+  padding: 5rem 0 3rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 .hero-eyebrow {
   font-family: var(--font-mono);
@@ -644,10 +651,11 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 
 @media (min-width: 640px) {
   .timeline-entry {
-    grid-template-columns: 10rem 1fr;
-    gap: 1.5rem;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    gap: 1.25rem 1.75rem;
   }
   .timeline-date { padding-top: 0.125rem; }
+  .timeline-content { min-width: 0; }
 }
 
 /* ===== Partnership Kanban Board ===== */
@@ -844,17 +852,12 @@ body[data-page="setup"] .section {
   gap: 0.875rem;
   margin-bottom: 3rem;
   max-width: var(--content-max);
-  margin-left: auto;
+  margin-left: 0;
   margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 0;
+  padding-right: 0;
   box-sizing: border-box;
-}
-@media (min-width: 1024px) {
-  .catalog {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
+  width: 100%;
 }
 @media (min-width: 640px) {
   .catalog { grid-template-columns: repeat(2, 1fr); }
@@ -1827,16 +1830,12 @@ body[data-page="setup"] .section {
 /* ===== Closing CTA ===== */
 .cta-block {
   max-width: var(--content-max);
-  margin-left: auto;
+  margin-left: 0;
   margin-right: auto;
-  padding: 0 1rem;
+  padding: 0;
   padding-top: 4rem;
-}
-@media (min-width: 1024px) {
-  .cta-block {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
+  width: 100%;
+  box-sizing: border-box;
 }
 .cta-inner {
   background: var(--ink);
@@ -2301,14 +2300,16 @@ body[data-page="setup"] .section {
 /* ===== Multi-page: page header + catalog shell ===== */
 .page-header {
   max-width: var(--content-max);
-  margin-left: auto;
+  margin-left: 0;
   margin-right: auto;
   margin-bottom: 2.5rem;
-  padding: 5rem 1rem 0;
+  padding: 5rem 0 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 @media (min-width: 1024px) {
   .page-header {
-    padding: 6rem 1.5rem 0;
+    padding-top: 6rem;
   }
 }
 .page-title {
