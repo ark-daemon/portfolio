@@ -126,29 +126,24 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 
 /* ===== Layout ===== */
 /*
-  After the fixed sidebar, content starts with equal horizontal
-  padding (not centered in the leftover viewport — that makes
-  the left gap look huge and the right edge cramped).
+  Content column is centered in the main area (right of sidebar)
+  with equal side padding so it is not stuck to the nav edge.
 */
 .main {
   min-height: 100vh;
   transition: margin var(--t-med);
-  padding-bottom: 5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0 1.25rem 5rem;
   box-sizing: border-box;
 }
 @media (min-width: 1024px) {
   .main {
-    padding-bottom: 6.5rem;
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    padding: 0 3rem 6.5rem;
   }
 }
 
 .section {
   max-width: var(--content-max);
-  margin-left: 0;
+  margin-left: auto;
   margin-right: auto;
   padding: 0;
   padding-top: 4rem;
@@ -160,10 +155,10 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
   max-width: var(--content-wide);
 }
 
-/* Experience: slightly wider so timeline + demos breathe evenly */
+/* Experience: same centering, slightly wider reading column */
 body[data-page="experience"] .section,
 body[data-page="experience"] .page-header {
-  max-width: min(52rem, 100%);
+  max-width: min(44rem, 100%);
 }
 
 /* ===== Section Label ===== */
@@ -196,7 +191,7 @@ body[data-page="experience"] .page-header {
 /* ===== Hero ===== */
 .hero {
   max-width: var(--content-max);
-  margin-left: 0;
+  margin-left: auto;
   margin-right: auto;
   padding: 5rem 0 3rem;
   width: 100%;
@@ -852,7 +847,7 @@ body[data-page="setup"] .section {
   gap: 0.875rem;
   margin-bottom: 3rem;
   max-width: var(--content-max);
-  margin-left: 0;
+  margin-left: auto;
   margin-right: auto;
   padding-left: 0;
   padding-right: 0;
@@ -1830,7 +1825,7 @@ body[data-page="setup"] .section {
 /* ===== Closing CTA ===== */
 .cta-block {
   max-width: var(--content-max);
-  margin-left: 0;
+  margin-left: auto;
   margin-right: auto;
   padding: 0;
   padding-top: 4rem;
@@ -2300,7 +2295,7 @@ body[data-page="setup"] .section {
 /* ===== Multi-page: page header + catalog shell ===== */
 .page-header {
   max-width: var(--content-max);
-  margin-left: 0;
+  margin-left: auto;
   margin-right: auto;
   margin-bottom: 2.5rem;
   padding: 5rem 0 0;
