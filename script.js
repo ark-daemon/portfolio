@@ -148,6 +148,48 @@
     });
   }
 
+  /* ===== Support Triage Flow Diagram — Capabilities section ===== */
+  function initFlowDiagram() {
+    var diagram = document.getElementById('flow-diagram');
+    if (!diagram) return;
+
+    var nodes     = Array.from(diagram.querySelectorAll('.flow-node'));
+    var descIndex = document.getElementById('flow-desc-index');
+    var descText  = document.getElementById('flow-desc-text');
+
+    /* One description per node, keyed by data-node value */
+    var descriptions = {
+      '1': { index: '01', text: 'Member posts in #support or sends a direct message to the team.' },
+      '2': { index: '02', text: 'Bot surfaces the three closest FAQ entries from the knowledge base template library.' },
+      '3': { index: '03', text: 'Member confirms the issue persists or asks a follow-up — ticket escalates automatically.' },
+      '4': { index: '04', text: 'Available moderator picks up the ticket with full context attached and closes the loop.' }
+    };
+
+    nodes.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        /* Deactivate all nodes */
+        nodes.forEach(function (n) {
+          n.classList.remove('flow-node--active');
+          n.setAttribute('aria-pressed', 'false');
+        });
+
+        /* Activate clicked node */
+        btn.classList.add('flow-node--active');
+        btn.setAttribute('aria-pressed', 'true');
+
+        /* Update description bar */
+        var key  = btn.getAttribute('data-node');
+        var data = descriptions[key];
+        if (data && descIndex && descText) {
+          descIndex.textContent = data.index;
+          descText.textContent  = data.text;
+        }
+      });
+    });
+  }
+
+  initFlowDiagram();
+
   /* ===== Partnership Kanban Board — drag-and-drop (HTML5 drag API) ===== */
   function initKanbanBoard() {
     var board = document.getElementById('kanban-board');

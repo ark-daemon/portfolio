@@ -687,7 +687,65 @@
           <h4 class="capability-heading">Technical resourcefulness</h4>
           <p class="capability-items">AI-assisted prototyping, structured research, data collection workflows, testing, dashboard planning, issue documentation</p>
         </div>
+      </div><!-- / .capabilities-grid -->
+
+      <!-- Support Triage Flow Diagram -->
+      <div class="flow-diagram" id="flow-diagram" role="region" aria-label="Support triage workflow diagram">
+        <p class="flow-eyebrow">Workflow · Support Triage Pipeline</p>
+        <div class="flow-stage-wrap">
+          <!-- SVG connectors — absolutely positioned behind the nodes -->
+          <svg class="flow-svg" aria-hidden="true" focusable="false" viewBox="0 0 480 56" preserveAspectRatio="none">
+            <defs>
+              <marker id="flow-arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="var(--border-strong)"/>
+              </marker>
+            </defs>
+            <!-- Track lines (static gray-200) -->
+            <line class="flow-track" x1="120" y1="28" x2="236" y2="28" marker-end="url(#flow-arrow)"/>
+            <line class="flow-track" x1="244" y1="28" x2="356" y2="28" marker-end="url(#flow-arrow)"/>
+            <line class="flow-track" x1="364" y1="28" x2="478" y2="28" marker-end="url(#flow-arrow)"/>
+            <!-- Animated pulse dots travelling along each segment -->
+            <line class="flow-pulse flow-pulse-1" x1="120" y1="28" x2="240" y2="28"/>
+            <line class="flow-pulse flow-pulse-2" x1="244" y1="28" x2="360" y2="28"/>
+            <line class="flow-pulse flow-pulse-3" x1="364" y1="28" x2="480" y2="28"/>
+          </svg>
+
+          <!-- Node 1 -->
+          <button class="flow-node flow-node--active" data-node="1"
+                  aria-pressed="true"
+                  aria-describedby="flow-desc-text">
+            <span class="flow-node-label">New member joins</span>
+          </button>
+
+          <!-- Node 2 -->
+          <button class="flow-node" data-node="2"
+                  aria-pressed="false"
+                  aria-describedby="flow-desc-text">
+            <span class="flow-node-label">Auto-FAQ triggers</span>
+          </button>
+
+          <!-- Node 3 — decision step -->
+          <button class="flow-node flow-node--decision" data-node="3"
+                  aria-pressed="false"
+                  aria-describedby="flow-desc-text">
+            <span class="flow-node-label">Still unresolved?</span>
+          </button>
+
+          <!-- Node 4 -->
+          <button class="flow-node" data-node="4"
+                  aria-pressed="false"
+                  aria-describedby="flow-desc-text">
+            <span class="flow-node-label">Human review</span>
+          </button>
+        </div>
+
+        <!-- Description bar — updated by JS on node click -->
+        <div class="flow-desc" role="status" aria-live="polite">
+          <span class="flow-desc-index" id="flow-desc-index">01</span>
+          <span class="flow-desc-text" id="flow-desc-text">Member posts in #support or sends a direct message to the team.</span>
+        </div>
       </div>
+      <!-- / Support Triage Flow Diagram -->
     </section>
 
     <!-- ====== Certifications ====== -->

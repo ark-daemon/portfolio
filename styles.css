@@ -1111,6 +1111,162 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
   .capability-group:last-child { border-bottom: 1px solid var(--border); }
 }
 
+/* ===== Support Triage Flow Diagram ===== */
+.flow-diagram {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+/* Section eyebrow label */
+.flow-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-bottom: 1.25rem;
+}
+
+/* Stage wrapper — positions SVG behind HTML nodes */
+.flow-stage-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  /* inner padding so the SVG connectors line up with node centres */
+  padding: 0 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.flow-stage-wrap::-webkit-scrollbar { display: none; }
+
+/* SVG layer — stretched to fill the wrap, sits behind nodes via z-index */
+.flow-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Track line — static gray-200 connector */
+.flow-track {
+  stroke: var(--border-strong);
+  stroke-width: 1;
+}
+
+/* Animated pulse: 8px dot riding along a 200px gap, 1800ms loop */
+.flow-pulse {
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 8 200;
+  stroke-dashoffset: 0;
+  opacity: 0.22;
+  animation: flow-march 1800ms linear infinite;
+}
+/* Stagger each segment by one-third of the loop duration */
+.flow-pulse-1 { animation-delay:    0ms; }
+.flow-pulse-2 { animation-delay:  600ms; }
+.flow-pulse-3 { animation-delay: 1200ms; }
+
+@keyframes flow-march {
+  to { stroke-dashoffset: -208; } /* -(dasharray sum: 8 + 200) */
+}
+
+/* Honour reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .flow-pulse { animation: none; opacity: 0; }
+}
+
+/* Node — full button reset + card styling */
+.flow-node {
+  position: relative;
+  z-index: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);          /* 8px */
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  min-width: 108px;
+  text-align: center;
+  font-family: inherit;
+  color: var(--text-2);
+  transition:
+    background     200ms cubic-bezier(0, 0, 0.2, 1),
+    border-color   200ms cubic-bezier(0, 0, 0.2, 1),
+    box-shadow     200ms cubic-bezier(0, 0, 0.2, 1);
+}
+.flow-node:hover {
+  background: var(--bg);
+  border-color: var(--border-strong);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+}
+.flow-node:focus-visible {
+  outline: 2px solid var(--border-strong);
+  outline-offset: 2px;
+}
+
+/* Active / pressed node */
+.flow-node--active,
+.flow-node[aria-pressed="true"] {
+  background: var(--bg);
+  border-color: var(--ink);
+  color: var(--ink);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+}
+
+/* Decision step — dashed border signals a conditional */
+.flow-node--decision {
+  border-style: dashed;
+}
+.flow-node--decision.flow-node--active,
+.flow-node--decision[aria-pressed="true"] {
+  border-style: dashed;
+  border-color: var(--ink);
+}
+
+/* Node label text */
+.flow-node-label {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.35;
+  display: block;
+}
+
+/* Description bar */
+.flow-desc {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  margin-top: 1rem;
+  padding: 0.625rem 0.875rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  min-height: 2.5rem;
+}
+.flow-desc-index {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+}
+.flow-desc-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
 /* ===== Certifications ===== */
 /* Category rows with hairline top separator */
 .cert-category {
