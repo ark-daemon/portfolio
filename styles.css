@@ -125,6 +125,8 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 }
 
 /* ===== Layout ===== */
+/* Bryl-minimal: content sits left of remaining viewport after sidebar —
+   do NOT margin:auto center (that drifts content to the right on wide screens). */
 .main {
   min-height: 100vh;
   transition: margin var(--t-med);
@@ -132,10 +134,17 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 
 .section {
   max-width: var(--content-max);
-  margin: 0 auto;
-  padding: 0 1.5rem;
+  margin-left: 0;
+  margin-right: auto;
+  padding: 0 1rem;
   padding-top: 4rem;
   scroll-margin-top: 2rem;
+}
+@media (min-width: 1024px) {
+  .section {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 }
 .section-wide {
   max-width: var(--content-wide);
@@ -171,8 +180,15 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 /* ===== Hero ===== */
 .hero {
   max-width: var(--content-max);
-  margin: 0 auto;
-  padding: 5rem 1.5rem 3rem;
+  margin-left: 0;
+  margin-right: auto;
+  padding: 5rem 1rem 3rem;
+}
+@media (min-width: 1024px) {
+  .hero {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 }
 .hero-eyebrow {
   font-family: var(--font-mono);
@@ -810,16 +826,13 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
   white-space: nowrap;
 }
 
-/* Wider column for 3-up grids (projects, setup gear) */
-body[data-page="projects"] .main,
-body[data-page="setup"] .main {
-  max-width: min(var(--content-wide), 100%);
-}
-@media (min-width: 1200px) {
-  body[data-page="projects"] .main,
-  body[data-page="setup"] .main {
-    max-width: 58rem;
-  }
+/* Wider column for 3-up grids — still left-aligned after sidebar */
+body[data-page="projects"] .page-header,
+body[data-page="projects"] .catalog,
+body[data-page="projects"] .featured-demo,
+body[data-page="setup"] .page-header,
+body[data-page="setup"] .section {
+  max-width: var(--content-wide);
 }
 
 /* ===== Catalog cards (Projects — 3-up Bryl-style grid) ===== */
@@ -828,6 +841,18 @@ body[data-page="setup"] .main {
   grid-template-columns: 1fr;
   gap: 0.875rem;
   margin-bottom: 3rem;
+  max-width: var(--content-max);
+  margin-left: 0;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+}
+@media (min-width: 1024px) {
+  .catalog {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 }
 @media (min-width: 640px) {
   .catalog { grid-template-columns: repeat(2, 1fr); }
@@ -1749,9 +1774,16 @@ body[data-page="setup"] .main {
 /* ===== Closing CTA ===== */
 .cta-block {
   max-width: var(--content-max);
-  margin: 0 auto;
-  padding: 0 1.5rem;
+  margin-left: 0;
+  margin-right: auto;
+  padding: 0 1rem;
   padding-top: 4rem;
+}
+@media (min-width: 1024px) {
+  .cta-block {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 }
 .cta-inner {
   background: var(--ink);
@@ -2112,10 +2144,18 @@ body[data-page="setup"] .main {
           mask-image: radial-gradient(ellipse 100% 100% at 100% 0%, black 30%, transparent 80%);
 }
 
-/* ===== Multi-page: page header ===== */
+/* ===== Multi-page: page header + catalog shell ===== */
 .page-header {
+  max-width: var(--content-max);
+  margin-left: 0;
+  margin-right: auto;
   margin-bottom: 2.5rem;
-  padding-top: 0.5rem;
+  padding: 5rem 1rem 0;
+}
+@media (min-width: 1024px) {
+  .page-header {
+    padding: 6rem 1.5rem 0;
+  }
 }
 .page-title {
   font-family: var(--font-display);
