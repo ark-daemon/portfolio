@@ -281,41 +281,38 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 }
 
 /* ===== Metrics (Proof) — bryl-minimal: dividers are the design ===== */
-/* Grid cells carry their own borders; no box, no container border */
 .metrics {
   display: grid;
   grid-template-columns: 1fr 1fr;     /* 2-col on mobile */
   margin-bottom: 2rem;
 }
 .metric {
-  padding: 1.25rem 1.5rem 1.25rem 0;
-  border-right: 1px solid var(--border);  /* vertical divider */
-  border-bottom: 1px solid var(--border); /* horizontal divider */
+  /* Equal inset on both sides so text never kisses the vertical rule */
+  padding: 1.25rem 1.25rem;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
-/* Right-column cells: no right border, add left padding */
 .metric:nth-child(2n) {
   border-right: none;
-  padding-left: 1.5rem;
-  padding-right: 0;
 }
-/* Last row of cells: no bottom border */
-.metric:nth-last-child(-n+2) { border-bottom: none; }
+.metric:nth-last-child(-n+2) {
+  border-bottom: none;
+}
 
-/* ≥640px: single row of 4, only vertical dividers needed */
+/* ≥640px: single row of 4 */
 @media (min-width: 640px) {
   .metrics { grid-template-columns: repeat(4, 1fr); }
   .metric {
-    padding: 0 2rem 0 0;
+    padding: 0.25rem 1.25rem;
     border-right: 1px solid var(--border);
-    border-bottom: none;                  /* no rows → no horizontal divider */
+    border-bottom: none;
   }
-  /* Restore right border for cells that were right-column on mobile */
   .metric:nth-child(2n) {
     border-right: 1px solid var(--border);
-    padding-left: 0;
-    padding-right: 2rem;
   }
-  /* Last cell: close the row */
+  .metric:first-child {
+    padding-left: 0;
+  }
   .metric:last-child {
     border-right: none;
     padding-right: 0;
