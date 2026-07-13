@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Play | Noah Carpiso</title>
-  <meta name="description" content="Three quick browser games: Queue Clear, Falco Pulse, and Monitor Snake.">
+  <meta name="description" content="Monitor Snake — a small dual-monitor arcade game.">
   <link rel="canonical" href="https://noah-carpiso.pages.dev/play.html">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0c0c0f" media="(prefers-color-scheme: dark)">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Play | Noah Carpiso">
-  <meta property="og:description" content="Three quick browser games: Queue Clear, Falco Pulse, and Monitor Snake.">
+  <meta property="og:description" content="Monitor Snake — a small dual-monitor arcade game.">
   <meta property="og:url" content="https://noah-carpiso.pages.dev/play.html">
   <meta property="og:site_name" content="Noah Carpiso">
 
@@ -63,21 +63,6 @@
       <a href="setup.html" class="nav-item" data-nav="setup">Setup</a>
       <a href="certifications.html" class="nav-item" data-nav="certifications">Certifications</a>
     </nav>
-
-    <div class="sidebar-utils" aria-label="Utilities">
-      <button type="button" class="util-btn" data-open-overlay="faq" title="FAQ (Alt+K)">
-        <span>FAQ</span>
-        <kbd>Alt K</kbd>
-      </button>
-      <button type="button" class="util-btn" data-open-overlay="typing" title="Typing test (Alt+J)">
-        <span>Typing test</span>
-        <kbd>Alt J</kbd>
-      </button>
-      <a href="play.html" class="util-btn" style="text-decoration:none">
-        <span>Play</span>
-        <span aria-hidden="true">?</span>
-      </a>
-    </div>
 
     <div class="sidebar-footer">
       <a href="Noah-David-Carpiso-Resume.pdf" download class="sidebar-link">Resume ↓</a>
@@ -138,62 +123,19 @@
   <main class="main">
     <header class="page-header">
       <h1 class="page-title">play</h1>
-      <p class="page-lede">Three quick games. Pick one, play a round, beat your best score (saved on this device).</p>
+      <p class="page-lede">Monitor Snake. Arrow keys or WASD. Best score saves on this device.</p>
     </header>
 
-    <div class="game-picker section" id="game-picker">
-      <button type="button" class="game-pick" data-game="queue">
-        <span class="game-pick-kicker">A · Ops arcade</span>
-        <span class="game-pick-title">Queue Clear</span>
-        <span class="game-pick-desc">Tickets stack up. Resolve, escalate, or ban. Fast and correct wins.</span>
-      </button>
-      <button type="button" class="game-pick" data-game="falco">
-        <span class="game-pick-kicker">B · Screener</span>
-        <span class="game-pick-title">Falco Pulse</span>
-        <span class="game-pick-desc">Tap green blips, skip red. Timing game skinned as a crypto pulse.</span>
-      </button>
-      <button type="button" class="game-pick" data-game="snake">
-        <span class="game-pick-kicker">C · Classic</span>
-        <span class="game-pick-title">Monitor Snake</span>
-        <span class="game-pick-desc">Snake on dual monitors. Arrow keys or WASD. Don't hit the bezel.</span>
-      </button>
-    </div>
-
-    <section class="game-stage section" id="game-stage" hidden>
+    <section class="game-stage section" id="game-stage">
       <div class="game-stage-bar">
-        <button type="button" class="btn btn-secondary" id="game-back">← Games</button>
-        <h2 class="game-stage-title" id="game-stage-title"></h2>
+        <h2 class="game-stage-title">Monitor Snake</h2>
         <div class="game-stage-score">
           <span>Score <strong id="game-score">0</strong></span>
           <span>Best <strong id="game-best">0</strong></span>
         </div>
       </div>
 
-      <div class="game-panel" id="panel-queue" hidden>
-        <p class="game-hint">Press <kbd>1</kbd> Resolve · <kbd>2</kbd> Escalate · <kbd>3</kbd> Ban · 45s run</p>
-        <div class="queue-ticket" id="queue-ticket">
-          <span class="queue-meta" id="queue-meta">#000 · channel</span>
-          <p class="queue-text" id="queue-text">Ready?</p>
-        </div>
-        <div class="queue-actions">
-          <button type="button" class="btn btn-secondary" data-queue-act="resolve">1 · Resolve</button>
-          <button type="button" class="btn btn-secondary" data-queue-act="escalate">2 · Escalate</button>
-          <button type="button" class="btn btn-secondary" data-queue-act="ban">3 · Ban</button>
-        </div>
-        <p class="game-feedback" id="queue-feedback" aria-live="polite"></p>
-        <button type="button" class="btn btn-primary" id="queue-start">Start run</button>
-      </div>
-
-      <div class="game-panel" id="panel-falco" hidden>
-        <p class="game-hint">Click the pulse when it's <strong>green</strong>. Ignore red. 30s · mouse or space</p>
-        <div class="falco-arena" id="falco-arena" tabindex="0">
-          <div class="falco-blip" id="falco-blip" aria-hidden="true"></div>
-          <p class="falco-label" id="falco-label">Press start</p>
-        </div>
-        <button type="button" class="btn btn-primary" id="falco-start">Start run</button>
-      </div>
-
-      <div class="game-panel" id="panel-snake" hidden>
+      <div class="game-panel" id="panel-snake">
         <p class="game-hint">Arrows / WASD · eat the dots · dual-monitor grid</p>
         <canvas id="snake-canvas" width="360" height="360" aria-label="Snake game board"></canvas>
         <div class="queue-actions">
