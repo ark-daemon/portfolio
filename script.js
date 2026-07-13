@@ -123,23 +123,67 @@
     sections.forEach(function (s) { navObserver.observe(s); });
   }
 
-  /* ===== Entrance Animations  -  bryl-minimal spec ===== */
-  /* 400ms fast ease-out, 60ms stagger between list items, 6px lift */
+  /* ===== Prefetch other pages (hover + idle) for faster nav ===== */
+  var sitePages = [
+    'index.html',
+    'experience.html',
+    'projects.html',
+    'stack.html',
+    'setup.html',
+    'certifications.html',
+    'play.html',
+    'styles.css',
+    'script.js'
+  ];
+  var prefetched = Object.create(null);
+
+  function prefetchHref(href) {
+    if (!href || prefetched[href]) return;
+    try {
+      var u = new URL(href, window.location.href);
+      if (u.origin !== window.location.origin) return;
+      // only same-site HTML/CSS/JS
+      if (!/\.(html|css|js)(\?|#|$)/i.test(u.pathname) && !/\/$/.test(u.pathname)) return;
+      prefetched[href] = true;
+      var link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = u.pathname + u.search;
+      link.as = /\.css$/i.test(u.pathname) ? 'style' : /\.js$/i.test(u.pathname) ? 'script' : 'document';
+      document.head.appendChild(link);
+    } catch (e) {}
+  }
+
+  function prefetchAllSite() {
+    sitePages.forEach(function (p) { prefetchHref(p); });
+  }
+
+  document.querySelectorAll('a[href]').forEach(function (a) {
+    var href = a.getAttribute('href');
+    if (!href || href.charAt(0) === '#' || href.indexOf('mailto:') === 0) return;
+    a.addEventListener('pointerenter', function () { prefetchHref(href); }, { passive: true });
+    a.addEventListener('focus', function () { prefetchHref(href); });
+  });
+
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(prefetchAllSite, { timeout: 1500 });
+  } else {
+    setTimeout(prefetchAllSite, 400);
+  }
+
+  /* ===== Entrance Animations (short; above-fold instant) ===== */
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (!reduceMotion) {
-    /* Stagger direct children of timeline, project lists, capabilities, metrics */
     var staggerParents = document.querySelectorAll(
-      '.timeline, .metrics, .capabilities-grid, .project-details, .setup-grid, .archive-list'
+      '.timeline, .metrics, .capabilities-grid, .project-details, .setup-grid, .archive-list, .exp-list, .gear-grid, .catalog'
     );
     staggerParents.forEach(function (parent) {
       Array.from(parent.children).forEach(function (child, i) {
         child.classList.add('reveal');
-        child.style.transitionDelay = Math.min(i * 60, 300) + 'ms';
+        child.style.transitionDelay = Math.min(i * 28, 120) + 'ms';
       });
     });
 
-    /* Section-level fade-up */
     var revealObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -147,15 +191,24 @@
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.06, rootMargin: '0px 0px -32px 0px' });
+    }, { threshold: 0.01, rootMargin: '40px 0px 0px 0px' });
 
-    document.querySelectorAll('.section, .hero, .cta-block').forEach(function (el) {
+    document.querySelectorAll('.section, .hero, .cta-block, .page-header').forEach(function (el) {
       el.classList.add('reveal');
-      revealObserver.observe(el);
+      /* paint first paint content immediately */
+      if (
+        el.classList.contains('hero') ||
+        el.classList.contains('page-header') ||
+        (el.parentElement && el.parentElement.classList.contains('main') &&
+          el === el.parentElement.querySelector('.section, .hero, .page-header'))
+      ) {
+        el.classList.add('visible');
+      } else {
+        revealObserver.observe(el);
+      }
     });
 
-    /* Also observe pre-staggered children */
-    document.querySelectorAll('.reveal').forEach(function (el) {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(function (el) {
       revealObserver.observe(el);
     });
   }
