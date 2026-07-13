@@ -2173,9 +2173,9 @@ body[data-page="setup"] .section {
 .theme-switch {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: 1px;
   margin-top: 0.35rem;
-  padding: 3px;
+  padding: 2px;
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--surface);
@@ -2185,8 +2185,8 @@ body[data-page="setup"] .section {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
   border-radius: 999px;
   background: transparent;
   border: 1px solid transparent;
@@ -2195,7 +2195,7 @@ body[data-page="setup"] .section {
   transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast);
   padding: 0;
 }
-.theme-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.theme-btn svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .theme-btn:hover { color: var(--ink); background: var(--surface-2); }
 .theme-btn.active {
   color: var(--ink);
