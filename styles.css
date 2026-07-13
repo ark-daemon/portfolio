@@ -2565,79 +2565,109 @@ body[data-page="setup"] .section {
 }
 
 /* Base Card Style */
+.projects-stack-viewport {
+  margin: 3.5rem auto;
+  padding: 1.5rem 0 3.5rem;
+  display: flex;
+  justify-content: center;
+  overflow-x: clip;
+  overflow-y: visible;
+  width: 100%;
+}
+
+.projects-stack {
+  position: relative;
+  width: 100%;
+  height: 290px;
+}
+
+/* Base Card Style */
 .stack-card {
   position: absolute;
-  width: 320px;
-  height: 250px;
+  left: 50%;
+  top: 0.75rem;
+  width: 328px;
+  margin-left: -164px; /* Half of 328px */
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--r-xl); /* 16px */
   padding: 1.25rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 16px 32px -18px rgba(10, 10, 10, 0.12);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  text-decoration: none;
-  color: inherit;
+  cursor: pointer;
+  will-change: transform;
   transition:
-    transform var(--t-med),
-    opacity var(--t-med),
-    box-shadow var(--t-med),
-    border-color var(--t-med);
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
 }
 
-.stack-card:hover {
-  text-decoration: none;
+/* Dimming overlay using ::after */
+.stack-card.is-left::after,
+.stack-card.is-right::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--bg) 40%, transparent);
+  transition: background 0.35s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Brighten on hover */
+.stack-card.is-left:hover::after,
+.stack-card.is-right:hover::after {
+  background: transparent;
+}
+
+/* Disable clicks on inner links for side cards so container click works */
+.stack-card:not(.is-center) a {
+  pointer-events: none;
 }
 
 /* Overlapping & tilting defaults for desktop (min-width: 640px) */
 @media (min-width: 640px) {
   .stack-card.is-left {
-    transform: translateX(-115px) translateY(12px) rotate(-6deg) scale(0.92);
-    z-index: 1;
-    opacity: 0.55;
-    filter: blur(1.5px);
-    transform-origin: bottom center;
+    transform: translateX(-40%) translateY(14px) rotate(-16deg) scale(0.88);
+    z-index: 10;
+    filter: blur(0.8px);
   }
   .stack-card.is-center {
-    transform: translateY(-8px) rotate(0deg) scale(1.0);
-    z-index: 3;
-    opacity: 1;
+    transform: translateY(0px) rotate(0deg) scale(1);
+    z-index: 30;
     filter: none;
-    transform-origin: bottom center;
+    box-shadow: 0 26px 55px -22px rgba(10, 10, 10, 0.25);
   }
   .stack-card.is-right {
-    transform: translateX(115px) translateY(12px) rotate(6deg) scale(0.92);
-    z-index: 2;
-    opacity: 0.55;
-    filter: blur(1.5px);
-    transform-origin: bottom center;
+    transform: translateX(40%) translateY(14px) rotate(16deg) scale(0.88);
+    z-index: 20;
+    filter: blur(0.8px);
   }
 
   /* Individual card hover states */
   .stack-card.is-left:hover {
-    transform: translateX(-115px) translateY(-8px) rotate(-6deg) scale(0.96);
-    opacity: 0.9;
+    transform: translateX(-45%) translateY(2px) rotate(-12deg) scale(0.92);
     filter: none;
-    z-index: 10;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+    z-index: 25;
+    box-shadow: 0 20px 40px -15px rgba(10, 10, 10, 0.15);
   }
   
   .stack-card.is-center:hover {
-    transform: translateY(-24px) rotate(0deg) scale(1.04);
-    opacity: 1;
+    transform: translateY(-7px) scale(1.015);
     filter: none;
-    z-index: 20;
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+    z-index: 35;
+    box-shadow: 0 34px 65px -22px rgba(10, 10, 10, 0.3);
     border-color: var(--border-strong);
   }
   
   .stack-card.is-right:hover {
-    transform: translateX(115px) translateY(-8px) rotate(6deg) scale(0.96);
-    opacity: 0.9;
+    transform: translateX(45%) translateY(2px) rotate(12deg) scale(0.92);
     filter: none;
-    z-index: 10;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+    z-index: 25;
+    box-shadow: 0 20px 40px -15px rgba(10, 10, 10, 0.15);
   }
 }
 
@@ -2656,14 +2686,26 @@ body[data-page="setup"] .section {
   }
   .stack-card {
     position: relative;
+    left: 0;
+    top: 0;
     width: 100%;
+    margin-left: 0;
     height: auto;
     min-height: 200px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    cursor: default;
   }
   .stack-card:hover {
     border-color: var(--border-strong);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Stretch badge link to cover card on mobile */
+  .stack-badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 10;
   }
 }
 
