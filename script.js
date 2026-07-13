@@ -763,7 +763,8 @@
         '.kanban-card',
         '.flow-node',
         '.glossary-entry',
-        '.util-btn'
+        '.util-btn',
+        '.stack-card'
       ];
       document.querySelectorAll(selectors.join(',')).forEach(function (el) {
         if (el.dataset.hasSoundHover) return;
