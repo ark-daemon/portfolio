@@ -518,9 +518,8 @@ body[data-page="experience"] .page-header {
 }
 .ticket-sim-hint {
   font-family: var(--font-mono);
-  font-size: 9px;
-  color: var(--text-3);
-  opacity: 0.6;
+  font-size: 11px;
+  color: var(--text-2);
 }
 
 /* Queue list */
@@ -720,9 +719,8 @@ body[data-page="experience"] .page-header {
 }
 .kanban-hint {
   font-family: var(--font-mono);
-  font-size: 9px;
-  color: var(--text-3);
-  opacity: 0.6;
+  font-size: 11px;
+  color: var(--text-2);
 }
 
 /* Horizontal scroll wrapper  -  the board never cramps on narrow viewports */
@@ -3054,15 +3052,12 @@ a.util-btn { color: var(--text-2); }
   border-radius: 999px;
   border: 1px dashed var(--border-strong);
   background: transparent;
-  color: var(--text-3);
+  color: var(--text-2);
   line-height: inherit;
 }
 .skill-chips .tag--more:hover {
   color: var(--ink);
   border-color: var(--text-3);
-}
-.skill-chips.is-expanded .tag--more {
-  display: none;
 }
 .timeline-tools { display: none; } /* replaced by skill-chips where present */
 

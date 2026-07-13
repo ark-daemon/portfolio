@@ -467,17 +467,27 @@
 
   initTicketSim();
 
-  /* ===== Experience skill pills  -  expand +N ===== */
+  /* ===== Experience skill pills - expand/collapse +N ===== */
   function initSkillExpand() {
     document.querySelectorAll('[data-skill-expand]').forEach(function (wrap) {
       var btn = wrap.querySelector('[data-skill-more]');
       if (!btn) return;
+      var extras = wrap.querySelectorAll('.skill-chip-extra');
+      var moreLabel = btn.textContent.trim(); /* e.g. "+6 skills" */
+
       btn.addEventListener('click', function () {
-        wrap.querySelectorAll('.skill-chip-extra').forEach(function (el) {
-          el.hidden = false;
-        });
-        wrap.classList.add('is-expanded');
-        btn.setAttribute('aria-expanded', 'true');
+        var expanded = wrap.classList.contains('is-expanded');
+        if (expanded) {
+          extras.forEach(function (el) { el.hidden = true; });
+          wrap.classList.remove('is-expanded');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.textContent = moreLabel;
+        } else {
+          extras.forEach(function (el) { el.hidden = false; });
+          wrap.classList.add('is-expanded');
+          btn.setAttribute('aria-expanded', 'true');
+          btn.textContent = 'Show less';
+        }
       });
     });
   }
