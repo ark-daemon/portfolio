@@ -2036,18 +2036,23 @@ body[data-page="setup"] .section {
 
 /* ===== Three-way theme switch ===== */
 .theme-switch {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 2px;
-  margin-top: 0.25rem;
+  margin-top: 0.35rem;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  width: fit-content;
 }
 .theme-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: var(--r-sm);
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
   background: transparent;
   border: 1px solid transparent;
   cursor: pointer;
@@ -2059,8 +2064,13 @@ body[data-page="setup"] .section {
 .theme-btn:hover { color: var(--ink); background: var(--surface-2); }
 .theme-btn.active {
   color: var(--ink);
-  background: var(--surface-2);
+  background: var(--bg);
   border-color: var(--border-strong);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+[data-theme="dark"] .theme-btn.active {
+  box-shadow: none;
+  background: var(--surface-2);
 }
 .sidebar-utils {
   display: flex;
@@ -2098,11 +2108,12 @@ body[data-page="setup"] .section {
   border-top: 1px solid var(--border);
 }
 .sidebar-reach-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.04em;
-  color: var(--text-3);
-  margin: 0 0 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text-2);
+  margin: 0 0 0.55rem;
   line-height: 1.4;
 }
 .sidebar-email {

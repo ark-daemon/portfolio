@@ -6,6 +6,78 @@
 (function () {
   'use strict';
 
+  /* ===== UI sounds (soft clicks / ticks — Web Audio, no assets) ===== */
+  var audioCtx = null;
+  var soundEnabled = true;
+  try {
+    if (localStorage.getItem('noah-ui-sound') === 'off') soundEnabled = false;
+  } catch (e) {}
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function ensureAudio() {
+    if (!soundEnabled || reduceMotion) return null;
+    if (!audioCtx) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      audioCtx = new AC();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume().catch(function () {});
+    }
+    return audioCtx;
+  }
+
+  function playTone(freq, dur, type, gain) {
+    var ctx = ensureAudio();
+    if (!ctx) return;
+    var t0 = ctx.currentTime;
+    var osc = ctx.createOscillator();
+    var g = ctx.createGain();
+    osc.type = type || 'sine';
+    osc.frequency.setValueAtTime(freq, t0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(gain || 0.03, t0 + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + (dur || 0.06));
+    osc.connect(g);
+    g.connect(ctx.destination);
+    osc.start(t0);
+    osc.stop(t0 + (dur || 0.06) + 0.02);
+  }
+
+  function uiHover() {
+    playTone(520, 0.035, 'triangle', 0.012);
+  }
+  function uiClick() {
+    playTone(740, 0.05, 'sine', 0.028);
+  }
+
+  // Unlock audio on first gesture, then wire hover/click sounds
+  function armUiSounds() {
+    document.addEventListener('pointerdown', function once() {
+      ensureAudio();
+      document.removeEventListener('pointerdown', once);
+    });
+
+    var hoverSel = 'a, button, .nav-item, .util-btn, .theme-btn, .btn, .catalog-card, .gear-card, .software-card, .game-pick, .sidebar-email, .teaser-card-link';
+    var lastHover = 0;
+    document.addEventListener('mouseover', function (e) {
+      var el = e.target.closest(hoverSel);
+      if (!el || el === lastHover) return;
+      // don't fire when entering child of same control
+      if (lastHover && lastHover.contains && lastHover.contains(e.target) && lastHover === el) return;
+      lastHover = el;
+      uiHover();
+    }, true);
+    document.addEventListener('mouseout', function (e) {
+      if (lastHover && e.relatedTarget && lastHover.contains(e.relatedTarget)) return;
+      lastHover = 0;
+    }, true);
+    document.addEventListener('click', function (e) {
+      if (e.target.closest(hoverSel)) uiClick();
+    }, true);
+  }
+  armUiSounds();
+
   /* ===== Three-way theme: system | light | dark ===== */
   var STORAGE_KEY = 'noah-portfolio-theme';
   var mq = window.matchMedia('(prefers-color-scheme: dark)');
