@@ -1789,7 +1789,7 @@ body[data-page="setup"] .section {
   border: 1px solid var(--border);
   border-radius: var(--r-xl);
   padding: 0;
-  background: var(--surface); /* soft fill like Bryl gear cards */
+  background: var(--bg); /* same as page - outline only, Bryl gear */
   overflow: hidden;
   box-shadow: none;
   transition: transform 420ms var(--ease), border-color 200ms var(--ease);
@@ -1800,7 +1800,7 @@ body[data-page="setup"] .section {
   border-color: var(--border-strong);
 }
 [data-theme="dark"] .gear-card {
-  background: var(--surface);
+  background: var(--bg);
 }
 /* Bryl-style product stage: square well, photo fills the card width */
 .gear-visual {
