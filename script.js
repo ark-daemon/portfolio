@@ -45,10 +45,37 @@
   }
 
   function uiHover() {
+    if (!soundEnabled) return;
     playTone(520, 0.035, 'triangle', 0.012);
   }
   function uiClick() {
+    if (!soundEnabled) return;
     playTone(740, 0.05, 'sine', 0.028);
+  }
+
+  function syncSoundButtons() {
+    document.querySelectorAll('[data-sound-toggle]').forEach(function (btn) {
+      var on = soundEnabled;
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.setAttribute('aria-label', on ? 'Mute UI sounds' : 'Unmute UI sounds');
+      btn.setAttribute('title', on ? 'Sound on' : 'Sound off');
+      var onIcon = btn.querySelector('.sound-icon--on');
+      var offIcon = btn.querySelector('.sound-icon--off');
+      if (onIcon) onIcon.hidden = !on;
+      if (offIcon) offIcon.hidden = on;
+    });
+  }
+
+  function setSoundEnabled(on) {
+    soundEnabled = !!on;
+    try {
+      localStorage.setItem('noah-ui-sound', soundEnabled ? 'on' : 'off');
+    } catch (e) {}
+    syncSoundButtons();
+    if (soundEnabled) {
+      ensureAudio();
+      playTone(880, 0.06, 'sine', 0.03);
+    }
   }
 
   // Unlock audio on first gesture, then wire hover/click sounds
@@ -58,12 +85,11 @@
       document.removeEventListener('pointerdown', once);
     });
 
-    var hoverSel = 'a, button, .nav-item, .util-btn, .theme-btn, .btn, .catalog-card, .gear-card, .software-card, .game-pick, .sidebar-email, .teaser-card-link';
+    var hoverSel = 'a, button, .nav-item, .util-btn, .theme-btn, .sound-btn, .btn, .catalog-card, .gear-card, .software-card, .game-pick, .sidebar-email, .teaser-card-link';
     var lastHover = 0;
     document.addEventListener('mouseover', function (e) {
       var el = e.target.closest(hoverSel);
       if (!el || el === lastHover) return;
-      // don't fire when entering child of same control
       if (lastHover && lastHover.contains && lastHover.contains(e.target) && lastHover === el) return;
       lastHover = el;
       uiHover();
@@ -73,8 +99,16 @@
       lastHover = 0;
     }, true);
     document.addEventListener('click', function (e) {
+      var soundBtn = e.target.closest('[data-sound-toggle]');
+      if (soundBtn) {
+        e.preventDefault();
+        setSoundEnabled(!soundEnabled);
+        return;
+      }
       if (e.target.closest(hoverSel)) uiClick();
     }, true);
+
+    syncSoundButtons();
   }
   armUiSounds();
 
