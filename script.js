@@ -148,6 +148,119 @@
     });
   }
 
+  /* ===== Partnership Kanban Board — drag-and-drop (HTML5 drag API) ===== */
+  function initKanbanBoard() {
+    var board = document.getElementById('kanban-board');
+    if (!board) return;
+
+    var draggedCard = null;
+    var dropLine    = null; /* the 2px insertion indicator */
+
+    /* --- helpers --- */
+    function createDropLine() {
+      var line = document.createElement('div');
+      line.className = 'kanban-drop-line';
+      return line;
+    }
+
+    function removeDropLine() {
+      if (dropLine && dropLine.parentNode) dropLine.parentNode.removeChild(dropLine);
+      dropLine = null;
+    }
+
+    /* Returns the card that the cursor is above, or null (= append to end) */
+    function getInsertBefore(zone, clientY) {
+      var cards = Array.from(zone.querySelectorAll('.kanban-card:not(.is-dragging)'));
+      var closest = null;
+      var closestOffset = Infinity;
+      cards.forEach(function (card) {
+        var rect   = card.getBoundingClientRect();
+        var offset = clientY - (rect.top + rect.height / 2);
+        if (offset < 0 && Math.abs(offset) < closestOffset) {
+          closestOffset = Math.abs(offset);
+          closest       = card;
+        }
+      });
+      return closest;
+    }
+
+    function updateColCounts() {
+      board.querySelectorAll('.kanban-col').forEach(function (col) {
+        var count = col.querySelector('.kanban-col-count');
+        if (count) count.textContent = col.querySelectorAll('.kanban-card').length;
+      });
+    }
+
+    /* --- wire cards (event delegation would re-bind on drop; direct is simpler here) --- */
+    function wireCard(card) {
+      card.addEventListener('dragstart', function (e) {
+        draggedCard = card;
+        e.dataTransfer.effectAllowed = 'move';
+        /* Delay the visual change so the drag ghost renders first */
+        setTimeout(function () { card.classList.add('is-dragging'); }, 0);
+      });
+
+      card.addEventListener('dragend', function () {
+        card.classList.remove('is-dragging');
+        removeDropLine();
+        board.querySelectorAll('.kanban-cards').forEach(function (z) {
+          z.classList.remove('drag-over');
+        });
+        draggedCard = null;
+      });
+    }
+
+    board.querySelectorAll('.kanban-card').forEach(wireCard);
+
+    /* --- wire drop zones --- */
+    board.querySelectorAll('.kanban-cards').forEach(function (zone) {
+
+      zone.addEventListener('dragover', function (e) {
+        if (!draggedCard) return;
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        zone.classList.add('drag-over');
+
+        /* Position the drop-line cursor */
+        removeDropLine();
+        dropLine = createDropLine();
+        var before = getInsertBefore(zone, e.clientY);
+        if (before) {
+          zone.insertBefore(dropLine, before);
+        } else {
+          zone.appendChild(dropLine);
+        }
+      });
+
+      zone.addEventListener('dragleave', function (e) {
+        /* Only clear if truly leaving the zone (not entering a child) */
+        if (!zone.contains(e.relatedTarget)) {
+          zone.classList.remove('drag-over');
+          removeDropLine();
+        }
+      });
+
+      zone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        if (!draggedCard) return;
+
+        var before = getInsertBefore(zone, e.clientY);
+        removeDropLine();
+        zone.classList.remove('drag-over');
+
+        if (before) {
+          zone.insertBefore(draggedCard, before);
+        } else {
+          zone.appendChild(draggedCard);
+        }
+
+        updateColCounts();
+      });
+    });
+  }
+
+  initKanbanBoard();
+
   /* ===== Support Ticket Simulator — Experience section ===== */
   function initTicketSim() {
     var sim = document.getElementById('ticket-sim');
