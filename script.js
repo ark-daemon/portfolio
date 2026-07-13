@@ -808,7 +808,12 @@
           '<path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>' +
           '</svg>';
 
-      ts.parentNode.insertBefore(btn, ts.nextSibling);
+      // Wrap them in a .sidebar-controls flex container so they sit on the same line
+      var wrapper = document.createElement('div');
+      wrapper.className = 'sidebar-controls';
+      ts.parentNode.insertBefore(wrapper, ts);
+      wrapper.appendChild(ts);
+      wrapper.appendChild(btn);
 
       btn.addEventListener('click', function (e) {
         e.stopPropagation();

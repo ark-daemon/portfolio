@@ -2171,12 +2171,20 @@ body[data-page="setup"] .section {
 }
 .sidebar-link:hover { color: var(--ink); text-decoration: none; }
 
+/* ===== Controls Wrapper (Aligns switches side-by-side) ===== */
+.sidebar-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+  width: fit-content;
+}
+
 /* ===== Three-way theme switch ===== */
 .theme-switch {
   display: inline-flex;
   align-items: center;
   gap: 1px;
-  margin-top: 0.35rem;
   padding: 2px;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -2224,8 +2232,6 @@ body[data-page="setup"] .section {
   color: var(--text-3);
   transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast);
   padding: 0;
-  margin-top: 0.35rem;
-  margin-left: 0.5rem;
   vertical-align: middle;
 }
 .sound-toggle-btn svg {
