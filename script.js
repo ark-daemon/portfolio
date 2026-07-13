@@ -584,7 +584,7 @@
     }
     function onKey(e) {
       var k = e.key;
-      if (k === 'Escape') {
+      if (k === 'Escape' || k === 'Esc' || e.keyCode === 27) {
         window.location.href = 'index.html';
         return;
       }
@@ -618,7 +618,7 @@
       loop = setInterval(step, 165);
     }
 
-    document.addEventListener('keydown', onKey);
+    window.addEventListener('keydown', onKey);
     if (start) start.addEventListener('click', startGame);
     if (bestEl) bestEl.textContent = String(loadBest());
     snake = [{ x: 8, y: 9 }, { x: 7, y: 9 }, { x: 6, y: 9 }];
