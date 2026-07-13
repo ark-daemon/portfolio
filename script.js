@@ -148,6 +148,52 @@
     });
   }
 
+  /* ===== Support Ticket Simulator — Experience section ===== */
+  function initTicketSim() {
+    var sim = document.getElementById('ticket-sim');
+    if (!sim) return;
+
+    sim.querySelectorAll('.ticket-row').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var isOpen  = btn.getAttribute('aria-expanded') === 'true';
+        var bodyId  = btn.getAttribute('aria-controls');
+        var body    = bodyId ? document.getElementById(bodyId) : null;
+        var badge   = btn.querySelector('.ticket-badge');
+        if (!body) return;
+
+        if (isOpen) {
+          /* Collapse */
+          body.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          if (badge) {
+            badge.textContent = 'Open';
+            badge.className   = 'ticket-badge ticket-badge--open';
+          }
+          /* Re-hide after transition so it's removed from tab order */
+          body.addEventListener('transitionend', function onEnd() {
+            body.removeEventListener('transitionend', onEnd);
+            if (!body.classList.contains('open')) body.hidden = true;
+          });
+        } else {
+          /* Expand — two-frame trick: remove hidden → rAF → add .open */
+          body.hidden = false;
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              body.classList.add('open');
+            });
+          });
+          btn.setAttribute('aria-expanded', 'true');
+          if (badge) {
+            badge.textContent = 'Resolved';
+            badge.className   = 'ticket-badge ticket-badge--resolved';
+          }
+        }
+      });
+    });
+  }
+
+  initTicketSim();
+
   /* ===== Glossary Widget — Trading Knowledge Base project preview ===== */
   function initGlossaryWidget() {
     var search  = document.getElementById('glossary-search');

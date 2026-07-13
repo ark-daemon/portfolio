@@ -421,6 +421,209 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
   color: var(--text-3);
   letter-spacing: 0.02em;
 }
+
+/* ===== Support Ticket Simulator ===== */
+.ticket-sim {
+  margin-top: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* Header bar */
+.ticket-sim-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.625rem 1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.ticket-sim-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+}
+.ticket-sim-hint {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-3);
+  opacity: 0.6;
+}
+
+/* Queue list */
+.ticket-list {
+  list-style: none;
+}
+.ticket {
+  border-bottom: 1px solid var(--border);
+}
+.ticket:last-child {
+  border-bottom: none;
+}
+
+/* Clickable ticket row — full-width button reset */
+.ticket-row {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0.875rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  transition: background var(--t-fast);
+  color: inherit;
+  font-family: inherit;
+}
+.ticket-row:hover {
+  background: var(--surface);
+}
+.ticket-row:focus-visible {
+  outline: 2px solid var(--border-strong);
+  outline-offset: -2px;
+}
+
+/* Meta row: ticket ID + badge */
+.ticket-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.ticket-id {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+/* Shared badge base */
+.ticket-badge {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 999px;
+  line-height: 1;
+}
+/* Ghost chip — open state */
+.ticket-badge--open {
+  background: var(--surface-2);
+  color: var(--text-3);
+  border: 1px solid var(--border-strong);
+}
+/* Inverted chip — resolved state */
+.ticket-badge--resolved {
+  background: var(--ink);
+  color: var(--bg);
+  border: 1px solid var(--ink);
+}
+
+/* Subject line */
+.ticket-subject {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+/* Footer row: channel + chevron */
+.ticket-footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.125rem;
+}
+.ticket-channel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+/* Chevron icon — rotates on open */
+.ticket-chevron {
+  display: flex;
+  align-items: center;
+  color: var(--text-3);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+.ticket-chevron svg {
+  width: 14px;
+  height: 14px;
+}
+/* Rotate when the parent button is expanded */
+.ticket-row[aria-expanded="true"] .ticket-chevron {
+  transform: rotate(180deg);
+}
+
+/* Expand/collapse body — max-height transition */
+.ticket-body {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition:
+    max-height 200ms cubic-bezier(0, 0, 0.2, 1),
+    opacity    200ms cubic-bezier(0, 0, 0.2, 1);
+  /* hidden attribute: display:none bypasses transitions — JS removes it */
+}
+.ticket-body.open {
+  max-height: 600px;
+  opacity: 1;
+}
+
+/* Response body content */
+.ticket-response-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem 0;
+  flex-wrap: wrap;
+}
+.ticket-response-from {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+.ticket-resolve-time {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-3);
+  margin-left: auto;
+}
+.ticket-response-text {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+  padding: 0.5rem 1rem;
+  border-left: 2px solid var(--border-strong);
+  margin: 0.625rem 1rem;
+  background: var(--surface);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+}
+.ticket-template-note {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-3);
+  padding: 0 1rem 0.75rem;
+  letter-spacing: 0.04em;
+}
+.ticket-template-note em {
+  font-style: normal;
+  color: var(--text-2);
+}
+
+
 @media (min-width: 640px) {
   .timeline-entry {
     grid-template-columns: 10rem 1fr;

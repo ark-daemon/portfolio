@@ -218,6 +218,96 @@
               <li>Organized giveaways, community events, and allocation campaigns across Discord and Twitter/X.</li>
             </ul>
             <p class="timeline-tools">Discord · Twitter/X · Telegram · Alphabot · Atlas3 · Premint · Subber · Galxe · Zealy</p>
+
+            <!-- Support Ticket Simulator -->
+            <div class="ticket-sim" id="ticket-sim" role="region" aria-label="Support ticket queue example">
+              <div class="ticket-sim-header">
+                <span class="ticket-sim-eyebrow">Degen Homes · Support Queue</span>
+                <span class="ticket-sim-hint">Click a ticket to see the response</span>
+              </div>
+              <ul class="ticket-list" role="list">
+
+                <!-- Ticket 1 -->
+                <li class="ticket" role="listitem">
+                  <button class="ticket-row" aria-expanded="false" aria-controls="ticket-1-body">
+                    <div class="ticket-meta">
+                      <span class="ticket-id">#DH-041</span>
+                      <span class="ticket-badge ticket-badge--open">Open</span>
+                    </div>
+                    <p class="ticket-subject">I submitted my wallet address for the allowlist but haven't received any confirmation. Did it go through?</p>
+                    <div class="ticket-footer-row">
+                      <span class="ticket-channel">Discord DM</span>
+                      <span class="ticket-chevron" aria-hidden="true">
+                        <svg viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
+                    </div>
+                  </button>
+                  <div class="ticket-body" id="ticket-1-body" role="region" hidden>
+                    <div class="ticket-response-label">
+                      <span class="ticket-response-from">Noah · Support</span>
+                      <span class="ticket-badge ticket-badge--resolved">Resolved</span>
+                      <span class="ticket-resolve-time">~3 min</span>
+                    </div>
+                    <p class="ticket-response-text">Hey! Your submission looks good on our end — I can see your wallet in the list. Confirmations aren't sent automatically, but if you got the "Success" screen after submitting on Premint, you're all set. If you're unsure, drop your Discord handle here and I'll double-check manually.</p>
+                    <p class="ticket-template-note">Template: <em>Allowlist Confirmation · Premint</em></p>
+                  </div>
+                </li>
+
+                <!-- Ticket 2 -->
+                <li class="ticket" role="listitem">
+                  <button class="ticket-row" aria-expanded="false" aria-controls="ticket-2-body">
+                    <div class="ticket-meta">
+                      <span class="ticket-id">#DH-078</span>
+                      <span class="ticket-badge ticket-badge--open">Open</span>
+                    </div>
+                    <p class="ticket-subject">Someone in general chat is posting a fake mint link. I think it's a scam — what do I do?</p>
+                    <div class="ticket-footer-row">
+                      <span class="ticket-channel">Discord · #general</span>
+                      <span class="ticket-chevron" aria-hidden="true">
+                        <svg viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
+                    </div>
+                  </button>
+                  <div class="ticket-body" id="ticket-2-body" role="region" hidden>
+                    <div class="ticket-response-label">
+                      <span class="ticket-response-from">Noah · Support</span>
+                      <span class="ticket-badge ticket-badge--resolved">Resolved</span>
+                      <span class="ticket-resolve-time">~1 min</span>
+                    </div>
+                    <p class="ticket-response-text">Thanks for flagging this fast — that's exactly the right move. I've deleted the message and timed out the account. Please do not click any external mint links in chat; the only official link is always pinned in #announcements. If you clicked it, do not sign anything and revoke wallet approvals immediately.</p>
+                    <p class="ticket-template-note">Template: <em>Scam Report · Immediate Escalation</em></p>
+                  </div>
+                </li>
+
+                <!-- Ticket 3 -->
+                <li class="ticket" role="listitem">
+                  <button class="ticket-row" aria-expanded="false" aria-controls="ticket-3-body">
+                    <div class="ticket-meta">
+                      <span class="ticket-id">#DH-112</span>
+                      <span class="ticket-badge ticket-badge--open">Open</span>
+                    </div>
+                    <p class="ticket-subject">The partner project said we got 10 spots but I only see 8 names on the list. Who gets the last 2?</p>
+                    <div class="ticket-footer-row">
+                      <span class="ticket-channel">Telegram · Partners</span>
+                      <span class="ticket-chevron" aria-hidden="true">
+                        <svg viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
+                    </div>
+                  </button>
+                  <div class="ticket-body" id="ticket-3-body" role="region" hidden>
+                    <div class="ticket-response-label">
+                      <span class="ticket-response-from">Noah · Support</span>
+                      <span class="ticket-badge ticket-badge--resolved">Resolved</span>
+                      <span class="ticket-resolve-time">~8 min</span>
+                    </div>
+                    <p class="ticket-response-text">Good catch — I'm pulling up the original partnership agreement now. We were allocated 10 spots; 8 went to the raffle winners. The remaining 2 are earmarked for the founding team as per the deal terms. I'll cross-reference and send you the confirmed final list within the hour.</p>
+                    <p class="ticket-template-note">Template: <em>Allocation Discrepancy · Partnership Tracking</em></p>
+                  </div>
+                </li>
+
+              </ul>
+            </div>
+            <!-- / Support Ticket Simulator -->
           </div>
         </div>
 
