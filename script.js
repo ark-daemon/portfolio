@@ -396,51 +396,622 @@
 
   initGlossaryWidget();
 
-  /* ===== Play: mini workflow builder ===== */
-  (function initWorkflowBuilder() {
-    var root = document.getElementById('workflow-builder');
-    if (!root) return;
-    var btn = document.getElementById('workflow-generate');
-    var result = document.getElementById('workflow-result');
-    var list = document.getElementById('workflow-result-steps');
-    if (!btn || !result || !list) return;
+  /* ===== Sidebar overlays: FAQ + Typing (Bryl-style utilities) ===== */
+  (function initOverlays() {
+    var WORD_BANK = [
+      'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'i',
+      'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at',
+      'this', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she',
+      'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what',
+      'so', 'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me',
+      'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take',
+      'people', 'into', 'year', 'your', 'good', 'some', 'could', 'them', 'see', 'other',
+      'than', 'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also',
+      'back', 'after', 'use', 'two', 'how', 'our', 'work', 'first', 'well', 'way',
+      'even', 'new', 'want', 'because', 'any', 'these', 'give', 'day', 'most', 'us',
+      'support', 'remote', 'discord', 'community', 'partner', 'campaign', 'process',
+      'ticket', 'queue', 'member', 'channel', 'template', 'ops', 'timezone'
+    ];
 
-    var labels = {
-      trigger: {
-        'member-joins': 'When a new member joins',
-        'ticket-opens': 'When a support ticket opens',
-        'partner-reply': 'When a partner replies'
-      },
-      action: {
-        'auto-faq': 'send the auto-FAQ / onboarding message',
-        'tag-role': 'assign the correct role or tag',
-        'log-sheet': 'log the event to a sheet'
-      },
-      notify: {
-        'mod-channel': 'notify the mods channel',
-        'dm-user': 'DM the member with next steps',
-        'escalate': 'escalate to a human for review'
+    function pickWords(n) {
+      var out = [];
+      for (var i = 0; i < n; i++) {
+        out.push(WORD_BANK[Math.floor(Math.random() * WORD_BANK.length)]);
       }
-    };
+      return out.join(' ');
+    }
 
-    btn.addEventListener('click', function () {
-      var tEl = root.querySelector('input[name="trigger"]:checked');
-      var aEl = root.querySelector('input[name="action"]:checked');
-      var nEl = root.querySelector('input[name="notify"]:checked');
-      if (!tEl || !aEl || !nEl) return;
-      var steps = [
-        labels.trigger[tEl.value],
-        'Then ' + labels.action[aEl.value],
-        'Then ' + labels.notify[nEl.value]
-      ];
-      list.innerHTML = '';
-      steps.forEach(function (text) {
-        var li = document.createElement('li');
-        li.textContent = text;
-        list.appendChild(li);
+    var root = document.getElementById('site-overlays');
+    if (!root) {
+      root = document.createElement('div');
+      root.id = 'site-overlays';
+      root.innerHTML =
+        '<div class="overlay" id="overlay-faq" role="dialog" aria-modal="true" aria-labelledby="faq-title" hidden>' +
+          '<div class="overlay-shell">' +
+            '<button type="button" class="overlay-close" data-close-overlay>esc close</button>' +
+            '<div class="overlay-panel">' +
+              '<h2 class="overlay-title" id="faq-title">what do you want to know?</h2>' +
+              '<p class="overlay-sub">Quick answers — no chatbot required.</p>' +
+              '<div class="faq-list">' +
+                '<div class="faq-item"><button type="button" class="faq-q">What roles are you open to?</button>' +
+                '<div class="faq-a">Remote community support/ops, partnership coordination, virtual assistance, and junior automation / systems roles. Happy where ops experience and tool-building both matter.</div></div>' +
+                '<div class="faq-item"><button type="button" class="faq-q">What timezone / hours?</button>' +
+                '<div class="faq-a">Based in Metro Manila (PHT). Flexible schedule and open to international time zones and night shifts when needed.</div></div>' +
+                '<div class="faq-item"><button type="button" class="faq-q">Web3 only, or general support/ops?</button>' +
+                '<div class="faq-a">Web3 experience is deep (Discord/Telegram/allowlists/partnerships), but the same ops muscle applies to any remote community or support team.</div></div>' +
+                '<div class="faq-item"><button type="button" class="faq-q">Can you build tools?</button>' +
+                '<div class="faq-a">Yes — independently shipped a trading knowledge base, account utilities, screener demos, and more. Studying n8n/Make to automate ops patterns I used to run by hand.</div></div>' +
+                '<div class="faq-item"><button type="button" class="faq-q">How do I reach you?</button>' +
+                '<div class="faq-a">Email carpisonoah@gmail.com · LinkedIn · resume download in the sidebar.</div></div>' +
+              '</div>' +
+              '<p class="faq-footer">Still stuck? <a href="mailto:carpisonoah@gmail.com">Email me</a> · <a href="play.html">Play games ↗</a></p>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="overlay" id="overlay-typing" role="dialog" aria-modal="true" aria-labelledby="typing-title" hidden>' +
+          '<div class="overlay-shell">' +
+            '<button type="button" class="overlay-close" data-close-overlay>esc close</button>' +
+            '<div class="overlay-panel">' +
+              '<h2 class="overlay-title" id="typing-title">typing test</h2>' +
+              '<p class="overlay-sub">Client-side only. Click the text and type.</p>' +
+              '<div class="typing-stats">' +
+                '<div class="typing-stat"><span class="typing-stat-value" id="typing-wpm">0</span><span class="typing-stat-label">wpm</span></div>' +
+                '<div class="typing-stat"><span class="typing-stat-value" id="typing-acc">100</span><span class="typing-stat-label">acc %</span></div>' +
+                '<div class="typing-stat"><span class="typing-stat-value" id="typing-time">0</span><span class="typing-stat-label">time s</span></div>' +
+              '</div>' +
+              '<div class="typing-prompt" id="typing-prompt" tabindex="0"></div>' +
+              '<input class="typing-input" id="typing-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Type here">' +
+              '<div class="typing-actions">' +
+                '<button type="button" class="btn btn-secondary" id="typing-restart">Restart</button>' +
+                '<button type="button" class="btn btn-secondary" data-close-overlay>Close</button>' +
+              '</div>' +
+              '<p class="typing-hint">tab restart · esc close</p>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(root);
+    }
+
+    var faq = document.getElementById('overlay-faq');
+    var typing = document.getElementById('overlay-typing');
+    var promptEl = document.getElementById('typing-prompt');
+    var inputEl = document.getElementById('typing-input');
+    var wpmEl = document.getElementById('typing-wpm');
+    var accEl = document.getElementById('typing-acc');
+    var timeEl = document.getElementById('typing-time');
+    var target = '';
+    var startedAt = null;
+    var timer = null;
+    var done = false;
+
+    function openOverlay(id) {
+      var el = id === 'faq' ? faq : typing;
+      if (!el) return;
+      el.hidden = false;
+      requestAnimationFrame(function () { el.classList.add('is-open'); });
+      document.body.classList.add('overlay-open');
+      if (id === 'typing') {
+        resetTyping();
+        setTimeout(function () { if (inputEl) inputEl.focus(); }, 50);
+      }
+    }
+
+    function closeOverlays() {
+      [faq, typing].forEach(function (el) {
+        if (!el) return;
+        el.classList.remove('is-open');
+        el.hidden = true;
       });
-      result.hidden = false;
+      document.body.classList.remove('overlay-open');
+      if (timer) { clearInterval(timer); timer = null; }
+    }
+
+    function resetTyping() {
+      target = pickWords(28);
+      startedAt = null;
+      done = false;
+      if (inputEl) inputEl.value = '';
+      if (wpmEl) wpmEl.textContent = '0';
+      if (accEl) accEl.textContent = '100';
+      if (timeEl) timeEl.textContent = '0';
+      if (timer) { clearInterval(timer); timer = null; }
+      renderPrompt('');
+    }
+
+    function renderPrompt(typed) {
+      if (!promptEl) return;
+      var html = '';
+      for (var i = 0; i < target.length; i++) {
+        var ch = target[i];
+        if (i < typed.length) {
+          if (typed[i] === ch) html += '<span class="typed">' + escapeHtml(ch) + '</span>';
+          else html += '<span class="wrong">' + escapeHtml(ch === ' ' ? '·' : ch) + '</span>';
+        } else if (i === typed.length) {
+          html += '<span class="caret"></span><span>' + escapeHtml(ch) + '</span>';
+        } else {
+          html += escapeHtml(ch);
+        }
+      }
+      if (typed.length >= target.length) html += '<span class="caret"></span>';
+      promptEl.innerHTML = html;
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function updateStats(typed) {
+      var correct = 0;
+      for (var i = 0; i < typed.length && i < target.length; i++) {
+        if (typed[i] === target[i]) correct++;
+      }
+      var acc = typed.length ? Math.round((correct / typed.length) * 100) : 100;
+      if (accEl) accEl.textContent = String(acc);
+      if (!startedAt) return;
+      var secs = (Date.now() - startedAt) / 1000;
+      if (timeEl) timeEl.textContent = String(Math.floor(secs));
+      var wpm = secs > 0 ? Math.round((correct / 5) / (secs / 60)) : 0;
+      if (wpmEl) wpmEl.textContent = String(Math.max(0, wpm));
+    }
+
+    if (promptEl) {
+      promptEl.addEventListener('click', function () {
+        if (inputEl) inputEl.focus();
+      });
+    }
+    if (inputEl) {
+      inputEl.addEventListener('input', function () {
+        if (done) return;
+        var typed = inputEl.value;
+        if (!startedAt && typed.length) {
+          startedAt = Date.now();
+          timer = setInterval(function () {
+            if (!startedAt) return;
+            var secs = Math.floor((Date.now() - startedAt) / 1000);
+            if (timeEl) timeEl.textContent = String(secs);
+            updateStats(inputEl.value);
+          }, 250);
+        }
+        renderPrompt(typed);
+        updateStats(typed);
+        if (typed.length >= target.length) {
+          done = true;
+          if (timer) { clearInterval(timer); timer = null; }
+          updateStats(typed);
+        }
+      });
+    }
+    var restart = document.getElementById('typing-restart');
+    if (restart) {
+      restart.addEventListener('click', function () {
+        resetTyping();
+        if (inputEl) inputEl.focus();
+      });
+    }
+
+    document.addEventListener('click', function (e) {
+      var openBtn = e.target.closest('[data-open-overlay]');
+      if (openBtn) {
+        e.preventDefault();
+        openOverlay(openBtn.getAttribute('data-open-overlay'));
+        return;
+      }
+      if (e.target.closest('[data-close-overlay]')) {
+        closeOverlays();
+        return;
+      }
+      if (e.target.classList && e.target.classList.contains('overlay')) {
+        closeOverlays();
+      }
     });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        if (document.body.classList.contains('overlay-open')) {
+          closeOverlays();
+          e.preventDefault();
+        }
+        return;
+      }
+      if (e.altKey && (e.key === 'k' || e.key === 'K')) {
+        e.preventDefault();
+        openOverlay('faq');
+      }
+      if (e.altKey && (e.key === 'j' || e.key === 'J')) {
+        e.preventDefault();
+        openOverlay('typing');
+      }
+      if (e.key === 'Tab' && typing && typing.classList.contains('is-open')) {
+        e.preventDefault();
+        resetTyping();
+        if (inputEl) inputEl.focus();
+      }
+    });
+
+    root.querySelectorAll('.faq-q').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var item = btn.closest('.faq-item');
+        if (!item) return;
+        var open = item.classList.contains('is-open');
+        root.querySelectorAll('.faq-item').forEach(function (i) { i.classList.remove('is-open'); });
+        if (!open) item.classList.add('is-open');
+      });
+    });
+  })();
+
+  /* ===== Play hub: Queue Clear · Falco Pulse · Monitor Snake ===== */
+  (function initPlayGames() {
+    var picker = document.getElementById('game-picker');
+    var stage = document.getElementById('game-stage');
+    if (!picker || !stage) return;
+
+    var titleEl = document.getElementById('game-stage-title');
+    var scoreEl = document.getElementById('game-score');
+    var bestEl = document.getElementById('game-best');
+    var endEl = document.getElementById('game-end');
+    var panels = {
+      queue: document.getElementById('panel-queue'),
+      falco: document.getElementById('panel-falco'),
+      snake: document.getElementById('panel-snake')
+    };
+    var titles = {
+      queue: 'Queue Clear',
+      falco: 'Falco Pulse',
+      snake: 'Monitor Snake'
+    };
+    var active = null;
+    var score = 0;
+    var stopFns = [];
+
+    function bestKey(g) { return 'noah-play-best-' + g; }
+    function loadBest(g) {
+      try { return parseInt(localStorage.getItem(bestKey(g)) || '0', 10) || 0; }
+      catch (e) { return 0; }
+    }
+    function saveBest(g, n) {
+      var b = loadBest(g);
+      if (n > b) {
+        try { localStorage.setItem(bestKey(g), String(n)); } catch (e) {}
+        b = n;
+      }
+      if (bestEl) bestEl.textContent = String(b);
+      return b;
+    }
+    function setScore(n) {
+      score = n;
+      if (scoreEl) scoreEl.textContent = String(score);
+    }
+    function stopAll() {
+      stopFns.forEach(function (fn) { try { fn(); } catch (e) {} });
+      stopFns = [];
+    }
+    function showEnd(msg) {
+      if (!endEl) return;
+      endEl.hidden = false;
+      endEl.textContent = msg;
+      saveBest(active, score);
+    }
+    function openGame(g) {
+      stopAll();
+      active = g;
+      setScore(0);
+      if (endEl) { endEl.hidden = true; endEl.textContent = ''; }
+      picker.hidden = true;
+      stage.hidden = false;
+      Object.keys(panels).forEach(function (k) {
+        if (panels[k]) panels[k].hidden = k !== g;
+      });
+      if (titleEl) titleEl.textContent = titles[g] || g;
+      if (bestEl) bestEl.textContent = String(loadBest(g));
+      if (g === 'queue') initQueue();
+      if (g === 'falco') initFalco();
+      if (g === 'snake') initSnake();
+    }
+    function backToPicker() {
+      stopAll();
+      active = null;
+      stage.hidden = true;
+      picker.hidden = false;
+    }
+
+    document.getElementById('game-back').addEventListener('click', backToPicker);
+    picker.querySelectorAll('[data-game]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        openGame(btn.getAttribute('data-game'));
+      });
+    });
+
+    /* ----- A: Queue Clear ----- */
+    var TICKETS = [
+      { t: 'Allowlist still pending. Did my wallet go through?', a: 'resolve', ch: 'DM' },
+      { t: 'Someone posted a fake mint link in #general', a: 'ban', ch: '#general' },
+      { t: 'Partner said 10 spots but list only has 8 names', a: 'escalate', ch: 'Partners' },
+      { t: 'How do I join the next giveaway?', a: 'resolve', ch: '#support' },
+      { t: 'DM me for free WL I swear not a scam', a: 'ban', ch: 'DM' },
+      { t: 'Role not showing after verification bot', a: 'resolve', ch: '#verify' },
+      { t: 'Legal threat if we do not pay allocation', a: 'escalate', ch: 'DM' },
+      { t: 'Is the official Twitter this one? [random link]', a: 'ban', ch: '#general' },
+      { t: 'Can you re-run the raffle I missed it', a: 'resolve', ch: 'DM' },
+      { t: 'Collab manager needs signed deal PDF', a: 'escalate', ch: 'Telegram' },
+      { t: 'Bot is down, cannot claim role', a: 'escalate', ch: '#support' },
+      { t: 'Free nitro if you enter seed phrase here', a: 'ban', ch: 'DM' }
+    ];
+    var qRun = false;
+    var qTicket = null;
+    var qTimer = null;
+    var qLeft = 0;
+
+    function initQueue() {
+      var start = document.getElementById('queue-start');
+      var text = document.getElementById('queue-text');
+      var meta = document.getElementById('queue-meta');
+      var fb = document.getElementById('queue-feedback');
+      qRun = false;
+      qTicket = null;
+      if (text) text.textContent = 'Press Start run.';
+      if (meta) meta.textContent = '#000 · —';
+      if (fb) fb.textContent = '';
+      if (start) start.hidden = false;
+
+      function nextTicket() {
+        qTicket = TICKETS[Math.floor(Math.random() * TICKETS.length)];
+        if (meta) meta.textContent = '#' + (100 + Math.floor(Math.random() * 800)) + ' · ' + qTicket.ch;
+        if (text) text.textContent = qTicket.t;
+        if (fb) fb.textContent = qLeft + 's left';
+      }
+      function answer(act) {
+        if (!qRun || !qTicket) return;
+        if (act === qTicket.a) {
+          setScore(score + 100);
+          if (fb) fb.textContent = 'Correct · +100 · ' + qLeft + 's';
+        } else {
+          setScore(Math.max(0, score - 40));
+          if (fb) fb.textContent = 'Wrong (needed ' + qTicket.a + ') · ' + qLeft + 's';
+        }
+        nextTicket();
+      }
+      function endRun() {
+        qRun = false;
+        if (qTimer) { clearInterval(qTimer); qTimer = null; }
+        if (start) start.hidden = false;
+        showEnd('Queue done. Score ' + score + '. Best ' + saveBest('queue', score) + '.');
+      }
+      function startRun() {
+        stopAll();
+        setScore(0);
+        if (endEl) endEl.hidden = true;
+        qRun = true;
+        qLeft = 45;
+        if (start) start.hidden = true;
+        nextTicket();
+        qTimer = setInterval(function () {
+          qLeft -= 1;
+          if (fb && qTicket) fb.textContent = qLeft + 's left';
+          if (qLeft <= 0) endRun();
+        }, 1000);
+        stopFns.push(function () {
+          qRun = false;
+          if (qTimer) { clearInterval(qTimer); qTimer = null; }
+        });
+      }
+      if (start) {
+        start.onclick = startRun;
+      }
+      stage.querySelectorAll('[data-queue-act]').forEach(function (btn) {
+        btn.onclick = function () { answer(btn.getAttribute('data-queue-act')); };
+      });
+      function onKey(e) {
+        if (active !== 'queue' || !qRun) return;
+        if (e.key === '1') answer('resolve');
+        if (e.key === '2') answer('escalate');
+        if (e.key === '3') answer('ban');
+      }
+      document.addEventListener('keydown', onKey);
+      stopFns.push(function () { document.removeEventListener('keydown', onKey); });
+    }
+
+    /* ----- B: Falco Pulse ----- */
+    function initFalco() {
+      var arena = document.getElementById('falco-arena');
+      var blip = document.getElementById('falco-blip');
+      var label = document.getElementById('falco-label');
+      var start = document.getElementById('falco-start');
+      var run = false;
+      var timer = null;
+      var spawn = null;
+      var left = 0;
+      var kind = null; // green | red | null
+      var armUntil = 0;
+
+      function clearBlip() {
+        kind = null;
+        if (blip) {
+          blip.className = 'falco-blip';
+          blip.style.left = '50%';
+          blip.style.top = '50%';
+        }
+      }
+      function spawnBlip() {
+        if (!run || !blip) return;
+        kind = Math.random() < 0.62 ? 'green' : 'red';
+        blip.className = 'falco-blip is-' + kind + ' is-on';
+        blip.style.left = (12 + Math.random() * 76) + '%';
+        blip.style.top = (18 + Math.random() * 64) + '%';
+        armUntil = Date.now() + (kind === 'green' ? 750 : 900);
+        setTimeout(function () {
+          if (!run) return;
+          if (kind === 'green' && blip.classList.contains('is-on')) {
+            // missed green
+            setScore(Math.max(0, score - 25));
+            if (label) label.textContent = 'Missed green · ' + left + 's';
+          }
+          clearBlip();
+        }, kind === 'green' ? 780 : 920);
+      }
+      function hit() {
+        if (!run || !kind || !blip || !blip.classList.contains('is-on')) return;
+        if (Date.now() > armUntil + 50) return;
+        if (kind === 'green') {
+          setScore(score + 80);
+          if (label) label.textContent = 'Hit · +80 · ' + left + 's';
+        } else {
+          setScore(Math.max(0, score - 50));
+          if (label) label.textContent = 'Red! · ' + left + 's';
+        }
+        clearBlip();
+      }
+      function endRun() {
+        run = false;
+        if (timer) { clearInterval(timer); timer = null; }
+        if (spawn) { clearInterval(spawn); spawn = null; }
+        clearBlip();
+        if (start) start.hidden = false;
+        if (label) label.textContent = 'Run over';
+        showEnd('Falco done. Score ' + score + '. Best ' + saveBest('falco', score) + '.');
+      }
+      function startRun() {
+        stopAll();
+        setScore(0);
+        if (endEl) endEl.hidden = true;
+        run = true;
+        left = 30;
+        if (start) start.hidden = true;
+        if (label) label.textContent = '30s · green only';
+        if (arena) arena.focus();
+        spawnBlip();
+        spawn = setInterval(spawnBlip, 1100);
+        timer = setInterval(function () {
+          left -= 1;
+          if (label && kind === null) label.textContent = left + 's';
+          if (left <= 0) endRun();
+        }, 1000);
+        stopFns.push(function () {
+          run = false;
+          if (timer) clearInterval(timer);
+          if (spawn) clearInterval(spawn);
+          timer = spawn = null;
+          clearBlip();
+        });
+      }
+      if (start) start.onclick = startRun;
+      if (arena) {
+        arena.onclick = hit;
+        arena.onkeydown = function (e) {
+          if (e.code === 'Space' || e.key === ' ') {
+            e.preventDefault();
+            hit();
+          }
+        };
+      }
+    }
+
+    /* ----- C: Monitor Snake ----- */
+    function initSnake() {
+      var canvas = document.getElementById('snake-canvas');
+      var start = document.getElementById('snake-start');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var cell = 20;
+      var cols = 18;
+      var rows = 18;
+      var snake, dir, nextDir, food, loop, alive;
+
+      function randFood() {
+        var p;
+        do {
+          p = { x: Math.floor(Math.random() * cols), y: Math.floor(Math.random() * rows) };
+        } while (snake.some(function (s) { return s.x === p.x && s.y === p.y; }));
+        return p;
+      }
+      function draw() {
+        var w = canvas.width;
+        var h = canvas.height;
+        // dual-monitor frame
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#fff';
+        ctx.fillRect(0, 0, w, h);
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--border').trim() || '#e9e9e9';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(1, 1, w / 2 - 4, h - 2);
+        ctx.strokeRect(w / 2 + 3, 1, w / 2 - 4, h - 2);
+        // grid dots subtle
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-3').trim() || '#a3a3a3';
+        for (var y = 0; y < rows; y++) {
+          for (var x = 0; x < cols; x++) {
+            ctx.globalAlpha = 0.15;
+            ctx.fillRect(x * cell + 9, y * cell + 9, 2, 2);
+          }
+        }
+        ctx.globalAlpha = 1;
+        // food
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim() || '#0a0a0a';
+        ctx.fillRect(food.x * cell + 4, food.y * cell + 4, cell - 8, cell - 8);
+        // snake
+        snake.forEach(function (s, i) {
+          ctx.globalAlpha = i === 0 ? 1 : 0.75;
+          ctx.fillRect(s.x * cell + 2, s.y * cell + 2, cell - 4, cell - 4);
+        });
+        ctx.globalAlpha = 1;
+      }
+      function step() {
+        if (!alive) return;
+        dir = nextDir;
+        var head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+        if (head.x < 0 || head.y < 0 || head.x >= cols || head.y >= rows ||
+            snake.some(function (s) { return s.x === head.x && s.y === head.y; })) {
+          alive = false;
+          if (loop) { clearInterval(loop); loop = null; }
+          showEnd('Snake over. Score ' + score + '. Best ' + saveBest('snake', score) + '.');
+          return;
+        }
+        snake.unshift(head);
+        if (head.x === food.x && head.y === food.y) {
+          setScore(score + 50);
+          food = randFood();
+        } else {
+          snake.pop();
+        }
+        draw();
+      }
+      function onKey(e) {
+        if (active !== 'snake' || !alive) return;
+        var k = e.key.toLowerCase();
+        if ((k === 'arrowup' || k === 'w') && dir.y !== 1) nextDir = { x: 0, y: -1 };
+        if ((k === 'arrowdown' || k === 's') && dir.y !== -1) nextDir = { x: 0, y: 1 };
+        if ((k === 'arrowleft' || k === 'a') && dir.x !== 1) nextDir = { x: -1, y: 0 };
+        if ((k === 'arrowright' || k === 'd') && dir.x !== -1) nextDir = { x: 1, y: 0 };
+      }
+      function startGame() {
+        stopAll();
+        setScore(0);
+        if (endEl) endEl.hidden = true;
+        snake = [{ x: 8, y: 9 }, { x: 7, y: 9 }, { x: 6, y: 9 }];
+        dir = { x: 1, y: 0 };
+        nextDir = dir;
+        food = randFood();
+        alive = true;
+        draw();
+        loop = setInterval(step, 110);
+        document.addEventListener('keydown', onKey);
+        stopFns.push(function () {
+          alive = false;
+          if (loop) clearInterval(loop);
+          loop = null;
+          document.removeEventListener('keydown', onKey);
+        });
+      }
+      if (start) start.onclick = startGame;
+      // idle board
+      snake = [{ x: 8, y: 9 }, { x: 7, y: 9 }, { x: 6, y: 9 }];
+      food = { x: 12, y: 9 };
+      dir = { x: 1, y: 0 };
+      nextDir = dir;
+      alive = false;
+      draw();
+    }
   })();
 
 })();
