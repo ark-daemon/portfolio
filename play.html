@@ -22,22 +22,22 @@
 <body data-page="play">
 
   <div class="snake-screen" id="game-stage">
-    <header class="snake-hud">
-      <a href="index.html" class="snake-exit" aria-label="Exit to home">Esc</a>
-      <p class="snake-hud-title">Snake</p>
-      <div class="snake-hud-score">
-        <span>Score <strong id="game-score">0</strong></span>
-        <span>Best <strong id="game-best">0</strong></span>
-      </div>
-    </header>
-
     <div class="snake-board-wrap">
       <canvas id="snake-canvas" width="360" height="360" aria-label="Snake game board"></canvas>
       <p class="snake-end" id="game-end" hidden></p>
-      <div class="snake-actions">
-        <button type="button" class="btn btn-primary" id="snake-start">Start</button>
+      <p class="snake-keys">Arrows / WASD</p>
+      <div class="snake-meta">
+        <span class="snake-meta-stat">Score <strong id="game-score">0</strong></span>
+        <span class="snake-meta-stat">Best <strong id="game-best">0</strong></span>
       </div>
-      <p class="snake-keys" aria-hidden="true">Arrows / WASD</p>
+      <div class="snake-footer" role="group" aria-label="Controls">
+        <button type="button" class="snake-keycap" id="snake-start">
+          <kbd>space</kbd><span>start</span>
+        </button>
+        <a href="index.html" class="snake-keycap" aria-label="Close and return home">
+          <kbd>esc</kbd><span>close</span>
+        </a>
+      </div>
     </div>
   </div>
 

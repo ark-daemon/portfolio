@@ -567,7 +567,10 @@
           endEl.hidden = false;
           endEl.textContent = 'Game over · ' + score + ' · best ' + saveBest(score);
         }
-        if (start) start.textContent = 'Restart';
+        if (start) {
+          var lab = start.querySelector('span:last-child');
+          if (lab) lab.textContent = 'restart';
+        }
         return;
       }
       snake.unshift(head);
@@ -585,13 +588,12 @@
         window.location.href = 'index.html';
         return;
       }
-      if (!alive) {
-        if (k === ' ' || k === 'Enter') {
-          e.preventDefault();
-          startGame();
-        }
+      if (k === ' ' || k === 'Enter') {
+        e.preventDefault();
+        startGame();
         return;
       }
+      if (!alive) return;
       var key = k.toLowerCase();
       if ((key === 'arrowup' || key === 'w') && dir.y !== 1) nextDir = { x: 0, y: -1 };
       if ((key === 'arrowdown' || key === 's') && dir.y !== -1) nextDir = { x: 0, y: 1 };
@@ -603,7 +605,10 @@
       if (loop) { clearInterval(loop); loop = null; }
       setScore(0);
       if (endEl) { endEl.hidden = true; endEl.textContent = ''; }
-      if (start) start.textContent = 'Restart';
+      if (start) {
+        var lab = start.querySelector('span:last-child');
+        if (lab) lab.textContent = 'restart';
+      }
       snake = [{ x: 8, y: 9 }, { x: 7, y: 9 }, { x: 6, y: 9 }];
       dir = { x: 1, y: 0 };
       nextDir = dir;
