@@ -228,6 +228,8 @@ a:hover {
 
 .section {
   max-width: var(--content-max);
+  margin-left: auto;
+  margin-right: auto;
   padding: 0 var(--content-padding-mobile);
   padding-top: 3.5rem;
   padding-bottom: 1rem;
