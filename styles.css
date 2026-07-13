@@ -2197,36 +2197,6 @@ body[data-page="setup"] .section {
   box-shadow: none;
   background: var(--surface-2);
 }
-.sound-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  background: transparent;
-  border: 1px solid transparent;
-  cursor: pointer;
-  color: var(--text-3);
-  transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast);
-  padding: 0;
-  margin-left: 2px;
-}
-.sound-btn svg {
-  width: 14px;
-  height: 14px;
-}
-.sound-btn:hover {
-  color: var(--ink);
-  background: var(--surface-2);
-}
-.sound-btn[aria-pressed="false"] {
-  color: var(--text-3);
-  opacity: 0.75;
-}
-.sound-btn .sound-icon[hidden] {
-  display: none;
-}
 .sidebar-utils {
   display: flex;
   flex-direction: column;
