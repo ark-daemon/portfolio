@@ -1,41 +1,55 @@
 /* ================================================================
-   Portfolio — Theme toggle, navigation, mobile menu, animations
+   Portfolio — Theme (system/light/dark), navigation, mobile menu, animations
+   bryl-minimal: defaults to system preference, persists choice
    ================================================================ */
 
 (function () {
   'use strict';
 
-  /* ===== Theme (light / dark toggle) ===== */
+  /* ===== Three-way theme: system | light | dark ===== */
   var STORAGE_KEY = 'noah-portfolio-theme';
+  var mq = window.matchMedia('(prefers-color-scheme: dark)');
 
-  function getStoredTheme() {
-    try { return localStorage.getItem(STORAGE_KEY) || 'light'; }
-    catch (e) { return 'light'; }
+  function getStoredPref() {
+    try { return localStorage.getItem(STORAGE_KEY) || 'system'; }
+    catch (e) { return 'system'; }
   }
 
-  function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    updateToggleUI(theme);
+  /* Resolve 'system' to an actual data-theme value */
+  function resolveTheme(pref) {
+    if (pref === 'system') return mq.matches ? 'dark' : 'light';
+    return pref;
   }
 
-  function updateToggleUI(theme) {
-    var labels = document.querySelectorAll('.theme-label');
-    labels.forEach(function (el) {
-      el.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+  function applyPref(pref) {
+    var resolved = resolveTheme(pref);
+    document.documentElement.setAttribute('data-theme', resolved);
+    updateSwitchUI(pref);
+  }
+
+  function updateSwitchUI(activePref) {
+    document.querySelectorAll('.theme-btn').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-theme-val') === activePref);
     });
   }
 
-  applyTheme(getStoredTheme());
+  /* Initial apply — before paint to avoid flash */
+  var currentPref = getStoredPref();
+  applyPref(currentPref);
 
-  function toggleTheme() {
-    var current = document.documentElement.getAttribute('data-theme');
-    var next = current === 'dark' ? 'light' : 'dark';
-    try { localStorage.setItem(STORAGE_KEY, next); } catch (e) {}
-    applyTheme(next);
-  }
+  /* Wire up every theme button */
+  document.querySelectorAll('.theme-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var pref = btn.getAttribute('data-theme-val');
+      try { localStorage.setItem(STORAGE_KEY, pref); } catch (e) {}
+      currentPref = pref;
+      applyPref(pref);
+    });
+  });
 
-  document.querySelectorAll('#theme-toggle, #theme-toggle-mobile').forEach(function (btn) {
-    btn.addEventListener('click', toggleTheme);
+  /* Re-apply when OS preference changes (only matters when pref === 'system') */
+  mq.addEventListener('change', function () {
+    if (getStoredPref() === 'system') applyPref('system');
   });
 
   /* ===== Mobile Menu ===== */
@@ -65,7 +79,7 @@
     });
   }
 
-  /* ===== Smooth Scroll (clean URLs, no #hash) ===== */
+  /* ===== Smooth Scroll ===== */
   document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     link.addEventListener('click', function (e) {
       var href = link.getAttribute('href');
@@ -81,14 +95,13 @@
   var sections = document.querySelectorAll('section[id]');
   var navItems = document.querySelectorAll('.nav-item');
 
-  var observer = new IntersectionObserver(function (entries) {
+  var navObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
         var id = entry.target.id;
         navItems.forEach(function (item) {
           item.classList.toggle('active', item.getAttribute('href') === '#' + id);
         });
-        /* Remove hash from URL without adding a history entry */
         if (window.location.hash) {
           history.replaceState(null, '', window.location.pathname + window.location.search);
         }
@@ -96,24 +109,41 @@
     });
   }, { rootMargin: '-30% 0px -60% 0px' });
 
-  sections.forEach(function (s) { observer.observe(s); });
+  sections.forEach(function (s) { navObserver.observe(s); });
 
-  /* ===== Entrance Animations ===== */
+  /* ===== Entrance Animations — bryl-minimal spec ===== */
+  /* 400ms fast ease-out, 60ms stagger between list items, 6px lift */
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (!reduceMotion) {
+    /* Stagger direct children of timeline, project lists, capabilities, metrics */
+    var staggerParents = document.querySelectorAll(
+      '.timeline, .metrics, .capabilities-grid, .project-details, .setup-grid, .archive-list'
+    );
+    staggerParents.forEach(function (parent) {
+      Array.from(parent.children).forEach(function (child, i) {
+        child.classList.add('reveal');
+        child.style.transitionDelay = Math.min(i * 60, 300) + 'ms';
+      });
+    });
+
+    /* Section-level fade-up */
     var revealObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry, i) {
+      entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          entry.target.style.transitionDelay = Math.min(i * 60, 240) + 'ms';
           entry.target.classList.add('visible');
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.06, rootMargin: '0px 0px -32px 0px' });
 
-    document.querySelectorAll('.section, .hero').forEach(function (el) {
+    document.querySelectorAll('.section, .hero, .cta-block').forEach(function (el) {
       el.classList.add('reveal');
+      revealObserver.observe(el);
+    });
+
+    /* Also observe pre-staggered children */
+    document.querySelectorAll('.reveal').forEach(function (el) {
       revealObserver.observe(el);
     });
   }

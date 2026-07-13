@@ -19,7 +19,10 @@
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%233b5a7e'/%3E%3Ctext x='50' y='70' font-family='system-ui,sans-serif' font-size='52' font-weight='600' fill='white' text-anchor='middle'%3En%3C/text%3E%3C/svg%3E">
 
-  <!-- Fonts: Geist + Geist Mono loaded locally via @font-face in styles.css -->
+  <!-- Fonts: Geist + Geist Mono loaded locally; Source Serif 4 via Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&display=swap">
   <link rel="stylesheet" href="styles.css">
 
   <!-- Structured Data -->
@@ -42,6 +45,9 @@
 </head>
 <body>
 
+  <!-- Fixed dot-grid texture: top-right corner, all sections -->
+  <div class="dot-grid" aria-hidden="true"></div>
+
   <!-- ===== Sidebar (desktop ≥1024px) ===== -->
   <aside class="sidebar" role="complementary" aria-label="Profile and navigation">
     <div class="sidebar-top">
@@ -61,6 +67,7 @@
       <a href="#experience" class="nav-item">Experience</a>
       <a href="#projects" class="nav-item">Projects</a>
       <a href="#capabilities" class="nav-item">Capabilities</a>
+      <a href="#certifications" class="nav-item">Certifications</a>
       <a href="#setup" class="nav-item">Setup</a>
       <a href="#contact" class="nav-item">Contact</a>
     </nav>
@@ -69,9 +76,17 @@
       <a href="Noah-David-Carpiso-Resume.pdf" download class="sidebar-link">Resume ↓</a>
       <a href="https://www.linkedin.com/in/noah-carpiso" target="_blank" rel="noopener noreferrer" class="sidebar-link">LinkedIn ↗</a>
       <a href="mailto:carpisonoah@gmail.com" class="sidebar-link">Email</a>
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-        <span class="theme-label">Dark mode</span>
-      </button>
+      <div class="theme-switch" id="theme-switch-desktop" role="group" aria-label="Color theme">
+        <button class="theme-btn" data-theme-val="system" aria-label="System theme" title="System">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </button>
+        <button class="theme-btn" data-theme-val="light" aria-label="Light theme" title="Light">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <button class="theme-btn" data-theme-val="dark" aria-label="Dark theme" title="Dark">
+          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
       <p class="sidebar-location">Metro Manila, Philippines</p>
     </div>
   </aside>
@@ -94,6 +109,7 @@
       <a href="#experience" class="mobile-nav-item">Experience</a>
       <a href="#projects" class="mobile-nav-item">Projects</a>
       <a href="#capabilities" class="mobile-nav-item">Capabilities</a>
+      <a href="#certifications" class="mobile-nav-item">Certifications</a>
       <a href="#setup" class="mobile-nav-item">Setup</a>
       <a href="#contact" class="mobile-nav-item">Contact</a>
     </nav>
@@ -101,9 +117,17 @@
       <a href="Noah-David-Carpiso-Resume.pdf" download class="mobile-link">Resume ↓</a>
       <a href="https://www.linkedin.com/in/noah-carpiso" target="_blank" rel="noopener noreferrer" class="mobile-link">LinkedIn ↗</a>
       <a href="mailto:carpisonoah@gmail.com" class="mobile-link">Email</a>
-      <button class="theme-toggle" id="theme-toggle-mobile" aria-label="Toggle dark mode">
-        <span class="theme-label">Dark mode</span>
-      </button>
+      <div class="theme-switch" id="theme-switch-mobile" role="group" aria-label="Color theme">
+        <button class="theme-btn" data-theme-val="system" aria-label="System theme" title="System">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </button>
+        <button class="theme-btn" data-theme-val="light" aria-label="Light theme" title="Light">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <button class="theme-btn" data-theme-val="dark" aria-label="Dark theme" title="Dark">
+          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -257,7 +281,33 @@
       <article class="project project-split">
         <div class="project-screenshot" role="img" aria-label="Codex Manager — desktop app showing account switching interface">
           <div class="screenshot-placeholder">
-            <span>Add screenshot</span>
+            <!-- Codex Manager: account-switching / stacked ID-card motif -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="148" height="108" viewBox="0 0 148 108" fill="none" aria-hidden="true">
+              <!-- back card -->
+              <rect x="20" y="8" width="108" height="64" rx="8" fill="currentColor" opacity="0.06"/>
+              <rect x="20" y="8" width="108" height="64" rx="8" stroke="currentColor" stroke-opacity="0.18" stroke-width="1.5"/>
+              <!-- middle card -->
+              <rect x="12" y="18" width="108" height="64" rx="8" fill="currentColor" opacity="0.05"/>
+              <rect x="12" y="18" width="108" height="64" rx="8" stroke="currentColor" stroke-opacity="0.22" stroke-width="1.5"/>
+              <!-- front card -->
+              <rect x="4" y="28" width="108" height="64" rx="8" fill="var(--bg)"/>
+              <rect x="4" y="28" width="108" height="64" rx="8" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5"/>
+              <!-- avatar circle -->
+              <circle cx="26" cy="52" r="10" fill="currentColor" opacity="0.12" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.25"/>
+              <!-- initials hint -->
+              <line x1="21" y1="52" x2="31" y2="52" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5" stroke-linecap="round"/>
+              <!-- name line -->
+              <rect x="42" y="47" width="42" height="4" rx="2" fill="currentColor" opacity="0.22"/>
+              <!-- sub line -->
+              <rect x="42" y="56" width="28" height="3" rx="1.5" fill="currentColor" opacity="0.13"/>
+              <!-- active dot -->
+              <circle cx="102" cy="52" r="4" fill="currentColor" opacity="0.28"/>
+              <!-- toggle arrows -->
+              <path d="M124 40 L138 40 M133 35 L138 40 L133 45" stroke="currentColor" stroke-opacity="0.4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M138 68 L124 68 M129 63 L124 68 L129 73" stroke="currentColor" stroke-opacity="0.4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- bottom label -->
+              <rect x="4" y="97" width="52" height="3" rx="1.5" fill="currentColor" opacity="0.1"/>
+            </svg>
           </div>
         </div>
         <div class="project-body">
@@ -287,7 +337,38 @@
       <article class="project project-split project-split-reverse">
         <div class="project-screenshot" role="img" aria-label="Esports Data Platform — dashboard showing match data and team statistics across multiple games">
           <div class="screenshot-placeholder">
-            <span>Add screenshot</span>
+            <!-- Esports Data Platform: network / data-graph motif -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="160" height="112" viewBox="0 0 160 112" fill="none" aria-hidden="true">
+              <!-- edges first (behind nodes) -->
+              <line x1="56" y1="56" x2="26" y2="30" stroke="currentColor" stroke-opacity="0.15" stroke-width="1.25"/>
+              <line x1="56" y1="56" x2="26" y2="82" stroke="currentColor" stroke-opacity="0.15" stroke-width="1.25"/>
+              <line x1="56" y1="56" x2="104" y2="56" stroke="currentColor" stroke-opacity="0.18" stroke-width="1.25"/>
+              <line x1="104" y1="56" x2="134" y2="30" stroke="currentColor" stroke-opacity="0.15" stroke-width="1.25"/>
+              <line x1="104" y1="56" x2="134" y2="82" stroke="currentColor" stroke-opacity="0.15" stroke-width="1.25"/>
+              <line x1="26" y1="30" x2="26" y2="82" stroke="currentColor" stroke-opacity="0.1" stroke-width="1" stroke-dasharray="3 3"/>
+              <line x1="134" y1="30" x2="134" y2="82" stroke="currentColor" stroke-opacity="0.1" stroke-width="1" stroke-dasharray="3 3"/>
+              <!-- hub node (center, slightly larger) -->
+              <circle cx="56" cy="56" r="14" fill="var(--bg)" stroke="currentColor" stroke-opacity="0.35" stroke-width="1.5"/>
+              <circle cx="56" cy="56" r="6" fill="currentColor" opacity="0.22"/>
+              <!-- right hub -->
+              <circle cx="104" cy="56" r="11" fill="var(--bg)" stroke="currentColor" stroke-opacity="0.28" stroke-width="1.5"/>
+              <circle cx="104" cy="56" r="5" fill="currentColor" opacity="0.18"/>
+              <!-- leaf nodes -->
+              <circle cx="26" cy="30" r="8" fill="var(--bg)" stroke="currentColor" stroke-opacity="0.22" stroke-width="1.25"/>
+              <circle cx="26" cy="82" r="8" fill="var(--bg)" stroke="currentColor" stroke-opacity="0.22" stroke-width="1.25"/>
+              <circle cx="134" cy="30" r="8" fill="var(--bg)" stroke="currentColor" stroke-opacity="0.22" stroke-width="1.25"/>
+              <circle cx="134" cy="82" r="8" fill="var(--bg)" stroke="currentColor" stroke-opacity="0.22" stroke-width="1.25"/>
+              <!-- leaf node inner dots -->
+              <circle cx="26" cy="30" r="3" fill="currentColor" opacity="0.2"/>
+              <circle cx="26" cy="82" r="3" fill="currentColor" opacity="0.2"/>
+              <circle cx="134" cy="30" r="3" fill="currentColor" opacity="0.2"/>
+              <circle cx="134" cy="82" r="3" fill="currentColor" opacity="0.2"/>
+              <!-- micro-labels -->
+              <rect x="14" y="21" width="20" height="2.5" rx="1.25" fill="currentColor" opacity="0.12"/>
+              <rect x="14" y="73" width="16" height="2.5" rx="1.25" fill="currentColor" opacity="0.12"/>
+              <rect x="122" y="21" width="20" height="2.5" rx="1.25" fill="currentColor" opacity="0.12"/>
+              <rect x="122" y="73" width="16" height="2.5" rx="1.25" fill="currentColor" opacity="0.12"/>
+            </svg>
           </div>
         </div>
         <div class="project-body">
@@ -359,11 +440,134 @@
       </div>
     </section>
 
+    <!-- ====== Certifications ====== -->
+    <section id="certifications" class="section">
+      <div class="section-label">
+        <span class="section-number">06</span>
+        <span class="section-dash">&mdash;</span>
+        <span>Certifications</span>
+      </div>
+
+      <!-- SERVICE & SUPPORT -->
+      <div class="cert-category">
+        <p class="cert-category-label">Service &amp; Support</p>
+        <div class="cert-grid">
+          <div class="cert-card cert-card--pending">
+            <div class="cert-issuer">
+              <!-- HubSpot wordmark glyph -->
+              <svg class="cert-issuer-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-opacity="0.25" stroke-width="1.25"/>
+                <path d="M6.5 13.5V8.5M6.5 6.5v.5M13.5 13.5V10a2 2 0 0 0-4 0v3.5M9.5 10v3.5" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.25" stroke-linecap="round"/>
+              </svg>
+              <span class="cert-issuer-name">HubSpot Academy</span>
+            </div>
+            <p class="cert-name">Service Hub Software</p>
+            <span class="cert-tag cert-tag--pending">In progress</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MARKETING -->
+      <div class="cert-category">
+        <p class="cert-category-label">Marketing</p>
+        <div class="cert-grid">
+          <div class="cert-card cert-card--pending">
+            <div class="cert-issuer">
+              <svg class="cert-issuer-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-opacity="0.25" stroke-width="1.25"/>
+                <path d="M6.5 13.5V8.5M6.5 6.5v.5M13.5 13.5V10a2 2 0 0 0-4 0v3.5M9.5 10v3.5" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.25" stroke-linecap="round"/>
+              </svg>
+              <span class="cert-issuer-name">HubSpot Academy</span>
+            </div>
+            <p class="cert-name">Inbound Certification</p>
+            <span class="cert-tag cert-tag--pending">In progress</span>
+          </div>
+          <div class="cert-card cert-card--pending">
+            <div class="cert-issuer">
+              <svg class="cert-issuer-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-opacity="0.25" stroke-width="1.25"/>
+                <path d="M6.5 13.5V8.5M6.5 6.5v.5M13.5 13.5V10a2 2 0 0 0-4 0v3.5M9.5 10v3.5" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.25" stroke-linecap="round"/>
+              </svg>
+              <span class="cert-issuer-name">HubSpot Academy</span>
+            </div>
+            <p class="cert-name">Social Media Certification</p>
+            <span class="cert-tag cert-tag--pending">In progress</span>
+          </div>
+          <div class="cert-card cert-card--pending">
+            <div class="cert-issuer">
+              <!-- Google G glyph -->
+              <svg class="cert-issuer-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-opacity="0.25" stroke-width="1.25"/>
+                <path d="M14 10h-4v2h2.3A2.5 2.5 0 1 1 10 7.5c.68 0 1.3.27 1.76.7L13.18 6.8A4.5 4.5 0 1 0 14 10z" fill="currentColor" fill-opacity="0.35"/>
+              </svg>
+              <span class="cert-issuer-name">Google</span>
+            </div>
+            <p class="cert-name">Digital Marketing &amp; E-commerce Certificate</p>
+            <span class="cert-tag cert-tag--pending">In progress</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUCTIVITY -->
+      <div class="cert-category">
+        <p class="cert-category-label">Productivity</p>
+        <div class="cert-grid">
+          <div class="cert-card cert-card--pending">
+            <div class="cert-issuer">
+              <!-- Notion N glyph -->
+              <svg class="cert-issuer-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-opacity="0.25" stroke-width="1.25"/>
+                <path d="M7 6.5h1.5L13 13.5V7" stroke="currentColor" stroke-opacity="0.5" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7 13.5V7" stroke="currentColor" stroke-opacity="0.3" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+              <span class="cert-issuer-name">Notion Academy</span>
+            </div>
+            <p class="cert-name">Notion Certified</p>
+            <span class="cert-tag cert-tag--pending">In progress</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUTOMATION -->
+      <div class="cert-category cert-category--last">
+        <p class="cert-category-label">Automation</p>
+        <div class="cert-grid">
+          <div class="cert-card cert-card--pending">
+            <div class="cert-issuer">
+              <!-- Make.com glyph -->
+              <svg class="cert-issuer-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-opacity="0.25" stroke-width="1.25"/>
+                <circle cx="7" cy="10" r="1.75" fill="currentColor" fill-opacity="0.3"/>
+                <circle cx="13" cy="10" r="1.75" fill="currentColor" fill-opacity="0.3"/>
+                <line x1="8.75" y1="10" x2="11.25" y2="10" stroke="currentColor" stroke-opacity="0.4" stroke-width="1.25"/>
+              </svg>
+              <span class="cert-issuer-name">Make.com</span>
+            </div>
+            <p class="cert-name">Automation Fundamentals</p>
+            <span class="cert-tag cert-tag--pending">In progress</span>
+          </div>
+          <div class="cert-card cert-card--pending">
+            <div class="cert-issuer">
+              <!-- n8n glyph -->
+              <svg class="cert-issuer-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-opacity="0.25" stroke-width="1.25"/>
+                <path d="M6 13V7l3.5 3L13 7v6" stroke="currentColor" stroke-opacity="0.45" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="cert-issuer-name">n8n</span>
+            </div>
+            <p class="cert-name">Workflow Automation</p>
+            <span class="cert-tag cert-tag--pending">Planned</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
     <!-- ====== Remote Work Readiness ====== -->
     <section id="setup" class="section">
       <div class="section-label">
-        <span class="section-number">06</span>
-        <span class="section-dash">—</span>
+        <span class="section-number">07</span>
+        <span class="section-dash">&mdash;</span>
         <span>Remote Work Readiness</span>
       </div>
       <div class="setup-grid">
@@ -389,8 +593,8 @@
     <!-- ====== Education ====== -->
     <section id="education" class="section">
       <div class="section-label">
-        <span class="section-number">07</span>
-        <span class="section-dash">—</span>
+        <span class="section-number">08</span>
+        <span class="section-dash">&mdash;</span>
         <span>Education</span>
       </div>
       <div class="education-entry">
@@ -400,11 +604,24 @@
       </div>
     </section>
 
+    <!-- ====== Closing CTA ====== -->
+    <div class="cta-block">
+      <div class="cta-inner">
+        <p class="cta-headline">Let's work together.</p>
+        <p class="cta-body">I'm ready to support your community, coordinate your operations, or fill whatever remote role needs a reliable, async-friendly person. Reach out and I'll get back to you fast.</p>
+        <div class="cta-actions">
+          <a href="mailto:carpisonoah@gmail.com" class="btn btn-cta-primary">Email me</a>
+          <a href="https://www.linkedin.com/in/noah-carpiso" target="_blank" rel="noopener noreferrer" class="btn btn-cta-outline">LinkedIn ↗</a>
+          <a href="Noah-David-Carpiso-Resume.pdf" download class="btn btn-cta-outline">Resume ↓</a>
+        </div>
+      </div>
+    </div>
+
     <!-- ====== Contact ====== -->
     <section id="contact" class="section">
       <div class="section-label">
-        <span class="section-number">08</span>
-        <span class="section-dash">—</span>
+        <span class="section-number">09</span>
+        <span class="section-dash">&mdash;</span>
         <span>Contact</span>
       </div>
       <h2 class="contact-heading">Need reliable support for your remote team?</h2>
