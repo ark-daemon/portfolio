@@ -548,10 +548,11 @@
       }
       ctx.globalAlpha = 1;
       ctx.fillStyle = ink();
-      ctx.fillRect(food.x * cell + 4, food.y * cell + 4, cell - 8, cell - 8);
+      ctx.fillRect(food.x * cell + 5, food.y * cell + 5, cell - 10, cell - 10);
       snake.forEach(function (s, i) {
-        ctx.globalAlpha = i === 0 ? 1 : 0.75;
-        ctx.fillRect(s.x * cell + 2, s.y * cell + 2, cell - 4, cell - 4);
+        ctx.globalAlpha = i === 0 ? 1 : 0.72;
+        /* gap between segments so the body doesn't read as one solid bar */
+        ctx.fillRect(s.x * cell + 4, s.y * cell + 4, cell - 8, cell - 8);
       });
       ctx.globalAlpha = 1;
     }
@@ -615,7 +616,7 @@
       food = randFood();
       alive = true;
       draw();
-      loop = setInterval(step, 110);
+      loop = setInterval(step, 165);
     }
 
     document.addEventListener('keydown', onKey);
