@@ -148,4 +148,39 @@
     });
   }
 
+  /* ===== Glossary Widget — Trading Knowledge Base project preview ===== */
+  function initGlossaryWidget() {
+    var search  = document.getElementById('glossary-search');
+    var list    = document.getElementById('glossary-list');
+    var empty   = document.getElementById('glossary-empty');
+    var count   = document.getElementById('glossary-count');
+    if (!search || !list) return;
+
+    var entries = Array.from(list.querySelectorAll('.glossary-entry'));
+    var total   = entries.length;
+
+    function filter() {
+      var q = search.value.trim().toLowerCase();
+      var visible = 0;
+      entries.forEach(function (entry) {
+        /* data-term pre-concatenates synonyms (e.g. "risk reward ratio rr") */
+        var haystack = (entry.getAttribute('data-term') || '') + ' ' +
+                       (entry.querySelector('.glossary-term') ? entry.querySelector('.glossary-term').textContent : '');
+        var match = !q || haystack.toLowerCase().indexOf(q) !== -1;
+        entry.hidden = !match;
+        if (match) visible++;
+      });
+      /* Update live count */
+      count.textContent = q
+        ? visible + ' of ' + total + ' term' + (total !== 1 ? 's' : '')
+        : total + ' term' + (total !== 1 ? 's' : '');
+      /* Show/hide empty state */
+      if (empty) empty.hidden = visible > 0;
+    }
+
+    search.addEventListener('input', filter);
+  }
+
+  initGlossaryWidget();
+
 })();

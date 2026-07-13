@@ -562,6 +562,141 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 .archive-list li:last-child { border-bottom: none; }
 .archive-list strong { color: var(--ink); font-weight: 500; }
 
+/* ===== Glossary Widget (Trading Knowledge Base project panel) ===== */
+.glossary-widget {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-sans);
+}
+
+/* Header: eyebrow + search input */
+.glossary-header {
+  padding: 0.875rem 1rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--surface);
+}
+.glossary-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  line-height: 1;
+}
+
+/* Search input — bryl-minimal minimal-input recipe */
+.glossary-search {
+  width: 100%;
+  background: var(--surface-2);      /* gray-50 fill */
+  border: 1px solid var(--border);   /* gray-200 hairline */
+  border-radius: 6px;                /* 6px radius per spec */
+  padding: 0.4rem 0.625rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.glossary-search::placeholder {
+  color: var(--text-3);
+}
+.glossary-search:focus {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 2px rgba(10, 10, 10, 0.06);
+}
+/* Remove the native ✕ button in Chrome/Safari */
+.glossary-search::-webkit-search-cancel-button { display: none; }
+
+/* Term list */
+.glossary-list {
+  list-style: none;
+  overflow-y: auto;
+  max-height: 280px;
+  flex: 1;
+}
+/* Each entry: card-like row with bottom hairline */
+.glossary-entry {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--t-fast);
+}
+.glossary-entry:last-child { border-bottom: none; }
+.glossary-entry:hover { background: var(--surface); }
+/* Hidden via JS filter */
+.glossary-entry[hidden] { display: none; }
+
+/* Term row: name + category tag side-by-side */
+.glossary-term-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+.glossary-term {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.3;
+}
+/* Ghost category chip — same recipe as cert-tag */
+.glossary-tag {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 2px 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Definition copy */
+.glossary-def {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+
+/* Empty state */
+.glossary-empty {
+  padding: 1.25rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  text-align: center;
+}
+
+/* Footer: term count + source attribution */
+.glossary-footer {
+  padding: 0.5rem 1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+}
+.glossary-count,
+.glossary-source {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
 /* ===== Capabilities ===== */
 .capabilities-grid {
   display: grid;
