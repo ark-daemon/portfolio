@@ -1618,6 +1618,13 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
   color: var(--ink);
   padding-left: 0.5rem;
 }
+.nav-item.active {
+  font-weight: 500;
+}
+.mobile-nav-item.active {
+  color: var(--ink);
+  font-weight: 500;
+}
 
 .sidebar-footer {
   display: flex;
@@ -1786,6 +1793,202 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
   background-size: 20px 20px;
   -webkit-mask-image: radial-gradient(ellipse 100% 100% at 100% 0%, black 30%, transparent 80%);
           mask-image: radial-gradient(ellipse 100% 100% at 100% 0%, black 30%, transparent 80%);
+}
+
+/* ===== Multi-page: page header ===== */
+.page-header {
+  margin-bottom: 2.5rem;
+  padding-top: 0.5rem;
+}
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: lowercase;
+  color: var(--ink);
+  margin: 0 0 0.75rem;
+}
+.page-lede {
+  font-size: 0.9375rem;
+  color: var(--text-2);
+  max-width: 36rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ===== Teasers (Home) ===== */
+.teaser-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  background: var(--surface, transparent);
+}
+.teaser-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 200ms var(--ease), transform 200ms var(--ease);
+}
+.teaser-card-link:hover {
+  border-color: var(--border-strong, var(--ink));
+  transform: translateY(-1px);
+}
+.teaser-meta {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin: 0 0 0.5rem;
+}
+.teaser-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.teaser-body {
+  font-size: 0.875rem;
+  color: var(--text-2);
+  margin: 0 0 0.75rem;
+  line-height: 1.55;
+}
+.teaser-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) {
+  .teaser-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.text-link {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--ink) 25%, transparent);
+  text-underline-offset: 2px;
+}
+.text-link:hover {
+  text-decoration-color: var(--ink);
+}
+
+.stack-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.stack-chips .tag em,
+.tag em {
+  font-style: normal;
+  opacity: 0.65;
+  font-size: 0.85em;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  border: 1px solid var(--border-strong, var(--border));
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+}
+.tag-muted {
+  opacity: 0.85;
+  font-size: 0.625rem;
+  margin-left: 0.25rem;
+}
+
+.project-screenshots {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.project-screenshots img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  display: block;
+}
+
+/* ===== Play: workflow builder ===== */
+.workflow-builder { margin-top: 0.5rem; }
+.workflow-hint {
+  color: var(--text-2);
+  font-size: 0.875rem;
+  margin-bottom: 1.25rem;
+}
+.workflow-columns {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  margin-bottom: 1.25rem;
+}
+@media (min-width: 900px) {
+  .workflow-columns { grid-template-columns: repeat(3, 1fr); }
+}
+.workflow-col {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  background: var(--surface, transparent);
+}
+.workflow-col-title {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin: 0 0 0.75rem;
+  font-weight: 500;
+}
+.workflow-option {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.workflow-option input {
+  margin-top: 0.2rem;
+  accent-color: var(--ink);
+}
+.workflow-result {
+  margin-top: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+.workflow-result-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin: 0 0 0.5rem;
+}
+.workflow-result-steps {
+  margin: 0.75rem 0;
+  padding-left: 1.25rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.workflow-result-note {
+  font-size: 0.8125rem;
+  color: var(--text-2);
+  margin: 0;
 }
 
 /* ===== Print ===== */

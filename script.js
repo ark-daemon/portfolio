@@ -91,25 +91,37 @@
     });
   });
 
-  /* ===== Active Nav Highlighting ===== */
-  var sections = document.querySelectorAll('section[id]');
-  var navItems = document.querySelectorAll('.nav-item');
-
-  var navObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        var id = entry.target.id;
-        navItems.forEach(function (item) {
-          item.classList.toggle('active', item.getAttribute('href') === '#' + id);
-        });
-        if (window.location.hash) {
-          history.replaceState(null, '', window.location.pathname + window.location.search);
-        }
-      }
+  /* ===== Active nav by data-page (multi-page shell) ===== */
+  function markActiveNav() {
+    var page = document.body.getAttribute('data-page') || '';
+    document.querySelectorAll('[data-nav]').forEach(function (el) {
+      var on = el.getAttribute('data-nav') === page;
+      el.classList.toggle('active', on);
+      if (on) el.setAttribute('aria-current', 'page');
+      else el.removeAttribute('aria-current');
     });
-  }, { rootMargin: '-30% 0px -60% 0px' });
+  }
+  markActiveNav();
 
-  sections.forEach(function (s) { navObserver.observe(s); });
+  /* ===== Scroll-spy only when hash section nav exists ===== */
+  var sectionNav = document.querySelectorAll('.nav-item[href^="#"]');
+  if (sectionNav.length) {
+    var sections = document.querySelectorAll('section[id]');
+    var navObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.id;
+          sectionNav.forEach(function (item) {
+            item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+          });
+          if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+          }
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    sections.forEach(function (s) { navObserver.observe(s); });
+  }
 
   /* ===== Entrance Animations — bryl-minimal spec ===== */
   /* 400ms fast ease-out, 60ms stagger between list items, 6px lift */
@@ -383,5 +395,52 @@
   }
 
   initGlossaryWidget();
+
+  /* ===== Play: mini workflow builder ===== */
+  (function initWorkflowBuilder() {
+    var root = document.getElementById('workflow-builder');
+    if (!root) return;
+    var btn = document.getElementById('workflow-generate');
+    var result = document.getElementById('workflow-result');
+    var list = document.getElementById('workflow-result-steps');
+    if (!btn || !result || !list) return;
+
+    var labels = {
+      trigger: {
+        'member-joins': 'When a new member joins',
+        'ticket-opens': 'When a support ticket opens',
+        'partner-reply': 'When a partner replies'
+      },
+      action: {
+        'auto-faq': 'send the auto-FAQ / onboarding message',
+        'tag-role': 'assign the correct role or tag',
+        'log-sheet': 'log the event to a sheet'
+      },
+      notify: {
+        'mod-channel': 'notify the mods channel',
+        'dm-user': 'DM the member with next steps',
+        'escalate': 'escalate to a human for review'
+      }
+    };
+
+    btn.addEventListener('click', function () {
+      var tEl = root.querySelector('input[name="trigger"]:checked');
+      var aEl = root.querySelector('input[name="action"]:checked');
+      var nEl = root.querySelector('input[name="notify"]:checked');
+      if (!tEl || !aEl || !nEl) return;
+      var steps = [
+        labels.trigger[tEl.value],
+        'Then ' + labels.action[aEl.value],
+        'Then ' + labels.notify[nEl.value]
+      ];
+      list.innerHTML = '';
+      steps.forEach(function (text) {
+        var li = document.createElement('li');
+        li.textContent = text;
+        list.appendChild(li);
+      });
+      result.hidden = false;
+    });
+  })();
 
 })();
