@@ -477,21 +477,53 @@
   initGlossaryWidget();
 
 
-  /* ===== Snake: full-screen ===== */
-  (function initPlaySnake() {
-    var stage = document.getElementById('game-stage');
-    var canvas = document.getElementById('snake-canvas');
-    if (!stage || !canvas || document.body.getAttribute('data-page') !== 'play') return;
+  /* ===== Snake: full-viewport overlay on any page ===== */
+  (function initSnakeOverlay() {
+    var overlay = document.createElement('div');
+    overlay.className = 'snake-screen';
+    overlay.id = 'snake-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Snake');
+    overlay.hidden = true;
+    overlay.innerHTML =
+      '<div class="snake-playfield">' +
+        '<canvas id="snake-canvas" width="640" height="400" aria-label="Snake game board"></canvas>' +
+      '</div>' +
+      '<div class="snake-ui">' +
+        '<p class="snake-end" id="game-end" hidden></p>' +
+        '<p class="snake-keys">Arrows / WASD</p>' +
+        '<div class="snake-meta">' +
+          '<span class="snake-meta-stat">Score <strong id="game-score">0</strong></span>' +
+          '<span class="snake-meta-stat">Best <strong id="game-best">0</strong></span>' +
+        '</div>' +
+        '<div class="snake-footer">' +
+          '<button type="button" class="snake-keycap" id="snake-start">' +
+            '<kbd>space</kbd><span>start</span>' +
+          '</button>' +
+          '<button type="button" class="snake-keycap" id="snake-close">' +
+            '<kbd>esc</kbd><span>close</span>' +
+          '</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(overlay);
 
+    var canvas = document.getElementById('snake-canvas');
     var scoreEl = document.getElementById('game-score');
     var bestEl = document.getElementById('game-best');
     var endEl = document.getElementById('game-end');
     var start = document.getElementById('snake-start');
+    var closeBtn = document.getElementById('snake-close');
+    var playfield = overlay.querySelector('.snake-playfield');
     var ctx = canvas.getContext('2d');
-    var cell = 20;
-    var cols = 18;
-    var rows = 18;
+
+    var cell = 22;
+    var cols = 20;
+    var rows = 16;
+    var offX = 0;
+    var offY = 0;
     var snake, dir, nextDir, food, loop, alive, score;
+    var open = false;
 
     function bestKey() { return 'noah-play-best-snake'; }
     function loadBest() {
@@ -530,32 +562,75 @@
     function muted() {
       return getComputedStyle(document.documentElement).getPropertyValue('--text-3').trim() || '#a3a3a3';
     }
+
+    function layoutBoard() {
+      var w = playfield.clientWidth || window.innerWidth;
+      var h = playfield.clientHeight || Math.max(200, window.innerHeight - 140);
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      cell = Math.max(16, Math.min(28, Math.floor(Math.min(w, h) / 22)));
+      cols = Math.max(14, Math.floor(w / cell));
+      rows = Math.max(10, Math.floor(h / cell));
+      if (cols % 2 === 1) cols -= 1;
+      offX = Math.floor((w - cols * cell) / 2);
+      offY = Math.floor((h - rows * cell) / 2);
+    }
+
     function draw() {
-      var w = canvas.width;
-      var h = canvas.height;
+      var w = canvas.clientWidth;
+      var h = canvas.clientHeight;
       ctx.fillStyle = bg();
       ctx.fillRect(0, 0, w, h);
+
+      /* dual-monitor frame */
+      var mid = offX + (cols / 2) * cell;
       ctx.strokeStyle = border();
-      ctx.lineWidth = 2;
-      ctx.strokeRect(1, 1, w / 2 - 4, h - 2);
-      ctx.strokeRect(w / 2 + 3, 1, w / 2 - 4, h - 2);
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(offX + 0.5, offY + 0.5, cols * cell - 1, rows * cell - 1);
+      ctx.beginPath();
+      ctx.moveTo(mid + 0.5, offY);
+      ctx.lineTo(mid + 0.5, offY + rows * cell);
+      ctx.stroke();
+
       ctx.fillStyle = muted();
       for (var y = 0; y < rows; y++) {
         for (var x = 0; x < cols; x++) {
-          ctx.globalAlpha = 0.15;
-          ctx.fillRect(x * cell + 9, y * cell + 9, 2, 2);
+          ctx.globalAlpha = 0.12;
+          ctx.fillRect(offX + x * cell + cell / 2 - 1, offY + y * cell + cell / 2 - 1, 2, 2);
         }
       }
       ctx.globalAlpha = 1;
+      if (!food || !snake) return;
+
       ctx.fillStyle = ink();
-      ctx.fillRect(food.x * cell + 5, food.y * cell + 5, cell - 10, cell - 10);
+      ctx.fillRect(offX + food.x * cell + 5, offY + food.y * cell + 5, cell - 10, cell - 10);
       snake.forEach(function (s, i) {
         ctx.globalAlpha = i === 0 ? 1 : 0.72;
-        /* gap between segments so the body doesn't read as one solid bar */
-        ctx.fillRect(s.x * cell + 4, s.y * cell + 4, cell - 8, cell - 8);
+        ctx.fillRect(offX + s.x * cell + 4, offY + s.y * cell + 4, cell - 8, cell - 8);
       });
       ctx.globalAlpha = 1;
     }
+
+    function resetSnakeIdle() {
+      var cx = Math.floor(cols / 2);
+      var cy = Math.floor(rows / 2);
+      snake = [
+        { x: cx, y: cy },
+        { x: cx - 1, y: cy },
+        { x: cx - 2, y: cy }
+      ];
+      food = { x: Math.min(cols - 2, cx + 4), y: cy };
+      dir = { x: 1, y: 0 };
+      nextDir = dir;
+      alive = false;
+      setScore(0);
+    }
+
     function step() {
       if (!alive) return;
       dir = nextDir;
@@ -583,10 +658,82 @@
       }
       draw();
     }
+
+    function startGame() {
+      if (loop) { clearInterval(loop); loop = null; }
+      setScore(0);
+      if (endEl) { endEl.hidden = true; endEl.textContent = ''; }
+      if (start) {
+        var lab = start.querySelector('span:last-child');
+        if (lab) lab.textContent = 'restart';
+      }
+      var cx = Math.floor(cols / 2);
+      var cy = Math.floor(rows / 2);
+      snake = [
+        { x: cx, y: cy },
+        { x: cx - 1, y: cy },
+        { x: cx - 2, y: cy }
+      ];
+      dir = { x: 1, y: 0 };
+      nextDir = dir;
+      food = randFood();
+      alive = true;
+      draw();
+      loop = setInterval(step, 165);
+    }
+
+    function openSnake() {
+      if (open) return;
+      open = true;
+      overlay.hidden = false;
+      overlay.classList.add('is-open');
+      document.body.classList.add('snake-open');
+      /* close mobile menu if open */
+      var mm = document.getElementById('mobile-menu');
+      var mt = document.getElementById('menu-toggle');
+      if (mm) {
+        mm.classList.remove('open');
+        mm.setAttribute('aria-hidden', 'true');
+      }
+      if (mt) mt.setAttribute('aria-expanded', 'false');
+
+      layoutBoard();
+      resetSnakeIdle();
+      if (bestEl) bestEl.textContent = String(loadBest());
+      if (endEl) { endEl.hidden = true; endEl.textContent = ''; }
+      if (start) {
+        var lab = start.querySelector('span:last-child');
+        if (lab) lab.textContent = 'start';
+      }
+      draw();
+      try {
+        if (location.hash !== '#snake') {
+          history.replaceState(null, '', location.pathname + location.search + '#snake');
+        }
+      } catch (e) {}
+    }
+
+    function closeSnake() {
+      if (!open) return;
+      open = false;
+      if (loop) { clearInterval(loop); loop = null; }
+      alive = false;
+      overlay.classList.remove('is-open');
+      overlay.hidden = true;
+      document.body.classList.remove('snake-open');
+      try {
+        if (location.hash === '#snake') {
+          history.replaceState(null, '', location.pathname + location.search);
+        }
+      } catch (e) {}
+    }
+
     function onKey(e) {
+      if (!open) return;
       var k = e.key;
       if (k === 'Escape') {
-        window.location.href = 'index.html';
+        e.preventDefault();
+        closeSnake();
         return;
       }
       if (k === ' ' || k === 'Enter') {
@@ -602,33 +749,39 @@
       if ((key === 'arrowright' || key === 'd') && dir.x !== -1) nextDir = { x: 1, y: 0 };
       if (key.indexOf('arrow') === 0) e.preventDefault();
     }
-    function startGame() {
+
+    function onResize() {
+      if (!open) return;
+      var wasAlive = alive;
       if (loop) { clearInterval(loop); loop = null; }
-      setScore(0);
-      if (endEl) { endEl.hidden = true; endEl.textContent = ''; }
-      if (start) {
-        var lab = start.querySelector('span:last-child');
-        if (lab) lab.textContent = 'restart';
+      layoutBoard();
+      /* clamp entities if board shrank */
+      if (snake) {
+        snake = snake.filter(function (s) { return s.x < cols && s.y < rows; });
+        if (!snake.length) resetSnakeIdle();
       }
-      snake = [{ x: 8, y: 9 }, { x: 7, y: 9 }, { x: 6, y: 9 }];
-      dir = { x: 1, y: 0 };
-      nextDir = dir;
-      food = randFood();
-      alive = true;
+      if (food && (food.x >= cols || food.y >= rows)) food = randFood();
       draw();
-      loop = setInterval(step, 165);
+      if (wasAlive && alive) loop = setInterval(step, 165);
     }
 
     document.addEventListener('keydown', onKey);
+    window.addEventListener('resize', onResize);
     if (start) start.addEventListener('click', startGame);
-    if (bestEl) bestEl.textContent = String(loadBest());
-    snake = [{ x: 8, y: 9 }, { x: 7, y: 9 }, { x: 6, y: 9 }];
-    food = { x: 12, y: 9 };
-    dir = { x: 1, y: 0 };
-    nextDir = dir;
-    alive = false;
-    score = 0;
-    draw();
+    if (closeBtn) closeBtn.addEventListener('click', closeSnake);
+
+    /* Snake nav links open overlay instead of leaving the page */
+    document.querySelectorAll('a[href="play.html"], a[href="./play.html"], a[href="/play.html"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        openSnake();
+      });
+    });
+
+    /* deep link: #snake or play page */
+    if (location.hash === '#snake' || document.body.getAttribute('data-page') === 'play') {
+      openSnake();
+    }
   })();
 
 })();
