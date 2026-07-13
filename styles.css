@@ -129,6 +129,12 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 .main {
   min-height: 100vh;
   transition: margin var(--t-med);
+  padding-bottom: 5rem; /* breathing room at page end */
+}
+@media (min-width: 1024px) {
+  .main {
+    padding-bottom: 6.5rem;
+  }
 }
 
 .section {
