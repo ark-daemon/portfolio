@@ -467,6 +467,23 @@
 
   initTicketSim();
 
+  /* ===== Experience skill pills — expand +N ===== */
+  function initSkillExpand() {
+    document.querySelectorAll('[data-skill-expand]').forEach(function (wrap) {
+      var btn = wrap.querySelector('[data-skill-more]');
+      if (!btn) return;
+      btn.addEventListener('click', function () {
+        wrap.querySelectorAll('.skill-chip-extra').forEach(function (el) {
+          el.hidden = false;
+        });
+        wrap.classList.add('is-expanded');
+        btn.setAttribute('aria-expanded', 'true');
+      });
+    });
+  }
+
+  initSkillExpand();
+
   /* ===== Glossary Widget — Trading Knowledge Base project preview ===== */
   function initGlossaryWidget() {
     var search  = document.getElementById('glossary-search');
