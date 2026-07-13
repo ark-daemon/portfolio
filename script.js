@@ -477,11 +477,11 @@
   initGlossaryWidget();
 
 
-  /* ===== Play: Monitor Snake only ===== */
+  /* ===== Snake: full-screen ===== */
   (function initPlaySnake() {
     var stage = document.getElementById('game-stage');
     var canvas = document.getElementById('snake-canvas');
-    if (!stage || !canvas) return;
+    if (!stage || !canvas || document.body.getAttribute('data-page') !== 'play') return;
 
     var scoreEl = document.getElementById('game-score');
     var bestEl = document.getElementById('game-best');
@@ -565,8 +565,9 @@
         if (loop) { clearInterval(loop); loop = null; }
         if (endEl) {
           endEl.hidden = false;
-          endEl.textContent = 'Game over. Score ' + score + '. Best ' + saveBest(score) + '.';
+          endEl.textContent = 'Game over · ' + score + ' · best ' + saveBest(score);
         }
+        if (start) start.textContent = 'Restart';
         return;
       }
       snake.unshift(head);
@@ -579,17 +580,30 @@
       draw();
     }
     function onKey(e) {
-      if (!alive) return;
-      var k = e.key.toLowerCase();
-      if ((k === 'arrowup' || k === 'w') && dir.y !== 1) nextDir = { x: 0, y: -1 };
-      if ((k === 'arrowdown' || k === 's') && dir.y !== -1) nextDir = { x: 0, y: 1 };
-      if ((k === 'arrowleft' || k === 'a') && dir.x !== 1) nextDir = { x: -1, y: 0 };
-      if ((k === 'arrowright' || k === 'd') && dir.x !== -1) nextDir = { x: 1, y: 0 };
+      var k = e.key;
+      if (k === 'Escape') {
+        window.location.href = 'index.html';
+        return;
+      }
+      if (!alive) {
+        if (k === ' ' || k === 'Enter') {
+          e.preventDefault();
+          startGame();
+        }
+        return;
+      }
+      var key = k.toLowerCase();
+      if ((key === 'arrowup' || key === 'w') && dir.y !== 1) nextDir = { x: 0, y: -1 };
+      if ((key === 'arrowdown' || key === 's') && dir.y !== -1) nextDir = { x: 0, y: 1 };
+      if ((key === 'arrowleft' || key === 'a') && dir.x !== 1) nextDir = { x: -1, y: 0 };
+      if ((key === 'arrowright' || key === 'd') && dir.x !== -1) nextDir = { x: 1, y: 0 };
+      if (key.indexOf('arrow') === 0) e.preventDefault();
     }
     function startGame() {
       if (loop) { clearInterval(loop); loop = null; }
       setScore(0);
       if (endEl) { endEl.hidden = true; endEl.textContent = ''; }
+      if (start) start.textContent = 'Restart';
       snake = [{ x: 8, y: 9 }, { x: 7, y: 9 }, { x: 6, y: 9 }];
       dir = { x: 1, y: 0 };
       nextDir = dir;

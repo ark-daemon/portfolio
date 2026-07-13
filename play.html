@@ -3,160 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Play | Noah Carpiso</title>
-  <meta name="description" content="Monitor Snake: a small dual-monitor arcade game.">
+  <title>Snake | Noah Carpiso</title>
+  <meta name="description" content="Snake: dual-monitor arcade game.">
   <link rel="canonical" href="https://noah-carpiso.pages.dev/play.html">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0c0c0f" media="(prefers-color-scheme: dark)">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Play | Noah Carpiso">
-  <meta property="og:description" content="Monitor Snake: a small dual-monitor arcade game.">
+  <meta property="og:title" content="Snake | Noah Carpiso">
+  <meta property="og:description" content="Snake: dual-monitor arcade game.">
   <meta property="og:url" content="https://noah-carpiso.pages.dev/play.html">
   <meta property="og:site_name" content="Noah Carpiso">
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%230a0a0a'/%3E%3Ctext x='50' y='70' font-family='system-ui,sans-serif' font-size='52' font-weight='600' fill='white' text-anchor='middle'%3En%3C/text%3E%3C/svg%3E">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&display=swap">
   <link rel="stylesheet" href="styles.css">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Noah Carpiso",
-    "jobTitle": "Remote Ops & Automation",
-    "email": "mailto:carpisonoah@gmail.com",
-    "url": "https://noah-carpiso.pages.dev/",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Valenzuela City",
-      "addressRegion": "Metro Manila",
-      "addressCountry": "Philippines"
-    }
-  }
-  </script>
 </head>
 <body data-page="play">
 
-  <div class="dot-grid" aria-hidden="true"></div>
-
-  <aside class="sidebar" role="complementary" aria-label="Profile and navigation">
-    <div class="sidebar-top">
-      <div class="sidebar-identity">
-        <a href="index.html" class="sidebar-name" aria-label="Noah Carpiso, home">Noah Carpiso</a>
-        <p class="sidebar-role">Remote Ops · Automation</p>
+  <div class="snake-screen" id="game-stage">
+    <header class="snake-hud">
+      <a href="index.html" class="snake-exit" aria-label="Exit to home">Esc</a>
+      <p class="snake-hud-title">Snake</p>
+      <div class="snake-hud-score">
+        <span>Score <strong id="game-score">0</strong></span>
+        <span>Best <strong id="game-best">0</strong></span>
       </div>
-      <div class="sidebar-status">
-        <span class="status-dot" aria-hidden="true"></span>
-        <span>Available for work</span>
-      </div>
-    </div>
-
-    <nav class="sidebar-nav" aria-label="Site">
-      <a href="experience.html" class="nav-item" data-nav="experience">Experience</a>
-      <a href="projects.html" class="nav-item" data-nav="projects">Projects</a>
-      <a href="stack.html" class="nav-item" data-nav="stack">Stack</a>
-      <a href="setup.html" class="nav-item" data-nav="setup">Setup</a>
-      <a href="certifications.html" class="nav-item" data-nav="certifications">Certifications</a>
-    </nav>
-
-        <div class="sidebar-utils" aria-label="Play">
-      <a href="play.html" class="util-btn util-btn--active" aria-current="page">
-        <span>Play - Snake</span>
-        <span aria-hidden="true">-></span>
-      </a>
-    </div>
-
-<div class="sidebar-footer">
-      <a href="Noah-David-Carpiso-Resume.pdf" download class="sidebar-link">Resume ↓</a>
-      <a href="https://www.linkedin.com/in/noah-carpiso" target="_blank" rel="noopener noreferrer" class="sidebar-link">LinkedIn ↗</a>
-      <a href="https://github.com/ark-daemon" target="_blank" rel="noopener noreferrer" class="sidebar-link">GitHub</a>
-      <div class="theme-switch" id="theme-switch-desktop" role="group" aria-label="Color theme">
-        <button class="theme-btn" data-theme-val="system" aria-label="System theme" title="System">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        </button>
-        <button class="theme-btn" data-theme-val="light" aria-label="Light theme" title="Light">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        </button>
-        <button class="theme-btn" data-theme-val="dark" aria-label="Dark theme" title="Dark">
-          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-      </div>
-      <div class="sidebar-reach">
-        <p class="sidebar-reach-label">For work or questions, email me</p>
-        <a href="mailto:carpisonoah@gmail.com" class="sidebar-email">
-          <svg class="sidebar-email-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>carpisonoah@gmail.com</span>
-        </a>
-      </div>
-    </div>
-  </aside>
-
-  <header class="mobile-header">
-    <a href="index.html" class="mobile-name" aria-label="Noah Carpiso, home">Noah Carpiso</a>
-    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false">
-      <span class="menu-bar"></span>
-      <span class="menu-bar"></span>
-      <span class="menu-bar"></span>
-    </button>
-  </header>
-
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-    <nav class="mobile-nav" aria-label="Site">
-      <a href="experience.html" class="mobile-nav-item" data-nav="experience">Experience</a>
-      <a href="projects.html" class="mobile-nav-item" data-nav="projects">Projects</a>
-      <a href="stack.html" class="mobile-nav-item" data-nav="stack">Stack</a>
-      <a href="setup.html" class="mobile-nav-item" data-nav="setup">Setup</a>
-      <a href="certifications.html" class="mobile-nav-item" data-nav="certifications">Certifications</a>
-      <a href="play.html" class="mobile-nav-item active" data-nav="play" aria-current="page">Play</a>
-    </nav>
-    <div class="mobile-menu-footer">
-      <a href="Noah-David-Carpiso-Resume.pdf" download class="mobile-link">Resume ↓</a>
-      <a href="https://www.linkedin.com/in/noah-carpiso" target="_blank" rel="noopener noreferrer" class="mobile-link">LinkedIn ↗</a>
-      <a href="https://github.com/ark-daemon" target="_blank" rel="noopener noreferrer" class="mobile-link">GitHub</a>
-      <div class="theme-switch" id="theme-switch-mobile" role="group" aria-label="Color theme">
-        <button class="theme-btn" data-theme-val="system" aria-label="System theme" title="System">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        </button>
-        <button class="theme-btn" data-theme-val="light" aria-label="Light theme" title="Light">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        </button>
-        <button class="theme-btn" data-theme-val="dark" aria-label="Dark theme" title="Dark">
-          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <main class="main">
-    <header class="page-header">
-      <h1 class="page-title">play</h1>
-      <p class="page-lede">Monitor Snake. Arrow keys or WASD. Best score saves on this device.</p>
     </header>
 
-    <section class="game-stage section" id="game-stage">
-      <div class="game-stage-bar">
-        <h2 class="game-stage-title">Monitor Snake</h2>
-        <div class="game-stage-score">
-          <span>Score <strong id="game-score">0</strong></span>
-          <span>Best <strong id="game-best">0</strong></span>
-        </div>
+    <div class="snake-board-wrap">
+      <canvas id="snake-canvas" width="360" height="360" aria-label="Snake game board"></canvas>
+      <p class="snake-end" id="game-end" hidden></p>
+      <div class="snake-actions">
+        <button type="button" class="btn btn-primary" id="snake-start">Start</button>
       </div>
-
-      <div class="game-panel" id="panel-snake">
-        <p class="game-hint">Arrows / WASD · eat the dots · dual-monitor grid</p>
-        <canvas id="snake-canvas" width="360" height="360" aria-label="Snake game board"></canvas>
-        <div class="queue-actions">
-          <button type="button" class="btn btn-primary" id="snake-start">Start / Restart</button>
-        </div>
-      </div>
-
-      <p class="game-end" id="game-end" hidden></p>
-    </section>
-  </main>
+      <p class="snake-keys" aria-hidden="true">Arrows / WASD</p>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
