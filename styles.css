@@ -939,6 +939,21 @@ body[data-page="setup"] .section {
   line-height: 1.5;
   flex: 1;
 }
+.catalog-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--ink) 25%, transparent);
+  text-underline-offset: 2px;
+  transition: text-decoration-color 200ms var(--ease);
+}
+.catalog-link:hover {
+  text-decoration-color: var(--ink);
+}
 .catalog-details {
   margin-top: 0.75rem;
   border-top: 1px solid var(--border);
