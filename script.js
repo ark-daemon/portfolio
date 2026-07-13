@@ -65,6 +65,18 @@
     });
   }
 
+  /* ===== Smooth Scroll (clean URLs, no #hash) ===== */
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href');
+      if (href === '#' || href.length < 2) return;
+      var target = document.querySelector(href);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
   /* ===== Active Nav Highlighting ===== */
   var sections = document.querySelectorAll('section[id]');
   var navItems = document.querySelectorAll('.nav-item');
@@ -76,6 +88,10 @@
         navItems.forEach(function (item) {
           item.classList.toggle('active', item.getAttribute('href') === '#' + id);
         });
+        /* Remove hash from URL without adding a history entry */
+        if (window.location.hash) {
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
       }
     });
   }, { rootMargin: '-30% 0px -60% 0px' });
