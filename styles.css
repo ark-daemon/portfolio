@@ -2611,7 +2611,6 @@ body[data-page="setup"] .section {
   /* When the stack viewport is hovered, fade non-hovered cards */
   .projects-stack:hover .stack-card {
     opacity: 0.45;
-    transform: scale(0.95);
   }
 
   /* Straighten, scale, and focus the hovered card */
