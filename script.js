@@ -630,4 +630,207 @@
     draw();
   })();
 
+  /* ===== Sound Effects and Toggle Generator ===== */
+  function initSoundEffects() {
+    var audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playHover() {
+      var muted = localStorage.getItem('sound-muted') !== 'false';
+      if (muted) return;
+      var ctx = getAudioContext();
+      if (!ctx) return;
+      try {
+        var time = ctx.currentTime;
+        var osc = ctx.createOscillator();
+        var gainNode = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(2200, time);
+        osc.frequency.exponentialRampToValueAtTime(800, time + 0.008);
+        
+        gainNode.gain.setValueAtTime(0.015, time); // extremely quiet touch tick
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, time + 0.008);
+        
+        osc.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        osc.start(time);
+        osc.stop(time + 0.008);
+      } catch (e) {}
+    }
+
+    function playClick() {
+      var muted = localStorage.getItem('sound-muted') !== 'false';
+      if (muted) return;
+      var ctx = getAudioContext();
+      if (!ctx) return;
+      try {
+        var time = ctx.currentTime;
+
+        // --- transient snap ---
+        var osc = ctx.createOscillator();
+        var gainOsc = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1400, time);
+        osc.frequency.exponentialRampToValueAtTime(120, time + 0.02);
+        
+        gainOsc.gain.setValueAtTime(0.04, time);
+        gainOsc.gain.exponentialRampToValueAtTime(0.0001, time + 0.02);
+        
+        osc.connect(gainOsc);
+        gainOsc.connect(ctx.destination);
+        osc.start(time);
+        osc.stop(time + 0.02);
+
+        // --- bottom-out plastic clack ---
+        var bufferSize = ctx.sampleRate * 0.035; // 35ms
+        var buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        var data = buffer.getChannelData(0);
+        for (var i = 0; i < bufferSize; i++) {
+          data[i] = Math.random() * 2 - 1;
+        }
+        var noise = ctx.createBufferSource();
+        noise.buffer = buffer;
+
+        var filter = ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1100, time);
+        filter.Q.setValueAtTime(6, time);
+
+        var gainNoise = ctx.createGain();
+        gainNoise.gain.setValueAtTime(0.025, time);
+        gainNoise.gain.exponentialRampToValueAtTime(0.0001, time + 0.035);
+
+        noise.connect(filter);
+        filter.connect(gainNoise);
+        gainNoise.connect(ctx.destination);
+
+        noise.start(time);
+        noise.stop(time + 0.035);
+      } catch (e) {}
+    }
+
+    // Bind click events using event delegation
+    document.addEventListener('click', function (e) {
+      var target = e.target;
+      while (target && target !== document.body) {
+        if (target.nodeType !== 1) {
+          target = target.parentNode;
+          continue;
+        }
+        var tag = target.tagName;
+        var cl  = target.classList;
+        if (
+          tag === 'A' || 
+          tag === 'BUTTON' || 
+          cl.contains('nav-item') ||
+          cl.contains('mobile-nav-item') ||
+          cl.contains('theme-btn') ||
+          cl.contains('ticket-row') ||
+          cl.contains('kanban-card') ||
+          cl.contains('flow-node') ||
+          cl.contains('glossary-entry') ||
+          cl.contains('glossary-search')
+        ) {
+          // If clicked a sound toggle btn, don't play click immediately (it handles its own click)
+          if (cl.contains('sound-toggle-btn')) break;
+          playClick();
+          break;
+        }
+        target = target.parentNode;
+      }
+    });
+
+    // Dynamic hover listeners attachment
+    function attachHoverListeners() {
+      var selectors = [
+        '.nav-item',
+        '.mobile-nav-item',
+        '.btn',
+        '.theme-btn',
+        '.ticket-row',
+        '.kanban-card',
+        '.flow-node',
+        '.glossary-entry',
+        '.util-btn'
+      ];
+      document.querySelectorAll(selectors.join(',')).forEach(function (el) {
+        if (el.dataset.hasSoundHover) return;
+        el.dataset.hasSoundHover = 'true';
+        el.addEventListener('mouseenter', playHover);
+      });
+    }
+
+    attachHoverListeners();
+
+    // Listen to DOM mutations to bind hover events to dynamically loaded elements
+    var observer = new MutationObserver(function () {
+      attachHoverListeners();
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Inject sound toggle next to color theme switchers
+    var themeSwitches = document.querySelectorAll('.theme-switch');
+    themeSwitches.forEach(function (ts) {
+      var isMobile = ts.id === 'theme-switch-mobile';
+      var idSuffix = isMobile ? 'mobile' : 'desktop';
+
+      var btn = document.createElement('button');
+      btn.className = 'sound-toggle-btn';
+      btn.id = 'sound-toggle-' + idSuffix;
+      btn.title = 'Toggle sound effects';
+      btn.setAttribute('aria-label', 'Toggle interface sounds');
+      btn.setAttribute('role', 'switch');
+
+      var isMuted = localStorage.getItem('sound-muted') !== 'false';
+      btn.setAttribute('aria-checked', isMuted ? 'false' : 'true');
+
+      btn.innerHTML = 
+        '<svg class="sound-icon-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="' + (isMuted ? 'display: block;' : 'display: none;') + '">' +
+          '<path d="M11 5L6 9H2v6h4l5 4V5z"/>' +
+          '<line x1="23" y1="9" x2="17" y2="15"/>' +
+          '<line x1="17" y1="9" x2="23" y2="15"/>' +
+          '</svg>' +
+        '<svg class="sound-icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="' + (!isMuted ? 'display: block;' : 'display: none;') + '">' +
+          '<path d="M11 5L6 9H2v6h4l5 4V5z"/>' +
+          '<path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>' +
+          '<path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>' +
+          '</svg>';
+
+      ts.parentNode.insertBefore(btn, ts.nextSibling);
+
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var currentMuted = localStorage.getItem('sound-muted') !== 'false';
+        var newMuted = !currentMuted;
+        localStorage.setItem('sound-muted', newMuted ? 'true' : 'false');
+
+        // Sync toggles
+        document.querySelectorAll('.sound-toggle-btn').forEach(function (otherBtn) {
+          otherBtn.setAttribute('aria-checked', newMuted ? 'false' : 'true');
+          otherBtn.querySelector('.sound-icon-mute').style.display = newMuted ? 'block' : 'none';
+          otherBtn.querySelector('.sound-icon-on').style.display = !newMuted ? 'block' : 'none';
+        });
+
+        if (!newMuted) {
+          // Play click for unmuting feedback
+          setTimeout(playClick, 20);
+        }
+      });
+    });
+  }
+
+  initSoundEffects();
+
 })();

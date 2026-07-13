@@ -2209,6 +2209,50 @@ body[data-page="setup"] .section {
   box-shadow: none;
   background: var(--surface-2);
 }
+
+/* ===== Sound Toggle Button ===== */
+.sound-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  color: var(--text-3);
+  transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast);
+  padding: 0;
+  margin-top: 0.35rem;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+.sound-toggle-btn svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sound-toggle-btn:hover {
+  color: var(--ink);
+  background: var(--surface-2);
+  border-color: var(--border-strong);
+}
+.sound-toggle-btn[aria-checked="true"] {
+  color: var(--ink);
+  background: var(--bg);
+  border-color: var(--border-strong);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+[data-theme="dark"] .sound-toggle-btn[aria-checked="true"] {
+  box-shadow: none;
+  background: var(--surface-2);
+}
+
 .sidebar-utils {
   display: flex;
   flex-direction: column;
@@ -2393,18 +2437,16 @@ body[data-page="setup"] .section {
 /* Fixed to top-right of viewport; pointer-events off so it never blocks clicks */
 .dot-grid {
   position: fixed;
-  top: 0;
-  right: 0;
-  width: 40vw;
-  height: 60vh;
-  max-width: 480px;
-  max-height: 480px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 0;
   background-image: radial-gradient(circle, var(--halftone-color) 1px, transparent 1px);
-  background-size: 20px 20px;
-  -webkit-mask-image: radial-gradient(ellipse 100% 100% at 100% 0%, black 30%, transparent 80%);
-          mask-image: radial-gradient(ellipse 100% 100% at 100% 0%, black 30%, transparent 80%);
+  background-size: 13px 13px;
+  -webkit-mask-image: radial-gradient(circle at 75% 25%, black 20%, transparent 75%);
+          mask-image: radial-gradient(circle at 75% 25%, black 20%, transparent 75%);
+  opacity: 0.85;
 }
 
 /* ===== Multi-page: page header + catalog shell ===== */
