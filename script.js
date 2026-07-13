@@ -491,7 +491,7 @@
     var cell = 20;
     var cols = 18;
     var rows = 18;
-    var snake, dir, nextDir, food, loop, alive, score;
+    var snake, dir, nextDir, food, loop, alive, score, isNavigating = false;
 
     function bestKey() { return 'noah-play-best-snake'; }
     function loadBest() {
@@ -585,6 +585,8 @@
     function onKey(e) {
       var k = e.key;
       if (k === 'Escape' || k === 'Esc' || e.keyCode === 27) {
+        if (isNavigating) return;
+        isNavigating = true;
         window.location.href = 'index.html';
         return;
       }
