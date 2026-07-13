@@ -2592,43 +2592,52 @@ body[data-page="setup"] .section {
 
 /* Overlapping & tilting defaults for desktop (min-width: 640px) */
 @media (min-width: 640px) {
-  .stack-card--left {
-    transform: translateX(-110px) translateY(12px) rotate(-6deg);
+  .stack-card.is-left {
+    transform: translateX(-115px) translateY(12px) rotate(-6deg) scale(0.92);
     z-index: 1;
+    opacity: 0.55;
+    filter: blur(1.5px);
     transform-origin: bottom center;
   }
-  .stack-card--center {
-    transform: translateY(-8px) rotate(0deg);
+  .stack-card.is-center {
+    transform: translateY(-8px) rotate(0deg) scale(1.0);
     z-index: 3;
-    transform-origin: bottom center;
-  }
-  .stack-card--right {
-    transform: translateX(110px) translateY(12px) rotate(6deg);
-    z-index: 2;
-    transform-origin: bottom center;
-  }
-
-  /* When the stack viewport is hovered, fade non-hovered cards */
-  .projects-stack:hover .stack-card {
-    opacity: 0.45;
-  }
-
-  /* Straighten, scale, and focus the hovered card */
-  .projects-stack .stack-card:hover {
     opacity: 1;
+    filter: none;
+    transform-origin: bottom center;
+  }
+  .stack-card.is-right {
+    transform: translateX(115px) translateY(12px) rotate(6deg) scale(0.92);
+    z-index: 2;
+    opacity: 0.55;
+    filter: blur(1.5px);
+    transform-origin: bottom center;
+  }
+
+  /* Individual card hover states */
+  .stack-card.is-left:hover {
+    transform: translateX(-115px) translateY(-8px) rotate(-6deg) scale(0.96);
+    opacity: 0.9;
+    filter: none;
+    z-index: 10;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+  }
+  
+  .stack-card.is-center:hover {
+    transform: translateY(-24px) rotate(0deg) scale(1.04);
+    opacity: 1;
+    filter: none;
     z-index: 20;
     box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
     border-color: var(--border-strong);
   }
   
-  .projects-stack .stack-card--left:hover {
-    transform: translateX(-110px) translateY(-20px) rotate(0deg) scale(1.06);
-  }
-  .projects-stack .stack-card--center:hover {
-    transform: translateY(-30px) rotate(0deg) scale(1.06);
-  }
-  .projects-stack .stack-card--right:hover {
-    transform: translateX(110px) translateY(-20px) rotate(0deg) scale(1.06);
+  .stack-card.is-right:hover {
+    transform: translateX(115px) translateY(-8px) rotate(6deg) scale(0.96);
+    opacity: 0.9;
+    filter: none;
+    z-index: 10;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
   }
 }
 

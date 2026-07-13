@@ -839,6 +839,53 @@
     });
   }
 
+  /* ===== Projects Fanned Stack Swapper ===== */
+  function initProjectsSwapper() {
+    var stack = document.querySelector('.projects-stack');
+    if (!stack) return;
+
+    var cards = stack.querySelectorAll('.stack-card');
+    
+    cards.forEach(function (card, index) {
+      if (card.classList.contains('stack-card--left')) {
+        card.classList.remove('stack-card--left');
+        card.classList.add('is-left');
+      } else if (card.classList.contains('stack-card--center')) {
+        card.classList.remove('stack-card--center');
+        card.classList.add('is-center');
+      } else if (card.classList.contains('stack-card--right')) {
+        card.classList.remove('stack-card--right');
+        card.classList.add('is-right');
+      } else {
+        if (index === 0) card.classList.add('is-left');
+        else if (index === 1) card.classList.add('is-center');
+        else card.classList.add('is-right');
+      }
+
+      card.addEventListener('click', function (e) {
+        if (window.innerWidth >= 640 && !card.classList.contains('is-center')) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          var centerCard = stack.querySelector('.stack-card.is-center');
+          if (centerCard) {
+            var myClass = card.classList.contains('is-left') ? 'is-left' : 'is-right';
+            
+            centerCard.classList.remove('is-center');
+            centerCard.classList.add(myClass);
+
+            card.classList.remove(myClass);
+            card.classList.add('is-center');
+
+            if (typeof playClick === 'function') {
+              playClick();
+            }
+          }
+        }
+      });
+    });
+  }
+
   /* ===== Email Contact Modal Overlay ===== */
   function initEmailModal() {
     // 1. Create and inject email overlay HTML dynamically at the end of the body
@@ -929,5 +976,6 @@
 
   initEmailModal();
   initSoundEffects();
+  initProjectsSwapper();
 
 })();
