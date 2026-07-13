@@ -1,12 +1,12 @@
 /* ================================================================
-   Portfolio — Theme (system/light/dark), navigation, mobile menu, animations
+   Portfolio  -  Theme (system/light/dark), navigation, mobile menu, animations
    bryl-minimal: defaults to system preference, persists choice
    ================================================================ */
 
 (function () {
   'use strict';
 
-  /* ===== UI sounds (soft clicks / ticks — Web Audio, no assets) ===== */
+  /* ===== UI sounds (soft clicks / ticks  -  Web Audio, no assets) ===== */
   var audioCtx = null;
   var soundEnabled = true;
   try {
@@ -139,7 +139,7 @@
     });
   }
 
-  /* Initial apply — before paint to avoid flash */
+  /* Initial apply  -  before paint to avoid flash */
   var currentPref = getStoredPref();
   applyPref(currentPref);
 
@@ -229,7 +229,7 @@
     sections.forEach(function (s) { navObserver.observe(s); });
   }
 
-  /* ===== Entrance Animations — bryl-minimal spec ===== */
+  /* ===== Entrance Animations  -  bryl-minimal spec ===== */
   /* 400ms fast ease-out, 60ms stagger between list items, 6px lift */
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -266,7 +266,7 @@
     });
   }
 
-  /* ===== Support Triage Flow Diagram — Capabilities section ===== */
+  /* ===== Support Triage Flow Diagram  -  Capabilities section ===== */
   function initFlowDiagram() {
     var diagram = document.getElementById('flow-diagram');
     if (!diagram) return;
@@ -279,7 +279,7 @@
     var descriptions = {
       '1': { index: '01', text: 'Member posts in #support or sends a direct message to the team.' },
       '2': { index: '02', text: 'Bot surfaces the three closest FAQ entries from the knowledge base template library.' },
-      '3': { index: '03', text: 'Member confirms the issue persists or asks a follow-up — ticket escalates automatically.' },
+      '3': { index: '03', text: 'Member confirms the issue persists or asks a follow-up. The ticket escalates automatically.' },
       '4': { index: '04', text: 'Available moderator picks up the ticket with full context attached and closes the loop.' }
     };
 
@@ -308,7 +308,7 @@
 
   initFlowDiagram();
 
-  /* ===== Partnership Kanban Board — drag-and-drop (HTML5 drag API) ===== */
+  /* ===== Partnership Kanban Board  -  drag-and-drop (HTML5 drag API) ===== */
   function initKanbanBoard() {
     var board = document.getElementById('kanban-board');
     if (!board) return;
@@ -421,7 +421,7 @@
 
   initKanbanBoard();
 
-  /* ===== Support Ticket Simulator — Experience section ===== */
+  /* ===== Support Ticket Simulator  -  Experience section ===== */
   function initTicketSim() {
     var sim = document.getElementById('ticket-sim');
     if (!sim) return;
@@ -448,7 +448,7 @@
             if (!body.classList.contains('open')) body.hidden = true;
           });
         } else {
-          /* Expand — two-frame trick: remove hidden → rAF → add .open */
+          /* Expand  -  two-frame trick: remove hidden → rAF → add .open */
           body.hidden = false;
           requestAnimationFrame(function () {
             requestAnimationFrame(function () {
@@ -467,7 +467,7 @@
 
   initTicketSim();
 
-  /* ===== Experience skill pills — expand +N ===== */
+  /* ===== Experience skill pills  -  expand +N ===== */
   function initSkillExpand() {
     document.querySelectorAll('[data-skill-expand]').forEach(function (wrap) {
       var btn = wrap.querySelector('[data-skill-more]');
@@ -484,7 +484,7 @@
 
   initSkillExpand();
 
-  /* ===== Glossary Widget — Trading Knowledge Base project preview ===== */
+  /* ===== Glossary Widget  -  Trading Knowledge Base project preview ===== */
   function initGlossaryWidget() {
     var search  = document.getElementById('glossary-search');
     var list    = document.getElementById('glossary-list');

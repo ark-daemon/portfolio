@@ -1,5 +1,5 @@
 /* ================================================================
-   Portfolio — Noah Carpiso
+   Portfolio  -  Noah Carpiso
    bryl-minimal: monochrome · type-driven · halftone texture
    ================================================================ */
 
@@ -18,13 +18,6 @@
   font-style: normal;
   font-display: swap;
 }
-@font-face {
-  font-family: 'Geist Pixel Square';
-  src: url('fonts/GeistPixel-Square.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
 /* ===== Reset ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,7 +29,7 @@ html {
   scroll-padding-top: 2rem;
 }
 
-/* ===== CSS Variables — bryl-minimal monochrome ramp ===== */
+/* ===== CSS Variables  -  bryl-minimal monochrome ramp ===== */
 :root {
   /* Monochrome palette (light) */
   --bg: #ffffff;
@@ -49,10 +42,10 @@ html {
   --border-strong: #d4d4d4; /* gray-300 */
   --halftone-color: rgba(10, 10, 10, 0.07);
 
-  /* Fonts — four roles */
+  /* Fonts  -  four roles */
   --font-sans: 'Geist', system-ui, -apple-system, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
-  --font-display: 'Geist Pixel Square', 'Geist Mono', monospace;
+  --font-display: 'Geist', system-ui, -apple-system, sans-serif;
   --font-serif: 'Source Serif 4', Georgia, serif;
 
   /* Layout */
@@ -60,7 +53,7 @@ html {
   --content-max: 48rem;
   --content-wide: 56rem;
 
-  /* Radii — 4/8/12/16 ladder */
+  /* Radii  -  4/8/12/16 ladder */
   --r-sm: 4px;
   --r-md: 8px;
   --r-lg: 12px;
@@ -72,7 +65,7 @@ html {
   --t-med: 250ms var(--ease);
 }
 
-/* ===== Dark Theme — re-mapped, not redesigned ===== */
+/* ===== Dark Theme  -  re-mapped, not redesigned ===== */
 [data-theme="dark"] {
   --bg: #0c0c0f;
   --surface: #18181b;       /* gray-50 dark */
@@ -179,13 +172,14 @@ body[data-page="experience"] .page-header {
 /* Section number: gray-400 mono micro-label */
 .section-number { color: var(--text-3); font-family: var(--font-mono); }
 .section-dash { opacity: 0.4; }
-/* Section title word: pixel display font, ink */
+/* Section title word: display sans, ink */
 .section-label > span:last-child {
   font-family: var(--font-display);
   font-size: 12px;
-  letter-spacing: 0.05em;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   color: var(--ink);
-  text-transform: uppercase;
+  text-transform: lowercase;
 }
 
 /* ===== Hero ===== */
@@ -207,9 +201,9 @@ body[data-page="experience"] .page-header {
 .hero-heading {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 4vw, 2.25rem);
-  font-weight: 400;
-  line-height: 1.3;
-  letter-spacing: 0.01em;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
   max-width: 42rem;
   margin-bottom: 1.25rem;
 }
@@ -243,7 +237,7 @@ body[data-page="experience"] .page-header {
   color: var(--text-2);
   margin-top: 2rem;
 }
-/* bryl-minimal: no color — status dot uses ink */
+/* bryl-minimal: no color  -  status dot uses ink */
 .status-dot {
   width: 6px;
   height: 6px;
@@ -288,7 +282,7 @@ body[data-page="experience"] .page-header {
   color: var(--ink);
 }
 
-/* ===== Metrics (Proof) — bryl-minimal: dividers are the design ===== */
+/* ===== Metrics (Proof)  -  bryl-minimal: dividers are the design ===== */
 .metrics {
   display: grid;
   grid-template-columns: 1fr 1fr;     /* 2-col on mobile */
@@ -327,16 +321,16 @@ body[data-page="experience"] .page-header {
   }
 }
 
-/* Big stat value → pixel/mono display register (bryl-minimal: "big stat values") */
+/* Big stat value: display sans */
 .metric-value {
   display: block;
   font-family: var(--font-display);
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--ink);
   line-height: 1;
   margin-bottom: 0.375rem;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.03em;
 }
 /* Small muted micro-label */
 .metric-label {
@@ -359,7 +353,7 @@ body[data-page="experience"] .page-header {
   max-width: 42rem;
 }
 
-/* ===== About — long-form: Source Serif 4 ===== */
+/* ===== About  -  long-form: Source Serif 4 ===== */
 .about-content p {
   margin-bottom: 1rem;
   font-family: var(--font-serif);
@@ -514,7 +508,7 @@ body[data-page="experience"] .page-header {
   border-bottom: none;
 }
 
-/* Clickable ticket row — full-width button reset */
+/* Clickable ticket row  -  full-width button reset */
 .ticket-row {
   width: 100%;
   background: none;
@@ -561,13 +555,13 @@ body[data-page="experience"] .page-header {
   border-radius: 999px;
   line-height: 1;
 }
-/* Ghost chip — open state */
+/* Ghost chip  -  open state */
 .ticket-badge--open {
   background: var(--surface-2);
   color: var(--text-3);
   border: 1px solid var(--border-strong);
 }
-/* Inverted chip — resolved state */
+/* Inverted chip  -  resolved state */
 .ticket-badge--resolved {
   background: var(--ink);
   color: var(--bg);
@@ -597,7 +591,7 @@ body[data-page="experience"] .page-header {
   color: var(--text-3);
 }
 
-/* Chevron icon — rotates on open */
+/* Chevron icon  -  rotates on open */
 .ticket-chevron {
   display: flex;
   align-items: center;
@@ -614,7 +608,7 @@ body[data-page="experience"] .page-header {
   transform: rotate(180deg);
 }
 
-/* Expand/collapse body — max-height transition */
+/* Expand/collapse body  -  max-height transition */
 .ticket-body {
   overflow: hidden;
   max-height: 0;
@@ -622,7 +616,7 @@ body[data-page="experience"] .page-header {
   transition:
     max-height 200ms cubic-bezier(0, 0, 0.2, 1),
     opacity    200ms cubic-bezier(0, 0, 0.2, 1);
-  /* hidden attribute: display:none bypasses transitions — JS removes it */
+  /* hidden attribute: display:none bypasses transitions  -  JS removes it */
 }
 .ticket-body.open {
   max-height: 600px;
@@ -682,7 +676,7 @@ body[data-page="experience"] .page-header {
   background: var(--bg);
 }
 
-/* Header bar — matches ticket-sim treatment */
+/* Header bar  -  matches ticket-sim treatment */
 .kanban-header {
   display: flex;
   align-items: center;
@@ -705,11 +699,11 @@ body[data-page="experience"] .page-header {
   opacity: 0.6;
 }
 
-/* Horizontal scroll wrapper — the board never cramps on narrow viewports */
+/* Horizontal scroll wrapper  -  the board never cramps on narrow viewports */
 .kanban-scroll {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  /* custom scrollbar — thin, muted */
+  /* custom scrollbar  -  thin, muted */
   scrollbar-width: thin;
   scrollbar-color: var(--border-strong) transparent;
 }
@@ -752,7 +746,7 @@ body[data-page="experience"] .page-header {
   letter-spacing: 0.1em;
   color: var(--text-3);
 }
-/* Live count badge — counts update via JS on drop */
+/* Live count badge  -  counts update via JS on drop */
 .kanban-col-count {
   font-family: var(--font-mono);
   font-size: 9px;
@@ -766,7 +760,7 @@ body[data-page="experience"] .page-header {
   text-align: center;
 }
 
-/* Drop zone — the <ul> itself */
+/* Drop zone  -  the <ul> itself */
 .kanban-cards {
   list-style: none;
   padding: 0.5rem;
@@ -782,7 +776,7 @@ body[data-page="experience"] .page-header {
   background: var(--surface-2);
 }
 
-/* Drop cursor line — inserted by JS */
+/* Drop cursor line  -  inserted by JS */
 .kanban-drop-line {
   height: 2px;
   background: var(--border-strong);
@@ -791,7 +785,7 @@ body[data-page="experience"] .page-header {
   margin: 0 0.25rem;
 }
 
-/* Card — bryl-minimal card recipe */
+/* Card  -  bryl-minimal card recipe */
 .kanban-card {
   list-style: none;
   border: 1px solid var(--border);
@@ -835,7 +829,7 @@ body[data-page="experience"] .page-header {
   text-overflow: ellipsis;
 }
 
-/* Category tag — ghost chip, same register as cert-tag */
+/* Category tag  -  ghost chip, same register as cert-tag */
 .kanban-card-tag {
   font-family: var(--font-mono);
   font-size: 8px;
@@ -851,7 +845,7 @@ body[data-page="experience"] .page-header {
   white-space: nowrap;
 }
 
-/* Wider column for 3-up grids — still left-aligned after sidebar */
+/* Wider column for 3-up grids  -  still left-aligned after sidebar */
 body[data-page="projects"] .page-header,
 body[data-page="projects"] .catalog,
 body[data-page="projects"] .featured-demo,
@@ -860,7 +854,7 @@ body[data-page="setup"] .section {
   max-width: var(--content-wide);
 }
 
-/* ===== Catalog cards (Projects — 3-up Bryl-style grid) ===== */
+/* ===== Catalog cards (Projects  -  3-up Bryl-style grid) ===== */
 .catalog {
   display: grid;
   grid-template-columns: 1fr;
@@ -1178,7 +1172,7 @@ body[data-page="setup"] .section {
   line-height: 1;
 }
 
-/* Search input — bryl-minimal minimal-input recipe */
+/* Search input  -  bryl-minimal minimal-input recipe */
 .glossary-search {
   width: 100%;
   background: var(--surface-2);      /* gray-50 fill */
@@ -1235,7 +1229,7 @@ body[data-page="setup"] .section {
   color: var(--ink);
   line-height: 1.3;
 }
-/* Ghost category chip — same recipe as cert-tag */
+/* Ghost category chip  -  same recipe as cert-tag */
 .glossary-tag {
   font-family: var(--font-mono);
   font-size: 8px;
@@ -1334,7 +1328,7 @@ body[data-page="setup"] .section {
   margin-bottom: 1.25rem;
 }
 
-/* Stage wrapper — positions SVG behind HTML nodes */
+/* Stage wrapper  -  positions SVG behind HTML nodes */
 .flow-stage-wrap {
   position: relative;
   display: flex;
@@ -1349,7 +1343,7 @@ body[data-page="setup"] .section {
 }
 .flow-stage-wrap::-webkit-scrollbar { display: none; }
 
-/* SVG layer — stretched to fill the wrap, sits behind nodes via z-index */
+/* SVG layer  -  stretched to fill the wrap, sits behind nodes via z-index */
 .flow-svg {
   position: absolute;
   inset: 0;
@@ -1359,7 +1353,7 @@ body[data-page="setup"] .section {
   z-index: 0;
 }
 
-/* Track line — static gray-200 connector */
+/* Track line  -  static gray-200 connector */
 .flow-track {
   stroke: var(--border-strong);
   stroke-width: 1;
@@ -1389,7 +1383,7 @@ body[data-page="setup"] .section {
   .flow-pulse { animation: none; opacity: 0; }
 }
 
-/* Node — full button reset + card styling */
+/* Node  -  full button reset + card styling */
 .flow-node {
   position: relative;
   z-index: 1;
@@ -1427,7 +1421,7 @@ body[data-page="setup"] .section {
   box-shadow: 0 1px 6px rgba(0,0,0,0.08);
 }
 
-/* Decision step — dashed border signals a conditional */
+/* Decision step  -  dashed border signals a conditional */
 .flow-node--decision {
   border-style: dashed;
 }
@@ -1507,7 +1501,7 @@ body[data-page="setup"] .section {
   .cert-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* Card: centered logo stack — Bryl cert card */
+/* Card: centered logo stack  -  Bryl cert card */
 .cert-card {
   display: flex;
   flex-direction: column;
@@ -1692,7 +1686,7 @@ body[data-page="setup"] .section {
   border: 1px solid var(--border);
   border-radius: var(--r-xl);
   padding: 0;
-  background: var(--bg); /* same as page — outline only, Bryl-style */
+  background: var(--bg); /* same as page  -  outline only, Bryl-style */
   overflow: hidden;
   box-shadow: none;
   transition: transform 420ms var(--ease), border-color 200ms var(--ease);
@@ -1709,7 +1703,7 @@ body[data-page="setup"] .section {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 11rem; /* fixed — keeps titles on one baseline across cards */
+  height: 11rem; /* fixed  -  keeps titles on one baseline across cards */
   flex-shrink: 0;
   background: transparent;
   border-bottom: none;
@@ -1740,7 +1734,7 @@ body[data-page="setup"] .section {
   margin: 0 1rem 0.25rem;
   letter-spacing: -0.01em;
   line-height: 1.3;
-  min-height: 2.6em; /* two lines — equal title block height */
+  min-height: 2.6em; /* two lines  -  equal title block height */
 }
 .gear-note {
   font-size: 0.8125rem;
@@ -1750,7 +1744,7 @@ body[data-page="setup"] .section {
   flex: 1;
 }
 
-/* Software — text cards, not product photos */
+/* Software  -  text cards, not product photos */
 .software-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -1854,12 +1848,12 @@ body[data-page="setup"] .section {
 }
 .cta-inner {
   background: var(--ink);
-  border-radius: var(--r-xl);   /* 16px — largest panel on the page */
+  border-radius: var(--r-xl);   /* 16px  -  largest panel on the page */
   padding: 3rem 2.5rem;
   position: relative;
   overflow: hidden;
 }
-/* Halftone dot texture — bryl-minimal spec at ~12px tile, barely visible */
+/* Halftone dot texture  -  bryl-minimal spec at ~12px tile, barely visible */
 .cta-inner::before {
   content: '';
   position: absolute;
@@ -1871,12 +1865,12 @@ body[data-page="setup"] .section {
 .cta-headline {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 4vw, 2.25rem);
-  font-weight: 400;
+  font-weight: 500;
   color: #ffffff;
   line-height: 1.25;
   margin-bottom: 0.75rem;
   position: relative;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.025em;
 }
 .cta-body {
   font-size: 0.9375rem;
@@ -1913,7 +1907,7 @@ body[data-page="setup"] .section {
   color: #ffffff;
   border-color: rgba(255,255,255,0.5);
 }
-/* Dark mode: CTA inverts to near-white — still the one loud element */
+/* Dark mode: CTA inverts to near-white  -  still the one loud element */
 [data-theme="dark"] .cta-inner {
   background: #f4f4f5;
 }
@@ -1987,10 +1981,10 @@ body[data-page="setup"] .section {
   display: inline-block;
   font-family: var(--font-display);
   font-size: 1.05rem;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--ink);
   line-height: 1.2;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.02em;
   text-decoration: none;
   transition: opacity var(--t-fast);
 }
@@ -2283,7 +2277,7 @@ body[data-page="setup"] .section {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.3; }
 }
-/* Entrance animation — bryl-minimal spec: 400ms, fast ease-out, 6px lift */
+/* Entrance animation  -  bryl-minimal spec: 400ms, fast ease-out, 6px lift */
 .reveal {
   opacity: 0;
   transform: translateY(6px);
@@ -2329,10 +2323,10 @@ body[data-page="setup"] .section {
 }
 .page-title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3rem);
-  line-height: 1;
-  font-weight: 400;
-  letter-spacing: 0;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.05;
+  font-weight: 500;
+  letter-spacing: -0.035em;
   text-transform: lowercase;
   color: var(--ink);
   margin: 0 0 0.75rem;
@@ -2739,7 +2733,8 @@ body[data-page="setup"] .section {
   justify-content: center;
   font-family: var(--font-display);
   font-size: 1.75rem;
-  letter-spacing: 0.02em;
+  font-weight: 500;
+  letter-spacing: -0.02em;
   position: relative;
   overflow: hidden;
 }
@@ -2754,8 +2749,8 @@ body[data-page="setup"] .section {
 .hero-name {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 400;
-  letter-spacing: 0.01em;
+  font-weight: 500;
+  letter-spacing: -0.03em;
   line-height: 1.15;
   margin: 0 0 0.35rem;
 }
@@ -2789,7 +2784,7 @@ body[data-page="setup"] .section {
   padding-left: 0;
 }
 
-/* Sidebar utilities — overlays, not pages */
+/* Sidebar utilities  -  overlays, not pages */
 .sidebar-utils {
   display: flex;
   flex-direction: column;
@@ -2864,9 +2859,9 @@ a.util-btn { color: var(--text-2); }
 .overlay-title {
   font-family: var(--font-display);
   font-size: 1.35rem;
-  font-weight: 400;
+  font-weight: 500;
   margin: 0 0 0.35rem;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.02em;
 }
 .overlay-sub {
   font-size: 0.8125rem;
