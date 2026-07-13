@@ -836,6 +836,95 @@
     });
   }
 
+  /* ===== Email Contact Modal Overlay ===== */
+  function initEmailModal() {
+    // 1. Create and inject email overlay HTML dynamically at the end of the body
+    var overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    overlay.id = 'email-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'email-overlay-title');
+    
+    overlay.innerHTML = 
+      '<div class="overlay-panel" style="position: relative; width: min(28rem, 100%);">' +
+        '<button class="overlay-close" id="email-overlay-close" aria-label="Close modal">✕</button>' +
+        '<div style="margin-bottom: 1.5rem;">' +
+          '<p class="email-modal-eyebrow">GET IN TOUCH</p>' +
+          '<h2 id="email-overlay-title" class="email-modal-heading">say hello</h2>' +
+          '<p style="font-size: 13px; color: var(--text-2); line-height: 1.5;">For work, collabs, or just to say hi — drop me a line.</p>' +
+        '</div>' +
+        '<div class="email-copy-row">' +
+          '<input type="text" readonly value="carpisonoah@gmail.com" id="email-copy-input" class="email-copy-input" aria-label="Email address">' +
+          '<button id="email-copy-btn" class="email-copy-btn">Copy</button>' +
+        '</div>' +
+        '<a href="mailto:carpisonoah@gmail.com" id="email-mail-app-btn" class="email-mail-app-btn">Open mail app</a>' +
+      '</div>';
+      
+    document.body.appendChild(overlay);
+
+    var closeBtn = document.getElementById('email-overlay-close');
+    var copyInput = document.getElementById('email-copy-input');
+    var copyBtn = document.getElementById('email-copy-btn');
+    var mailAppBtn = document.getElementById('email-mail-app-btn');
+
+    // 2. Open / Close helper functions
+    function openModal() {
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('overlay-open');
+    }
+    
+    function closeModal() {
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('overlay-open');
+    }
+
+    // 3. Event listeners
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeModal();
+    });
+    
+    // Copy logic
+    copyBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      navigator.clipboard.writeText(copyInput.value).then(function () {
+        copyBtn.textContent = 'Copied!';
+        setTimeout(function () {
+          copyBtn.textContent = 'Copy';
+        }, 1500);
+      });
+    });
+
+    // Close when clicking main action
+    mailAppBtn.addEventListener('click', function () {
+      closeModal();
+    });
+
+    // 4. Global email link interceptor
+    document.addEventListener('click', function (e) {
+      var target = e.target;
+      while (target && target !== document.body) {
+        if (target.nodeType !== 1) {
+          target = target.parentNode;
+          continue;
+        }
+        var href = target.getAttribute('href') || '';
+        // If clicked any mailto link or email trigger, open the modal instead
+        if (href.indexOf('mailto:carpisonoah@gmail.com') === 0 || target.classList.contains('email-modal-trigger')) {
+          e.preventDefault();
+          openModal();
+          break;
+        }
+        target = target.parentNode;
+      }
+    });
+  }
+
+  initEmailModal();
   initSoundEffects();
 
 })();
