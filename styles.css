@@ -234,7 +234,7 @@ body[data-page="experience"] .page-header {
   height: 100%;
   object-fit: cover;
   object-position: center 20%;
-  filter: grayscale(100%) contrast(1.4);
+  filter: grayscale(100%) contrast(1.45);
   z-index: 1;
 }
 
@@ -245,13 +245,30 @@ body[data-page="experience"] .page-header {
   pointer-events: none;
   z-index: 2;
   
-  /* Repeating dot pattern */
-  background-image: radial-gradient(circle, var(--ink) 1px, transparent 1px);
-  background-size: 4px 4px;
+  /* Light mode defaults: solid white dot color, screen blend mode */
+  background: #ffffff;
+  mix-blend-mode: screen;
   
-  /* Dissolve from real photo (top) to dot pattern (bottom) */
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, black 100%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, black 100%);
+  /* Dual mask: Diamond SVG pattern + Fade gradient */
+  mask-image: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Cpolygon points='2,1 3,2 2,3 1,2' fill='black'/%3E%3C/svg%3E"),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, black 100%);
+  mask-size: 4px 4px, 100% 100%;
+  mask-repeat: repeat, no-repeat;
+  mask-composite: intersect;
+
+  -webkit-mask-image: 
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Cpolygon points='2,1 3,2 2,3 1,2' fill='black'/%3E%3C/svg%3E"),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, black 100%);
+  -webkit-mask-size: 4px 4px, 100% 100%;
+  -webkit-mask-repeat: repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+}
+
+[data-theme="dark"] .hero-monogram::after {
+  /* Dark mode: vertical gradient for the dot color itself (mid-gray/lower opacity to solid black) */
+  background: linear-gradient(to bottom, rgba(160, 160, 168, 0.7) 0%, #000000 100%);
+  mix-blend-mode: normal;
 }
 
 .hero-copy {
