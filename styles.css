@@ -241,17 +241,7 @@ body[data-page="experience"] .page-header {
 .hero-monogram:hover .hero-photo-img {
   transform: scale(1.035);
 }
-.hero-monogram::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background-image: radial-gradient(circle, rgba(140, 140, 140, 0.24) 1px, transparent 1px);
-  background-size: 4px 4px;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 0 0 5px rgba(0, 0, 0, 0.05);
-  pointer-events: none;
-  z-index: 2;
-}
+
 .hero-copy {
   flex: 1 1 auto;
   min-width: 0;
