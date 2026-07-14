@@ -245,9 +245,8 @@ body[data-page="experience"] .page-header {
   pointer-events: none;
   z-index: 2;
   
-  /* Light mode defaults: solid white dot color, screen blend mode */
+  /* Fixed white dot color for all themes */
   background: #ffffff;
-  mix-blend-mode: screen;
   
   /* Dual mask: Diamond SVG pattern + Fade gradient */
   mask-image: 
@@ -263,12 +262,6 @@ body[data-page="experience"] .page-header {
   -webkit-mask-size: 4px 4px, 100% 100%;
   -webkit-mask-repeat: repeat, no-repeat;
   -webkit-mask-composite: source-in;
-}
-
-[data-theme="dark"] .hero-monogram::after {
-  /* Dark mode: vertical gradient for the dot color itself (mid-gray/lower opacity to solid black) */
-  background: linear-gradient(to bottom, rgba(160, 160, 168, 0.7) 0%, #000000 100%);
-  mix-blend-mode: normal;
 }
 
 .hero-copy {
