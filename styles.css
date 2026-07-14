@@ -220,7 +220,7 @@ body[data-page="experience"] .page-header {
   width: clamp(11rem, 40%, 18.5rem);
   min-height: 16rem;
   align-self: stretch;
-  border-radius: var(--r-xl);
+  border-radius: 0;
   background: var(--surface-2);
   border: 1px solid var(--border);
   position: relative;
