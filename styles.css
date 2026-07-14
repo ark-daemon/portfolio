@@ -234,7 +234,7 @@ body[data-page="experience"] .page-header {
   height: 100%;
   object-fit: cover;
   object-position: center 20%;
-  filter: grayscale(100%) contrast(1.15);
+  filter: grayscale(100%) contrast(1.4);
   z-index: 1;
 }
 
@@ -250,8 +250,8 @@ body[data-page="experience"] .page-header {
   background-size: 4px 4px;
   
   /* Dissolve from real photo (top) to dot pattern (bottom) */
-  mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, black 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, black 100%);
 }
 
 .hero-copy {
