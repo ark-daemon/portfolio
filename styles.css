@@ -2597,6 +2597,7 @@ body[data-page="setup"] .section {
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+  transform-origin: center bottom;
   will-change: transform;
   transition:
     transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
@@ -2633,31 +2634,26 @@ body[data-page="setup"] .section {
   .stack-card.is-left {
     transform: translateX(-40%) translateY(14px) rotate(-16deg) scale(0.88);
     z-index: 10;
-    filter: blur(0.8px);
   }
   .stack-card.is-center {
     transform: translateY(0px) rotate(0deg) scale(1);
     z-index: 30;
-    filter: none;
     box-shadow: 0 26px 55px -22px rgba(10, 10, 10, 0.25);
   }
   .stack-card.is-right {
     transform: translateX(40%) translateY(14px) rotate(16deg) scale(0.88);
     z-index: 20;
-    filter: blur(0.8px);
   }
 
   /* Individual card hover states */
   .stack-card.is-left:hover {
     transform: translateX(-45%) translateY(2px) rotate(-12deg) scale(0.92);
-    filter: none;
     z-index: 25;
     box-shadow: 0 20px 40px -15px rgba(10, 10, 10, 0.15);
   }
   
   .stack-card.is-center:hover {
     transform: translateY(-7px) scale(1.015);
-    filter: none;
     z-index: 35;
     box-shadow: 0 34px 65px -22px rgba(10, 10, 10, 0.3);
     border-color: var(--border-strong);
@@ -2665,7 +2661,6 @@ body[data-page="setup"] .section {
   
   .stack-card.is-right:hover {
     transform: translateX(45%) translateY(2px) rotate(12deg) scale(0.92);
-    filter: none;
     z-index: 25;
     box-shadow: 0 20px 40px -15px rgba(10, 10, 10, 0.15);
   }
