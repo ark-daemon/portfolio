@@ -130,8 +130,6 @@
     'projects.html',
     'stack.html',
     'setup.html',
-    'certifications.html',
-    'play.html',
     'styles.css',
     'script.js'
   ];
