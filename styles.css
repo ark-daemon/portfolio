@@ -234,8 +234,23 @@ body[data-page="experience"] .page-header {
   height: 100%;
   object-fit: cover;
   object-position: center 20%;
-  filter: grayscale(100%) contrast(1.15) brightness(1.02);
   z-index: 1;
+}
+
+.hero-monogram::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  
+  /* Repeating dot pattern */
+  background-image: radial-gradient(circle, var(--ink) 1px, transparent 1px);
+  background-size: 4px 4px;
+  
+  /* Dissolve from real photo (top) to dot pattern (bottom) */
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 30%, black 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 30%, black 100%);
 }
 
 .hero-copy {
