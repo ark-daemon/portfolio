@@ -221,11 +221,11 @@ body[data-page="experience"] .page-header {
   min-height: 16rem;
   align-self: stretch;
   border-radius: 0;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
+  background: transparent;
+  border: none;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 16px 32px -18px rgba(10, 10, 10, 0.15);
+  box-shadow: none;
 }
 .hero-photo-img {
   position: absolute;
