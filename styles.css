@@ -2921,6 +2921,14 @@ body[data-page="setup"] .section {
   border-color: var(--accent);
 }
 
+/* Theme-aware screenshots (Codex Manager) */
+[data-theme="light"] .screenshot-dark {
+  display: none !important;
+}
+[data-theme="dark"] .screenshot-light {
+  display: none !important;
+}
+
 /* ===== Site-wide Screenshot Lightbox Modal ===== */
 .screenshot-modal {
   position: fixed;
