@@ -2893,15 +2893,119 @@ body[data-page="setup"] .section {
 
 .project-screenshots {
   display: grid;
+  grid-template-columns: 1fr;
   gap: 0.75rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0 1.25rem;
 }
-.project-screenshots img {
+@media (min-width: 640px) {
+  .project-screenshots {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+.project-screenshots img,
+.catalog-card img[src*="screenshots"],
+.featured-shots img {
   width: 100%;
   height: auto;
-  border-radius: 12px;
+  border-radius: 10px;
   border: 1px solid var(--border);
   display: block;
+  cursor: zoom-in;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.project-screenshots img:hover,
+.catalog-card img[src*="screenshots"]:hover,
+.featured-shots img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  border-color: var(--accent);
+}
+
+/* ===== Site-wide Screenshot Lightbox Modal ===== */
+.screenshot-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.screenshot-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.screenshot-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 8, 8, 0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: zoom-out;
+}
+.screenshot-modal-content {
+  position: relative;
+  z-index: 2;
+  max-width: 92vw;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0.94);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.screenshot-modal.is-open .screenshot-modal-content {
+  transform: scale(1);
+}
+.screenshot-modal-close {
+  position: absolute;
+  top: -44px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  padding: 0;
+}
+.screenshot-modal-close:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: scale(1.08);
+}
+.screenshot-modal-img {
+  max-width: 100%;
+  max-height: calc(88vh - 44px);
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #050505;
+}
+.screenshot-modal-caption {
+  margin-top: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.85rem;
+  font-family: var(--font-mono, monospace);
+  text-align: center;
+  max-width: 800px;
+  line-height: 1.4;
+}
+@media (max-width: 600px) {
+  .screenshot-modal-close {
+    top: -38px;
+    right: 4px;
+    width: 32px;
+    height: 32px;
+  }
 }
 
 /* ===== Play: workflow builder ===== */

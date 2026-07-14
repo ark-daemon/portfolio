@@ -974,7 +974,97 @@
     });
   }
 
+  /* ===== Screenshot Lightbox Modal (Site-Wide) ===== */
+  function initScreenshotLightbox() {
+    var modal = document.getElementById('screenshot-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.className = 'screenshot-modal';
+      modal.id = 'screenshot-modal';
+      modal.setAttribute('aria-hidden', 'true');
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-label', 'Enlarged screenshot view');
+      modal.innerHTML = 
+        '<div class="screenshot-modal-backdrop" data-dismiss="modal"></div>' +
+        '<div class="screenshot-modal-content">' +
+          '<button class="screenshot-modal-close" id="screenshot-modal-close" aria-label="Close modal" data-dismiss="modal">' +
+            '<svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><path d="M18 6L6 18M6 6l12 12"/></svg>' +
+          '</button>' +
+          '<img class="screenshot-modal-img" id="screenshot-modal-img" src="" alt="Enlarged project screenshot">' +
+          '<p class="screenshot-modal-caption" id="screenshot-modal-caption"></p>' +
+        '</div>';
+      document.body.appendChild(modal);
+    }
+
+    var modalImg = document.getElementById('screenshot-modal-img');
+    var modalCaption = document.getElementById('screenshot-modal-caption');
+    var closeBtn = document.getElementById('screenshot-modal-close');
+    var backdrop = modal.querySelector('.screenshot-modal-backdrop');
+
+    function openLightbox(src, alt) {
+      if (!modalImg) return;
+      modalImg.src = src;
+      modalImg.alt = alt || 'Enlarged project screenshot';
+      if (modalCaption) {
+        modalCaption.textContent = alt || '';
+      }
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      if (typeof playClick === 'function') playClick();
+    }
+
+    function closeLightbox() {
+      if (!modal.classList.contains('is-open')) return;
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (typeof playClick === 'function') playClick();
+    }
+
+    document.addEventListener('click', function (e) {
+      var target = e.target;
+      if (target && target.tagName === 'IMG') {
+        var isScreenshot = target.closest('.project-screenshots') ||
+                           target.closest('.featured-shots') ||
+                           target.closest('.project-screenshot') ||
+                           target.hasAttribute('data-zoomable') ||
+                           (target.closest('.catalog-card') && (target.src.indexOf('screenshots/') !== -1 || target.src.indexOf('.png') !== -1 || target.src.indexOf('.jpg') !== -1));
+        if (isScreenshot) {
+          e.preventDefault();
+          e.stopPropagation();
+          openLightbox(target.src, target.alt);
+        }
+      }
+    });
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        closeLightbox();
+      });
+    }
+    if (backdrop) {
+      backdrop.addEventListener('click', function (e) {
+        e.stopPropagation();
+        closeLightbox();
+      });
+    }
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal || e.target.hasAttribute('data-dismiss')) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeLightbox();
+      }
+    });
+  }
+
   initEmailModal();
+  initScreenshotLightbox();
   initSoundEffects();
   initProjectsSwapper();
 

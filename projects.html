@@ -154,6 +154,10 @@
         <h3 class="catalog-title">Trading Knowledge Base</h3>
         <p class="catalog-desc">Searchable library, curriculum, and guides for crypto trading knowledge in one workspace.</p>
         <a class="catalog-link" href="https://arkdaemon.pages.dev/" target="_blank" rel="noopener noreferrer">Open live ↗</a>
+        <div class="project-screenshots">
+          <img src="screenshots/trading-kb-1.png" alt="Trading Knowledge Base library view" width="800" height="500" loading="lazy">
+          <img src="screenshots/trading-kb-2.png" alt="Trading Knowledge Base curriculum" width="800" height="500" loading="lazy">
+        </div>
         <details class="catalog-details">
           <summary>Details</summary>
           <div class="project-details">
@@ -177,6 +181,10 @@
         <h3 class="catalog-title">Codex Manager</h3>
         <p class="catalog-desc">One-click switching between multiple Codex account sessions, with fewer logouts and logins.</p>
         <a class="catalog-link" href="https://github.com/ark-daemon/codex-manager" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <div class="project-screenshots">
+          <img src="screenshots/codex-manager-dark-mode.png" alt="Codex Manager dark mode interface" width="800" height="500" loading="lazy">
+          <img src="screenshots/codex-manager-light-mode.png" alt="Codex Manager light mode interface" width="800" height="500" loading="lazy">
+        </div>
         <details class="catalog-details">
           <summary>Details</summary>
           <div class="project-details">
@@ -288,6 +296,18 @@
         </div>
       </div>
     </section>
+
+    <!-- Site-Wide Project Screenshot Lightbox Modal -->
+    <div class="screenshot-modal" id="screenshot-modal" aria-hidden="true" role="dialog" aria-label="Enlarged screenshot view">
+      <div class="screenshot-modal-backdrop" data-dismiss="modal"></div>
+      <div class="screenshot-modal-content">
+        <button class="screenshot-modal-close" id="screenshot-modal-close" aria-label="Close modal" data-dismiss="modal">
+          <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <img class="screenshot-modal-img" id="screenshot-modal-img" src="" alt="Enlarged project screenshot">
+        <p class="screenshot-modal-caption" id="screenshot-modal-caption"></p>
+      </div>
+    </div>
   </main>
 
   <script src="script.js"></script>
