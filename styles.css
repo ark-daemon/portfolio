@@ -214,55 +214,66 @@ body[data-page="experience"] .page-header {
     gap: 2.5rem;
   }
 }
-/* Image column: height tracks the text block beside it */
+/* ASCII portrait column: height tracks the text block beside it */
 .hero-monogram {
   flex: 0 0 clamp(11rem, 40%, 18.5rem);
   width: clamp(11rem, 40%, 18.5rem);
   min-height: 16rem;
   align-self: stretch;
   border-radius: 0;
-  background: transparent;
+  background: var(--bg);
   border: none;
   position: relative;
   overflow: hidden;
   box-shadow: none;
+  color: var(--ink);
 }
-.hero-photo-img {
+/* Fallback grayscale photo until ASCII renders (same crop) */
+.hero-photo-fallback {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 20%;
-  filter: grayscale(100%) contrast(1.45);
-  z-index: 1;
+  filter: grayscale(100%) contrast(1.2);
+  z-index: 0;
+  opacity: 1;
+  transition: opacity 180ms var(--ease);
 }
-
-.hero-monogram::after {
-  content: '';
+.hero-monogram.is-ascii-ready .hero-photo-fallback {
+  opacity: 0;
+  pointer-events: none;
+}
+/* Live ASCII grid — actual text, theme via --ink / --bg */
+.hero-ascii-pre {
   position: absolute;
   inset: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 5.5px;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: pre;
+  color: var(--ink);
+  background: var(--bg);
+  z-index: 1;
+  opacity: 0;
+  user-select: none;
   pointer-events: none;
-  z-index: 2;
-  
-  /* Fixed white dot color for all themes */
-  background: #ffffff;
-  mix-blend-mode: screen;
-  
-  /* Dual mask: Diamond SVG pattern + Fade gradient */
-  mask-image: 
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Cpolygon points='2,1 3,2 2,3 1,2' fill='black'/%3E%3C/svg%3E"),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.3) 45%, black 100%);
-  mask-size: 2px 2px, 100% 100%;
-  mask-repeat: repeat, no-repeat;
-  mask-composite: intersect;
-
-  -webkit-mask-image: 
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Cpolygon points='2,1 3,2 2,3 1,2' fill='black'/%3E%3C/svg%3E"),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.3) 45%, black 100%);
-  -webkit-mask-size: 2px 2px, 100% 100%;
-  -webkit-mask-repeat: repeat, no-repeat;
-  -webkit-mask-composite: source-in;
+  -webkit-font-smoothing: antialiased;
+}
+.hero-monogram.is-ascii-ready .hero-ascii-pre {
+  opacity: 1;
+}
+@media (min-width: 640px) {
+  .hero-ascii-pre { font-size: 6px; }
+}
+@media (min-width: 1024px) {
+  .hero-ascii-pre { font-size: 6.5px; }
 }
 
 .hero-copy {

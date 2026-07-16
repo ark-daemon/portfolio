@@ -139,8 +139,17 @@
 
     <section id="hero" class="hero">
       <div class="hero-layout">
-        <div class="hero-monogram">
-          <img src="hero-photo.png" alt="Noah Carpiso portrait" class="hero-photo-img">
+        <div class="hero-monogram" id="hero-ascii" role="img" aria-label="Noah Carpiso portrait">
+          <img
+            src="hero-photo.png"
+            alt=""
+            class="hero-photo-fallback"
+            width="640"
+            height="800"
+            decoding="async"
+            fetchpriority="high"
+          >
+          <pre class="hero-ascii-pre" aria-hidden="true"></pre>
         </div>
         <div class="hero-copy">
           <p class="hero-eyebrow">Based in Metro Manila · available worldwide</p>
