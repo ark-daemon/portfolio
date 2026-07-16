@@ -236,6 +236,10 @@ body[data-page="experience"] .page-header {
   object-fit: cover;
   object-position: center 20%; /* head → collarbone crop */
   z-index: 1;
+  /* Keep baked halftone dots sharp when scaled down */
+  image-rendering: -webkit-optimize-contrast; /* Safari older */
+  image-rendering: crisp-edges;
+  image-rendering: pixelated; /* fallback if crisp-edges ignored */
 }
 /* Dark mode: invert pre-rendered black-on-white stipple so dots read light on dark bg */
 [data-theme="dark"] .hero-photo-img {
