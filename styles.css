@@ -215,7 +215,7 @@ body[data-page="experience"] .page-header {
   }
 }
 /* Hero photo column: height tracks the text block beside it.
-   final-image.png is pre-stippled B&W; CSS adds a fade-in dot veil. */
+   final-second.png is pre-stippled B&W; CSS adds a fade-in dot veil. */
 .hero-monogram {
   flex: 0 0 clamp(11rem, 40%, 18.5rem);
   width: clamp(11rem, 40%, 18.5rem);
