@@ -245,9 +245,9 @@ body[data-page="experience"] .page-header {
   pointer-events: none;
   z-index: 2;
   background-color: #0a0a0a;
-  /* circular dots, not diamonds; no mix-blend-mode */
+  /* Finer denser grid: smaller dots, tighter spacing */
   -webkit-mask-image:
-    radial-gradient(circle, #000 0.55px, transparent 0.65px),
+    radial-gradient(circle, #000 0.32px, transparent 0.4px),
     linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0.18) 0%,
@@ -255,15 +255,15 @@ body[data-page="experience"] .page-header {
       #000 100%
     );
   mask-image:
-    radial-gradient(circle, #000 0.55px, transparent 0.65px),
+    radial-gradient(circle, #000 0.32px, transparent 0.4px),
     linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0.18) 0%,
       rgba(0, 0, 0, 0.45) 50%,
       #000 100%
     );
-  -webkit-mask-size: 3px 3px, 100% 100%;
-  mask-size: 3px 3px, 100% 100%;
+  -webkit-mask-size: 1.75px 1.75px, 100% 100%;
+  mask-size: 1.75px 1.75px, 100% 100%;
   -webkit-mask-repeat: repeat, no-repeat;
   mask-repeat: repeat, no-repeat;
   -webkit-mask-composite: source-in;
