@@ -62,9 +62,11 @@ html {
   --r-xl: 16px;
 
   /* Motion */
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1); /* ease-out settle */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);  /* exit depart */
   --t-fast: 120ms var(--ease);
   --t-med: 250ms var(--ease);
+  --t-card: 200ms var(--ease); /* shared card hover clock */
 }
 
 /* ===== Dark Theme  -  re-mapped, not redesigned ===== */
@@ -350,9 +352,12 @@ body[data-page="experience"] .page-header {
   padding: 0.5rem 1.125rem;
   border-radius: var(--r-sm);
   border: 1px solid transparent;
-  transition: all var(--t-fast);
+  transition: opacity var(--t-fast), background var(--t-fast), border-color var(--t-fast), color var(--t-fast), transform var(--t-fast);
   cursor: pointer;
   text-decoration: none;
+}
+.btn:active {
+  transform: scale(0.98);
 }
 .btn-primary {
   background: var(--ink);
@@ -998,13 +1003,16 @@ body[data-page="setup"] .section {
   padding: 1.1rem 1.15rem 1.15rem;
   background: var(--bg);
   box-shadow: 0 8px 22px -14px rgba(0, 0, 0, 0.25);
-  transition: box-shadow 350ms var(--ease), transform 420ms var(--ease), border-color 200ms var(--ease);
+  transition: box-shadow var(--t-card), transform var(--t-card), border-color var(--t-card);
   min-width: 0; /* prevent grid blowout */
 }
 .catalog-card:hover {
   box-shadow: 0 18px 36px -20px rgba(0, 0, 0, 0.4);
   transform: translateY(-2px);
   border-color: var(--border-strong);
+}
+.catalog-card:active {
+  transform: translateY(0) scale(0.99);
 }
 [data-theme="dark"] .catalog-card {
   box-shadow: none;
@@ -1629,7 +1637,7 @@ body[data-page="setup"] .section {
   padding: 1.35rem 1rem 1rem;
   background: var(--bg);
   box-shadow: 0 8px 22px -14px rgba(0, 0, 0, 0.22);
-  transition: box-shadow 350ms var(--ease), border-color 200ms var(--ease), transform 420ms var(--ease);
+  transition: box-shadow var(--t-card), border-color var(--t-card), transform var(--t-card);
   text-decoration: none;
   color: inherit;
   min-height: 10.5rem;
@@ -1638,6 +1646,9 @@ body[data-page="setup"] .section {
   box-shadow: 0 18px 36px -20px rgba(0, 0, 0, 0.38);
   border-color: var(--border-strong);
   transform: translateY(-2px);
+}
+.cert-card:not(.cert-card--pending):active {
+  transform: translateY(0) scale(0.99);
 }
 .cert-card--pending {
   cursor: default;
@@ -1805,12 +1816,15 @@ body[data-page="setup"] .section {
   background: var(--bg); /* same as page - outline only, Bryl gear */
   overflow: hidden;
   box-shadow: none;
-  transition: transform 420ms var(--ease), border-color 200ms var(--ease);
+  transition: transform var(--t-card), border-color var(--t-card), box-shadow var(--t-card);
   height: 100%;
 }
 .gear-card:hover {
   transform: translateY(-2px);
   border-color: var(--border-strong);
+}
+.gear-card:active {
+  transform: translateY(0) scale(0.99);
 }
 [data-theme="dark"] .gear-card {
   background: var(--bg);
@@ -2224,11 +2238,12 @@ body[data-page="setup"] .section {
   border: 1px solid transparent;
   cursor: pointer;
   color: var(--text-3);
-  transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast);
+  transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast), transform var(--t-fast);
   padding: 0;
 }
 .theme-btn svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .theme-btn:hover { color: var(--ink); background: var(--surface-2); }
+.theme-btn:active { transform: scale(0.96); }
 .theme-btn.active {
   color: var(--ink);
   background: var(--bg);
@@ -2303,12 +2318,15 @@ body[data-page="setup"] .section {
   border: none;
   padding: 0.35rem 0;
   cursor: pointer;
-  transition: color var(--t-fast);
+  transition: color var(--t-fast), transform var(--t-fast);
 }
 .util-btn:hover,
 .util-btn--active {
   color: var(--ink);
   text-decoration: none;
+}
+.util-btn:active {
+  transform: scale(0.98);
 }
 
 .sidebar-reach {
@@ -2538,11 +2556,14 @@ body[data-page="setup"] .section {
   display: block;
   text-decoration: none;
   color: inherit;
-  transition: border-color 200ms var(--ease), transform 200ms var(--ease);
+  transition: border-color var(--t-card), transform var(--t-card);
 }
 .teaser-card-link:hover {
   border-color: var(--border-strong, var(--ink));
   transform: translateY(-1px);
+}
+.teaser-card-link:active {
+  transform: translateY(0) scale(0.99);
 }
 .teaser-meta {
   font-family: var(--font-mono);
@@ -2948,11 +2969,13 @@ body[data-page="setup"] .section {
   padding: 1.5rem;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s ease;
+  /* Exit: ease-in; open state overrides to ease-out */
+  transition: opacity 200ms var(--ease-in);
 }
 .screenshot-modal.is-open {
   opacity: 1;
   pointer-events: auto;
+  transition: opacity 200ms var(--ease);
 }
 .screenshot-modal-backdrop {
   position: absolute;
@@ -2970,11 +2993,12 @@ body[data-page="setup"] .section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  transform: scale(0.94);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(0.96);
+  transition: transform 200ms var(--ease-in);
 }
 .screenshot-modal.is-open .screenshot-modal-content {
   transform: scale(1);
+  transition: transform 220ms var(--ease);
 }
 .screenshot-modal-close {
   position: absolute;
@@ -2990,12 +3014,15 @@ body[data-page="setup"] .section {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: background var(--t-fast), transform var(--t-fast);
   padding: 0;
 }
 .screenshot-modal-close:hover {
   background: rgba(255, 255, 255, 0.28);
-  transform: scale(1.08);
+  transform: scale(1.03);
+}
+.screenshot-modal-close:active {
+  transform: scale(0.98);
 }
 .screenshot-modal-img {
   max-width: 100%;
@@ -3042,13 +3069,16 @@ body[data-page="setup"] .section {
   background: var(--bg);
   padding: 1.15rem 1.2rem;
   cursor: pointer;
-  transition: border-color 200ms var(--ease), transform 300ms var(--ease);
+  transition: border-color var(--t-card), transform var(--t-card);
   font: inherit;
   color: inherit;
 }
 .game-pick:hover {
   border-color: var(--border-strong);
   transform: translateY(-2px);
+}
+.game-pick:active {
+  transform: translateY(0) scale(0.99);
 }
 .game-pick-kicker {
   display: block;
@@ -3496,7 +3526,7 @@ a.util-btn { color: var(--text-2); }
   -webkit-backdrop-filter: blur(10px);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 200ms var(--ease);
+  transition: opacity 200ms var(--ease-in);
 }
 [data-theme="dark"] .overlay {
   background: rgba(12, 12, 15, 0.78);
@@ -3504,6 +3534,7 @@ a.util-btn { color: var(--text-2); }
 .overlay.is-open {
   opacity: 1;
   pointer-events: auto;
+  transition: opacity 200ms var(--ease);
 }
 .overlay-panel {
   width: min(32rem, 100%);
@@ -3514,6 +3545,12 @@ a.util-btn { color: var(--text-2); }
   border-radius: var(--r-xl);
   padding: 1.75rem 1.5rem;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.08);
+  transform: scale(0.97);
+  transition: transform 200ms var(--ease-in);
+}
+.overlay.is-open .overlay-panel {
+  transform: scale(1);
+  transition: transform 220ms var(--ease);
 }
 .overlay-title {
   font-family: var(--font-display);
@@ -3539,8 +3576,10 @@ a.util-btn { color: var(--text-2); }
   color: var(--text-2);
   padding: 0.35rem 0.6rem;
   cursor: pointer;
+  transition: color var(--t-fast), border-color var(--t-fast), transform var(--t-fast);
 }
 .overlay-close:hover { color: var(--ink); border-color: var(--border-strong); }
+.overlay-close:active { transform: scale(0.96); }
 .overlay-shell {
   position: relative;
   width: min(40rem, 100%);
@@ -3796,12 +3835,6 @@ body.overlay-open { overflow: hidden; }
   flex-wrap: wrap;
   gap: 0.6rem;
   margin-top: 1.25rem;
-}
-.hero-name {
-  transition: letter-spacing 220ms var(--ease);
-}
-.hero-layout:hover .hero-name {
-  letter-spacing: -0.04em;
 }
 .metric--link {
   text-decoration: none;
@@ -4124,15 +4157,26 @@ body.overlay-open { overflow: hidden; }
   background-size: 100% 1px;
 }
 
+/* Unified card hover (single clock — overrides any older 350/420ms rules) */
 .catalog-card,
 .gear-card,
-.teaser-card {
-  transition: transform 200ms var(--ease), border-color 200ms var(--ease), box-shadow 200ms var(--ease);
+.teaser-card,
+.bento-tile,
+.stack-tile {
+  transition: transform var(--t-card), border-color var(--t-card), box-shadow var(--t-card);
 }
 .catalog-card:hover,
 .gear-card:hover,
-.teaser-card:hover {
+.teaser-card:hover,
+.bento-tile:hover,
+.stack-tile:hover {
   transform: translateY(-2px);
   border-color: var(--border-strong);
-  box-shadow: 3px 3px 0 var(--border);
+}
+.catalog-card:active,
+.gear-card:active,
+.teaser-card:active,
+.bento-tile:active,
+.stack-tile:active {
+  transform: translateY(0) scale(0.99);
 }
