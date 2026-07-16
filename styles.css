@@ -2620,7 +2620,7 @@ body[data-page="setup"] .section {
   height: 290px;
 }
 
-/* Base Card Style */
+/* Base Card Style — Option B: keep fan, snappier quieter motion */
 .stack-card {
   position: absolute;
   left: 50%;
@@ -2639,9 +2639,9 @@ body[data-page="setup"] .section {
   transform-origin: center bottom;
   will-change: transform;
   transition:
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.35s ease,
-    border-color 0.35s ease;
+    transform 250ms var(--ease),
+    box-shadow 200ms var(--ease),
+    border-color 200ms var(--ease);
 }
 
 /* Dimming overlay using ::after */
@@ -2652,12 +2652,12 @@ body[data-page="setup"] .section {
   inset: 0;
   border-radius: inherit;
   background: color-mix(in srgb, var(--bg) 40%, transparent);
-  transition: background 0.35s ease;
+  transition: background 180ms var(--ease);
   pointer-events: none;
   z-index: 5;
 }
 
-/* Brighten on hover */
+/* Brighten on hover of that side card only */
 .stack-card.is-left:hover::after,
 .stack-card.is-right:hover::after {
   background: transparent;
@@ -2670,38 +2670,53 @@ body[data-page="setup"] .section {
 
 /* Overlapping & tilting defaults for desktop (min-width: 640px) */
 @media (min-width: 640px) {
+  /* Rest poses: gentler fan (±7°, scale 0.94) */
   .stack-card.is-left {
-    transform: translateX(-40%) translateY(14px) rotate(-16deg) scale(0.88);
+    transform: translateX(-28%) translateY(10px) rotate(-7deg) scale(0.94);
     z-index: 10;
   }
   .stack-card.is-center {
-    transform: translateY(0px) rotate(0deg) scale(1);
+    transform: translateY(0) rotate(0deg) scale(1);
     z-index: 30;
-    box-shadow: 0 26px 55px -22px rgba(10, 10, 10, 0.25);
+    box-shadow: 0 22px 48px -22px rgba(10, 10, 10, 0.22);
   }
   .stack-card.is-right {
-    transform: translateX(40%) translateY(14px) rotate(16deg) scale(0.88);
+    transform: translateX(28%) translateY(10px) rotate(7deg) scale(0.94);
     z-index: 20;
   }
 
-  /* Individual card hover states */
+  /*
+   Hover: only the hovered card moves.
+   Sides do not jump when center is hovered (no parent group hover).
+  */
   .stack-card.is-left:hover {
-    transform: translateX(-45%) translateY(2px) rotate(-12deg) scale(0.92);
-    z-index: 25;
-    box-shadow: 0 20px 40px -15px rgba(10, 10, 10, 0.15);
+    transform: translateX(-30%) translateY(4px) rotate(-6deg) scale(0.96);
+    z-index: 28;
+    box-shadow: 0 18px 36px -16px rgba(10, 10, 10, 0.16);
   }
-  
+
   .stack-card.is-center:hover {
-    transform: translateY(-7px) scale(1.015);
+    transform: translateY(-4px) scale(1.01);
     z-index: 35;
-    box-shadow: 0 34px 65px -22px rgba(10, 10, 10, 0.3);
+    box-shadow: 0 28px 52px -22px rgba(10, 10, 10, 0.28);
     border-color: var(--border-strong);
   }
-  
+
   .stack-card.is-right:hover {
-    transform: translateX(45%) translateY(2px) rotate(12deg) scale(0.92);
-    z-index: 25;
-    box-shadow: 0 20px 40px -15px rgba(10, 10, 10, 0.15);
+    transform: translateX(30%) translateY(4px) rotate(6deg) scale(0.96);
+    z-index: 28;
+    box-shadow: 0 18px 36px -16px rgba(10, 10, 10, 0.16);
+  }
+
+  /* Press feedback (subtle squash) */
+  .stack-card.is-left:active {
+    transform: translateX(-28%) translateY(10px) rotate(-7deg) scale(0.92);
+  }
+  .stack-card.is-center:active {
+    transform: translateY(-2px) scale(0.98);
+  }
+  .stack-card.is-right:active {
+    transform: translateX(28%) translateY(10px) rotate(7deg) scale(0.92);
   }
 }
 
@@ -2728,6 +2743,9 @@ body[data-page="setup"] .section {
     min-height: 200px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     cursor: default;
+    transition:
+      box-shadow 200ms var(--ease),
+      border-color 200ms var(--ease);
   }
   .stack-card:hover {
     border-color: var(--border-strong);
