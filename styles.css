@@ -215,7 +215,7 @@ body[data-page="experience"] .page-header {
   }
 }
 /* Hero photo column: height tracks the text block beside it.
-   final-image.png is pre-stippled B&W — no CSS filter/dot overlay. */
+   final-image.png is pre-stippled B&W; CSS adds a fade-in dot veil. */
 .hero-monogram {
   flex: 0 0 clamp(11rem, 40%, 18.5rem);
   width: clamp(11rem, 40%, 18.5rem);
@@ -240,6 +240,39 @@ body[data-page="experience"] .page-header {
 /* Dark mode: invert pre-rendered black-on-white stipple so dots read light on dark bg */
 [data-theme="dark"] .hero-photo-img {
   filter: invert(1);
+}
+/* Fading circular-dot veil on top of the baked photo:
+   nearly clear at top → full coverage at bottom */
+.hero-monogram::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  /* Fine dense circular dots (matches earlier density dial-in) */
+  background-image: radial-gradient(circle, #0a0a0a 0.32px, transparent 0.4px);
+  background-size: 1.75px 1.75px;
+  background-repeat: repeat;
+  /* Vertical opacity: ~15% top → full bottom */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.45) 50%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.45) 50%,
+    #000 100%
+  );
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+[data-theme="dark"] .hero-monogram::after {
+  background-image: radial-gradient(circle, #f4f4f5 0.32px, transparent 0.4px);
 }
 
 .hero-copy {
