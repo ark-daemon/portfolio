@@ -214,66 +214,63 @@ body[data-page="experience"] .page-header {
     gap: 2.5rem;
   }
 }
-/* ASCII portrait column: height tracks the text block beside it */
+/* Hero photo column: height tracks the text block beside it */
 .hero-monogram {
   flex: 0 0 clamp(11rem, 40%, 18.5rem);
   width: clamp(11rem, 40%, 18.5rem);
   min-height: 16rem;
   align-self: stretch;
   border-radius: 0;
-  background: var(--bg);
+  background: transparent;
   border: none;
   position: relative;
   overflow: hidden;
   box-shadow: none;
-  color: var(--ink);
 }
-/* Fallback grayscale photo until ASCII renders (same crop) */
-.hero-photo-fallback {
+.hero-photo-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
-  filter: grayscale(100%) contrast(1.2);
-  z-index: 0;
-  opacity: 1;
-  transition: opacity 180ms var(--ease);
+  object-position: center 20%; /* head → collarbone crop */
+  filter: grayscale(100%) contrast(1.4);
+  z-index: 1;
 }
-.hero-monogram.is-ascii-ready .hero-photo-fallback {
-  opacity: 0;
-  pointer-events: none;
-}
-/* Live ASCII grid — actual text, theme via --ink / --bg */
-.hero-ascii-pre {
+/* Circular dot halftone: black (light) / white (dark), fade denser toward bottom */
+.hero-monogram::after {
+  content: '';
   position: absolute;
   inset: 0;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  font-family: var(--font-mono);
-  font-weight: 500;
-  font-size: 5.5px;
-  line-height: 1;
-  letter-spacing: 0;
-  white-space: pre;
-  color: var(--ink);
-  background: var(--bg);
-  z-index: 1;
-  opacity: 0;
-  user-select: none;
   pointer-events: none;
-  -webkit-font-smoothing: antialiased;
+  z-index: 2;
+  background-color: #0a0a0a;
+  /* circular dots, not diamonds; no mix-blend-mode */
+  -webkit-mask-image:
+    radial-gradient(circle, #000 0.55px, transparent 0.65px),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.18) 0%,
+      rgba(0, 0, 0, 0.45) 50%,
+      #000 100%
+    );
+  mask-image:
+    radial-gradient(circle, #000 0.55px, transparent 0.65px),
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.18) 0%,
+      rgba(0, 0, 0, 0.45) 50%,
+      #000 100%
+    );
+  -webkit-mask-size: 3px 3px, 100% 100%;
+  mask-size: 3px 3px, 100% 100%;
+  -webkit-mask-repeat: repeat, no-repeat;
+  mask-repeat: repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
 }
-.hero-monogram.is-ascii-ready .hero-ascii-pre {
-  opacity: 1;
-}
-@media (min-width: 640px) {
-  .hero-ascii-pre { font-size: 6px; }
-}
-@media (min-width: 1024px) {
-  .hero-ascii-pre { font-size: 6.5px; }
+[data-theme="dark"] .hero-monogram::after {
+  background-color: #f4f4f5;
 }
 
 .hero-copy {
