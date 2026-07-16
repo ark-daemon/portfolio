@@ -215,7 +215,7 @@ body[data-page="experience"] .page-header {
   }
 }
 /* Hero photo column: height tracks the text block beside it.
-   final-third.png is pre-stippled B&W — image only, no CSS veil. */
+   final-second.png is pre-stippled B&W — image only, no CSS veil. */
 .hero-monogram {
   flex: 0 0 clamp(11rem, 40%, 18.5rem);
   width: clamp(11rem, 40%, 18.5rem);
