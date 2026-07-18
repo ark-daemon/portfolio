@@ -65,13 +65,13 @@
       <a href="certifications.html" class="nav-item" data-nav="certifications">Certifications</a>
     </nav>
 
-        <div class="sidebar-utils" aria-label="Snake">
+    <div class="sidebar-utils" aria-label="Snake">
       <a href="play.html" class="util-btn">
-      <span>Snake</span>
-    </a>
+        <span>Snake</span>
+      </a>
     </div>
 
-<div class="sidebar-footer">
+    <div class="sidebar-footer">
       <p class="sidebar-meta-label">Links</p>
       <a href="Noah-David-Carpiso-Resume.pdf" download class="sidebar-link">Resume ↓</a>
       <a href="https://www.linkedin.com/in/noah-carpiso" target="_blank" rel="noopener noreferrer" class="sidebar-link">LinkedIn ↗</a>
@@ -142,6 +142,8 @@
     </header>
 
     <div class="catalog" id="projects">
+
+      <!-- ── Trading Knowledge Base ── -->
       <article class="catalog-card" id="trading-kb">
         <div class="catalog-card-top">
           <div class="catalog-icon" aria-hidden="true">
@@ -183,6 +185,7 @@
         </details>
       </article>
 
+      <!-- ── Codex Manager (static screenshots, desktop app) ── -->
       <article class="catalog-card" id="codex-manager">
         <div class="catalog-card-top">
           <div class="catalog-icon" aria-hidden="true">
@@ -222,7 +225,8 @@
         </details>
       </article>
 
-      <article class="catalog-card">
+      <!-- ── Esports Data Platform — live iframe embed + scraper repos ── -->
+      <article class="catalog-card" id="esports-platform">
         <div class="catalog-card-top">
           <div class="catalog-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="1.5" opacity="0.45"/><circle cx="12" cy="14" r="3" stroke="currentColor" opacity="0.3"/><circle cx="36" cy="14" r="3" stroke="currentColor" opacity="0.3"/><circle cx="12" cy="34" r="3" stroke="currentColor" opacity="0.3"/><circle cx="36" cy="34" r="3" stroke="currentColor" opacity="0.3"/><path d="M20 21L14 16M28 21L34 16M20 27L14 32M28 27L34 32" stroke="currentColor" stroke-width="1.25" opacity="0.2"/></svg>
@@ -233,17 +237,55 @@
           </div>
         </div>
         <h3 class="catalog-title">Esports Data Platform</h3>
-        <p class="catalog-desc">Multi-title collectors and dashboard for Dota 2, LoL, MLBB, Valorant, CS2, and Rocket League.</p>
+        <p class="catalog-desc">Five live scrapers feeding a unified pipeline dashboard across Valorant, CS2, LoL, Dota 2, and Rocket League.</p>
+        <div class="case-block case-block--card">
+          <div class="case-step">
+            <span class="case-label">Problem</span>
+            <p>Esports stats are fragmented across individual game sites with no unified view or data layer.</p>
+          </div>
+          <div class="case-step">
+            <span class="case-label">What I built</span>
+            <p>Five independent scrapers (VLR, HLTV, LoL Esports, Dota 2, Rocket League) feeding into a single pipeline dashboard showing live scraper status and explanatory copy alongside the numbers.</p>
+          </div>
+          <div class="case-step">
+            <span class="case-label">Outcome</span>
+            <p>Five scrapers finished and deployed. Dashboard live at arkdaemon.pages.dev.</p>
+          </div>
+        </div>
+        <!-- Live pipeline dashboard embed (arkdaemon.pages.dev allows iframes) -->
+        <div class="project-embed">
+          <div class="project-embed-frame">
+            <iframe
+              src="https://arkdaemon.pages.dev/"
+              title="Esports Pipeline Dashboard"
+              loading="lazy"
+              scrolling="yes"
+              sandbox="allow-scripts allow-same-origin allow-forms"
+            ></iframe>
+          </div>
+          <div class="project-embed-bar">
+            <span>arkdaemon.pages.dev · live</span>
+            <a href="https://arkdaemon.pages.dev/" target="_blank" rel="noopener noreferrer">Open live ↗</a>
+          </div>
+        </div>
+        <!-- Finished scraper repos -->
+        <p class="scraper-repos-label">Finished scrapers</p>
+        <div class="scraper-repos">
+          <a class="scraper-repo-link" href="https://github.com/ark-daemon/vlr-scraper" target="_blank" rel="noopener noreferrer">↗ vlr-scraper</a>
+          <a class="scraper-repo-link" href="https://github.com/ark-daemon/hltv-scraper" target="_blank" rel="noopener noreferrer">↗ hltv-scraper</a>
+          <a class="scraper-repo-link" href="https://github.com/ark-daemon/lol-esports-scraper" target="_blank" rel="noopener noreferrer">↗ lol-esports-scraper</a>
+          <a class="scraper-repo-link" href="https://github.com/ark-daemon/dota2-esports-scraper" target="_blank" rel="noopener noreferrer">↗ dota2-esports-scraper</a>
+          <a class="scraper-repo-link" href="https://github.com/ark-daemon/rocket-league-esports-scraper" target="_blank" rel="noopener noreferrer">↗ rocket-league-esports-scraper</a>
+        </div>
         <details class="catalog-details">
-          <summary>Details</summary>
+          <summary>More detail</summary>
           <div class="project-details">
-            <div class="project-detail"><span class="detail-label">Problem</span><p>Esports stats are fragmented across individual game sites with no unified view.</p></div>
-            <div class="project-detail"><span class="detail-label">What it does</span><p>Collects match data, rankings, and player stats across six titles in one place.</p></div>
-            <div class="project-detail"><span class="detail-label">Status</span><p>Data collectors are functional. Dashboard UI still in progress.</p></div>
+            <div class="project-detail"><span class="detail-label">My contribution</span><p>Independently planned and assembled: scraper architecture, pipeline design, dashboard build, and deployment.</p></div>
           </div>
         </details>
       </article>
 
+      <!-- ── Falco — live iframe (falco-screener.pages.dev allows iframes) ── -->
       <article class="catalog-card catalog-card--quiet" id="falco">
         <div class="catalog-card-top">
           <div class="catalog-icon" aria-hidden="true">
@@ -256,23 +298,46 @@
         </div>
         <h3 class="catalog-title">Falco</h3>
         <p class="catalog-desc">Crypto market screener / terminal. Work in progress.</p>
-        <a class="catalog-link" href="https://falco-screener.pages.dev/" target="_blank" rel="noopener noreferrer">Open live ↗</a>
+        <div class="project-embed">
+          <div class="project-embed-frame">
+            <iframe
+              src="https://falco-screener.pages.dev/"
+              title="Falco Crypto Screener"
+              loading="lazy"
+              scrolling="yes"
+              sandbox="allow-scripts allow-same-origin allow-forms"
+            ></iframe>
+          </div>
+          <div class="project-embed-bar">
+            <span>falco-screener.pages.dev · live</span>
+            <a href="https://falco-screener.pages.dev/" target="_blank" rel="noopener noreferrer">Open live ↗</a>
+          </div>
+        </div>
       </article>
 
-      <article class="catalog-card catalog-card--quiet">
+      <!-- ── Sporty Desk — fallback (X-Frame-Options: DENY, cannot embed) ── -->
+      <article class="catalog-card catalog-card--quiet" id="sporty-desk">
         <div class="catalog-card-top">
           <div class="catalog-icon" aria-hidden="true">
             <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="24" rx="3" stroke="currentColor" stroke-width="1.5" opacity="0.35"/><path d="M14 28l6-8 5 6 4-4 5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/></svg>
           </div>
           <div class="catalog-badges">
             <span class="project-status status-wip">WIP</span>
-            <span class="catalog-pill">Models</span>
+            <span class="catalog-pill">Sports</span>
           </div>
         </div>
-        <h3 class="catalog-title">Sports betting models</h3>
-        <p class="catalog-desc">Research dashboard for sports models. Work in progress.</p>
+        <h3 class="catalog-title">Sporty Desk</h3>
+        <p class="catalog-desc">Sports research and betting models dashboard. Work in progress.</p>
+        <!-- Fallback: X-Frame-Options: DENY prevents embedding -->
+        <div class="project-embed">
+          <div class="project-embed-fallback">
+            <p>Live preview unavailable — this site blocks iframe embedding.</p>
+            <a href="https://sporty-desk.pages.dev/" target="_blank" rel="noopener noreferrer">Open live ↗</a>
+          </div>
+        </div>
       </article>
-    </div>
+
+    </div><!-- /.catalog -->
 
     <section class="section featured-demo" aria-label="Trading Knowledge Base live excerpt">
       <div class="section-label">
