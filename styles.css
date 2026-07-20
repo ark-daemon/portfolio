@@ -4344,7 +4344,13 @@ body.overlay-open { overflow: hidden; }
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 2.25rem;
+  gap: 2.75rem;
+}
+
+.project-pillar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .project-card-hero {
