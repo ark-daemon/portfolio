@@ -1116,9 +1116,294 @@
     });
   }
 
+  /* ===== Interactive 3D Workstation (setup.html) ===== */
+  function init3DWorkstation() {
+    var canvas = document.getElementById('workstation-3d-canvas');
+    if (!canvas || typeof THREE === 'undefined') return;
+
+    var container = document.getElementById('workstation-3d-container');
+    if (!container) return;
+
+    var width = container.clientWidth || 800;
+    var height = container.clientHeight || 420;
+
+    /* 1. Scene & Camera */
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
+    camera.position.set(0, 3.2, 6.8);
+    camera.lookAt(0, 1.1, 0);
+
+    /* 2. Renderer */
+    var renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      antialias: true,
+      alpha: true,
+      powerPreference: 'high-performance'
+    });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    if (THREE.ACESFilmicToneMapping) {
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.1;
+    }
+
+    /* 3. OrbitControls (if available) */
+    var controls = null;
+    if (typeof THREE.OrbitControls !== 'undefined') {
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.maxPolarAngle = Math.PI / 2 - 0.02;
+      controls.minDistance = 3.5;
+      controls.maxDistance = 9.0;
+      controls.target.set(0, 1.1, 0);
+    }
+
+    /* 4. Lights */
+    var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    var ambLight = new THREE.AmbientLight(isDark ? 0x222230 : 0xffffff, isDark ? 0.7 : 0.85);
+    scene.add(ambLight);
+
+    var dirLight = new THREE.DirectionalLight(0xfff5ea, isDark ? 0.6 : 0.9);
+    dirLight.position.set(4, 8, 5);
+    scene.add(dirLight);
+
+    /* Lightbar Downward Wash */
+    var lightbarSpot = new THREE.SpotLight(0xfff4e0, 2.2);
+    lightbarSpot.position.set(0, 2.8, 0.2);
+    lightbarSpot.target.position.set(0, 0.7, -0.2);
+    lightbarSpot.angle = Math.PI / 3;
+    lightbarSpot.penumbra = 0.6;
+    scene.add(lightbarSpot);
+    scene.add(lightbarSpot.target);
+
+    /* PC Tower Ambient RGB Light */
+    var pcGlow = new THREE.PointLight(0x00f0ff, 1.8, 4);
+    pcGlow.position.set(2.2, 1.0, 0);
+    scene.add(pcGlow);
+
+    /* 5. Procedural Textures for Screens */
+    function createCodeScreenTexture() {
+      var c = document.createElement('canvas');
+      c.width = 512; c.height = 320;
+      var ctx = c.getContext('2d');
+      ctx.fillStyle = '#0a0d0b';
+      ctx.fillRect(0, 0, 512, 320);
+
+      /* Terminal header */
+      ctx.fillStyle = '#141a16';
+      ctx.fillRect(0, 0, 512, 28);
+      ctx.fillStyle = '#ff5f56'; ctx.beginPath(); ctx.arc(16, 14, 4, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#ffbd2e'; ctx.beginPath(); ctx.arc(28, 14, 4, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#27c93f'; ctx.beginPath(); ctx.arc(40, 14, 4, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#737373'; ctx.font = '11px monospace'; ctx.fillText('vlr-scraper.py — Python 3.11', 56, 18);
+
+      /* Code lines */
+      ctx.font = '12px monospace';
+      var lines = [
+        'import asyncio, aiohttp',
+        'from bs4 import BeautifulSoup',
+        'async def fetch_vlr_matches():',
+        '  url = "https://www.vlr.gg/matches"',
+        '  async with session.get(url) as r:',
+        '    html = await r.text()',
+        '    soup = BeautifulSoup(html, "html.parser")',
+        '    matches = soup.select(".wf-module-item")',
+        '    print(f"[ONLINE] Parsed {len(matches)} matches")',
+        '    return [m.text.strip() for m in matches]',
+        '# Pipeline status: 99.9% Uptime'
+      ];
+      ctx.fillStyle = '#10b981';
+      for (var i = 0; i < lines.length; i++) {
+        ctx.fillText(lines[i], 16, 54 + i * 22);
+      }
+      return new THREE.CanvasTexture(c);
+    }
+
+    function createTelemetryScreenTexture() {
+      var c = document.createElement('canvas');
+      c.width = 512; c.height = 320;
+      var ctx = c.getContext('2d');
+      ctx.fillStyle = '#090b10';
+      ctx.fillRect(0, 0, 512, 320);
+
+      /* Header */
+      ctx.fillStyle = '#101520';
+      ctx.fillRect(0, 0, 512, 28);
+      ctx.fillStyle = '#00f0ff'; ctx.font = '11px monospace'; ctx.fillText('Esports Pipeline Telemetry Dashboard', 14, 18);
+
+      /* Metrics */
+      ctx.fillStyle = '#162232'; ctx.fillRect(16, 42, 150, 60);
+      ctx.fillStyle = '#00f0ff'; ctx.font = '18px monospace'; ctx.fillText('5 Active', 28, 68);
+      ctx.fillStyle = '#737373'; ctx.font = '10px monospace'; ctx.fillText('Scraper Services', 28, 88);
+
+      ctx.fillStyle = '#162232'; ctx.fillRect(180, 42, 150, 60);
+      ctx.fillStyle = '#10b981'; ctx.font = '18px monospace'; ctx.fillText('99.9% Up', 192, 68);
+      ctx.fillStyle = '#737373'; ctx.font = '10px monospace'; ctx.fillText('Pipeline Health', 192, 88);
+
+      ctx.fillStyle = '#162232'; ctx.fillRect(344, 42, 150, 60);
+      ctx.fillStyle = '#ffbd2e'; ctx.font = '18px monospace'; ctx.fillText('500+ Mbrs', 356, 68);
+      ctx.fillStyle = '#737373'; ctx.font = '10px monospace'; ctx.fillText('Degen Homes Ops', 356, 88);
+
+      /* Status List */
+      ctx.font = '11px monospace';
+      var services = ['vlr-scraper', 'hltv-scraper', 'lol-esports', 'dota2-esports', 'rlcs-scraper'];
+      for (var j = 0; j < services.length; j++) {
+        ctx.fillStyle = '#121c28'; ctx.fillRect(16, 120 + j * 36, 478, 28);
+        ctx.fillStyle = '#e5e5e5'; ctx.fillText(services[j], 28, 138 + j * 36);
+        ctx.fillStyle = '#10b981'; ctx.fillText('● ONLINE', 410, 138 + j * 36);
+      }
+      return new THREE.CanvasTexture(c);
+    }
+
+    var screenCodeTex = createCodeScreenTexture();
+    var screenTelemTex = createTelemetryScreenTexture();
+
+    /* 6. Build 3D Desk & Gear Primitives */
+    var workstationGroup = new THREE.Group();
+
+    /* Desk Top */
+    var deskGeo = new THREE.BoxGeometry(6.2, 0.12, 2.6);
+    var deskMat = new THREE.MeshStandardMaterial({ color: 0x16161a, roughness: 0.6, metalness: 0.2 });
+    var deskMesh = new THREE.Mesh(deskGeo, deskMat);
+    deskMesh.position.set(0, 0.7, 0);
+    workstationGroup.add(deskMesh);
+
+    /* Desk Mat */
+    var padGeo = new THREE.BoxGeometry(4.8, 0.02, 1.6);
+    var padMat = new THREE.MeshStandardMaterial({ color: 0x0c0c0f, roughness: 0.9 });
+    var padMesh = new THREE.Mesh(padGeo, padMat);
+    padMesh.position.set(0, 0.77, 0.1);
+    workstationGroup.add(padMesh);
+
+    /* Monitor Stand Arm */
+    var standGeo = new THREE.BoxGeometry(0.12, 1.4, 0.12);
+    var metalMat = new THREE.MeshStandardMaterial({ color: 0x2a2a32, roughness: 0.3, metalness: 0.8 });
+    var standMesh = new THREE.Mesh(standGeo, metalMat);
+    standMesh.position.set(0, 1.4, -0.6);
+    workstationGroup.add(standMesh);
+
+    /* Monitor Frame Geometry & Material */
+    var frameMat = new THREE.MeshStandardMaterial({ color: 0x111115, roughness: 0.4, metalness: 0.5 });
+
+    /* Screen 1 (AOC 24" Left - Code Screen) */
+    var monLeftGroup = new THREE.Group();
+    var frameLeft = new THREE.Mesh(new THREE.BoxGeometry(2.3, 1.4, 0.08), frameMat);
+    monLeftGroup.add(frameLeft);
+
+    var screenLeftMat = new THREE.MeshBasicMaterial({ map: screenCodeTex });
+    var screenLeft = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 1.3), screenLeftMat);
+    screenLeft.position.z = 0.042;
+    monLeftGroup.add(screenLeft);
+
+    monLeftGroup.position.set(-1.22, 1.75, -0.45);
+    monLeftGroup.rotation.y = 0.16; /* Angle inward */
+    workstationGroup.add(monLeftGroup);
+
+    /* Screen 2 (LG 24" Right - Telemetry Screen) */
+    var monRightGroup = new THREE.Group();
+    var frameRight = new THREE.Mesh(new THREE.BoxGeometry(2.3, 1.4, 0.08), frameMat);
+    monRightGroup.add(frameRight);
+
+    var screenRightMat = new THREE.MeshBasicMaterial({ map: screenTelemTex });
+    var screenRight = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 1.3), screenRightMat);
+    screenRight.position.z = 0.042;
+    monRightGroup.add(screenRight);
+
+    monRightGroup.position.set(1.22, 1.75, -0.45);
+    monRightGroup.rotation.y = -0.16; /* Angle inward */
+    workstationGroup.add(monRightGroup);
+
+    /* Xiaomi Monitor Lightbar (Mounted on Left Screen) */
+    var lightbarGeo = new THREE.CylinderGeometry(0.04, 0.04, 2.0, 16);
+    var lightbarMat = new THREE.MeshStandardMaterial({ color: 0x1f1f26, metalness: 0.8, roughness: 0.2 });
+    var lightbarMesh = new THREE.Mesh(lightbarGeo, lightbarMat);
+    lightbarMesh.rotation.z = Math.PI / 2;
+    lightbarMesh.position.set(-1.22, 2.5, -0.42);
+    workstationGroup.add(lightbarMesh);
+
+    /* PC Tower Case (Right side) */
+    var pcCaseGeo = new THREE.BoxGeometry(0.9, 1.6, 1.8);
+    var pcCaseMat = new THREE.MeshStandardMaterial({ color: 0x0f0f14, roughness: 0.3, metalness: 0.6 });
+    var pcCaseMesh = new THREE.Mesh(pcCaseGeo, pcCaseMat);
+    pcCaseMesh.position.set(2.4, 1.55, 0.1);
+    workstationGroup.add(pcCaseMesh);
+
+    /* Keyboard (Akko 5075) */
+    var kbGeo = new THREE.BoxGeometry(1.2, 0.06, 0.45);
+    var kbMat = new THREE.MeshStandardMaterial({ color: 0x1a1a22, roughness: 0.5 });
+    var kbMesh = new THREE.Mesh(kbGeo, kbMat);
+    kbMesh.position.set(-0.3, 0.81, 0.35);
+    workstationGroup.add(kbMesh);
+
+    /* Mouse (Razer Viper V3) */
+    var mouseGeo = new THREE.BoxGeometry(0.22, 0.05, 0.38);
+    var mouseMat = new THREE.MeshStandardMaterial({ color: 0x121216, roughness: 0.4 });
+    var mouseMesh = new THREE.Mesh(mouseGeo, mouseMat);
+    mouseMesh.position.set(1.1, 0.805, 0.35);
+    workstationGroup.add(mouseMesh);
+
+    scene.add(workstationGroup);
+
+    /* 7. Mouse Parallax Motion */
+    var mouseX = 0, mouseY = 0;
+    container.addEventListener('mousemove', function (e) {
+      var rect = container.getBoundingClientRect();
+      mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouseY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    });
+
+    /* 8. Theme Switch Observer */
+    var observer = new MutationObserver(function () {
+      var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      ambLight.color.setHex(dark ? 0x222230 : 0xffffff);
+      ambLight.intensity = dark ? 0.7 : 0.85;
+      dirLight.intensity = dark ? 0.6 : 0.9;
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    /* 9. Resize Listener */
+    window.addEventListener('resize', function () {
+      if (!container) return;
+      var w = container.clientWidth || 800;
+      var h = container.clientHeight || 420;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    });
+
+    /* 10. Animation Loop */
+    var clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+
+      var time = clock.getElapsedTime();
+
+      /* Subtle pulse on PC RGB Light */
+      pcGlow.intensity = 1.4 + Math.sin(time * 2.5) * 0.4;
+
+      /* Gentle Mouse Parallax Shift when not dragging OrbitControls */
+      if (controls) {
+        controls.update();
+      } else {
+        camera.position.x += (mouseX * 0.4 - camera.position.x) * 0.05;
+        camera.position.y += (3.2 + mouseY * 0.2 - camera.position.y) * 0.05;
+        camera.lookAt(0, 1.1, 0);
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  }
+
+  /* Initialize 3D Workstation on setup.html load */
+  init3DWorkstation();
+
   initEmailModal();
   initScreenshotLightbox();
   initSoundEffects();
   initProjectsSwapper();
 
 })();
+

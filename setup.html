@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Setup | Noah Carpiso</title>
-  <meta name="description" content="Remote work readiness: connection, dual monitors, hardware, typing, and availability.">
+  <meta name="description" content="Remote work readiness: 3D interactive dual-monitor workstation, PC hardware specs, fiber connection, typing speed, and 24/7 availability.">
   <link rel="canonical" href="https://noah-carpiso.pages.dev/setup.html">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0c0c0f" media="(prefers-color-scheme: dark)">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Setup | Noah Carpiso">
-  <meta property="og:description" content="Remote work readiness: connection, dual monitors, hardware, typing, and availability.">
+  <meta property="og:description" content="Remote work readiness: 3D interactive dual-monitor workstation, PC hardware specs, fiber connection, typing speed, and 24/7 availability.">
   <meta property="og:url" content="https://noah-carpiso.pages.dev/setup.html">
   <meta property="og:site_name" content="Noah Carpiso">
 
@@ -19,23 +19,19 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&display=swap">
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Three.js for 3D Workstation Scene -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Noah Carpiso",
-    "jobTitle": "Remote Ops & Automation",
-    "email": "mailto:carpisonoah@gmail.com",
-    "url": "https://noah-carpiso.pages.dev/",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Valenzuela City",
-      "addressRegion": "Metro Manila",
-      "addressCountry": "Philippines"
-    }
+    "jobTitle": "Remote Operations & Automation",
+    "url": "https://noah-carpiso.pages.dev/setup.html"
   }
   </script>
 </head>
@@ -65,13 +61,13 @@
       <a href="certifications.html" class="nav-item" data-nav="certifications">Certifications</a>
     </nav>
 
-        <div class="sidebar-utils" aria-label="Snake">
+    <div class="sidebar-utils" aria-label="Snake">
       <a href="play.html" class="util-btn">
-      <span>Snake</span>
-    </a>
+        <span>Snake</span>
+      </a>
     </div>
 
-<div class="sidebar-footer">
+    <div class="sidebar-footer">
       <p class="sidebar-meta-label">Links</p>
       <a href="Noah-David-Carpiso-Resume.pdf" download class="sidebar-link">Resume ↓</a>
       <a href="https://www.linkedin.com/in/noah-carpiso" target="_blank" rel="noopener noreferrer" class="sidebar-link">LinkedIn ↗</a>
@@ -136,20 +132,62 @@
   </div>
 
   <main class="main">
-    <header class="page-header">
+    <header class="page-header" data-reveal="1">
       <h1 class="page-title">setup</h1>
-      <p class="page-lede">Custom Windows workstation for remote ops. Dual monitors, solid uplink, and the kit I use day to day.</p>
+      <p class="page-lede">Custom Windows workstation for remote ops. Interactive 3D dual-monitor setup, PC specifications, high-speed fiber connection, and 24/7 remote readiness.</p>
     </header>
 
-    <section class="section" id="gear-workstation">
-      <p class="cert-category-label">Workstation</p>
+    <!-- 3D Interactive Dual-Monitor Workstation Scene -->
+    <section class="section 3d-workstation-section" aria-label="3D Interactive Workstation Experience" data-reveal="2">
+      <div class="section-label">
+        <span class="section-number">01</span>
+        <span class="section-dash">·</span>
+        <span>Interactive 3D Workstation</span>
+      </div>
+
+      <div class="workstation-3d-card">
+        <div class="workstation-3d-header">
+          <div class="workstation-3d-meta">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span class="workstation-3d-title">Dual-Monitor Remote Workstation</span>
+          </div>
+          <div class="workstation-3d-hints">
+            <span class="hint-pill-3d">🖱️ Drag to rotate 360°</span>
+            <span class="hint-pill-3d">🔍 Scroll to zoom</span>
+          </div>
+        </div>
+
+        <div class="workstation-3d-canvas-container" id="workstation-3d-container">
+          <canvas id="workstation-3d-canvas"></canvas>
+          <div class="workstation-3d-overlay">
+            <div class="screen-indicator indicator-left">
+              <span class="indicator-dot dot-green"></span>
+              <span>Screen 1: Python Scrapers</span>
+            </div>
+            <div class="screen-indicator indicator-right">
+              <span class="indicator-dot dot-cyan"></span>
+              <span>Screen 2: Telemetry Feed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Workstation Gear Specs -->
+    <section class="section" id="gear-workstation" data-reveal="3">
+      <div class="section-label">
+        <span class="section-number">02</span>
+        <span class="section-dash">·</span>
+        <span>Workstation Specs &amp; Gear</span>
+      </div>
+
       <div class="gear-grid">
         <article class="gear-card">
           <div class="gear-visual">
             <img src="gear/aoc-monitor.png" alt="AOC 24 inch monitor" width="400" height="300" loading="lazy">
           </div>
           <h3 class="gear-title">AOC 24″ monitor</h3>
-          <p class="gear-note">Primary: tickets, docs, and long Discord threads.</p>
+          <p class="gear-note">Primary: tickets, docs, code editor, and long Discord threads.</p>
         </article>
 
         <article class="gear-card">
@@ -218,8 +256,13 @@
       </div>
     </section>
 
-    <section class="section" id="software">
-      <p class="cert-category-label">Software</p>
+    <!-- Software & Audio -->
+    <section class="section" id="software" data-reveal="4">
+      <div class="section-label">
+        <span class="section-number">03</span>
+        <span class="section-dash">·</span>
+        <span>Software &amp; Audio</span>
+      </div>
       <div class="software-grid">
         <article class="software-card">
           <h3 class="software-title">NVIDIA Broadcast</h3>
@@ -232,48 +275,13 @@
       </div>
     </section>
 
-    <section class="section" id="gear-audio">
-      <p class="cert-category-label">Audio</p>
-      <div class="gear-grid">
-        <article class="gear-card">
-          <div class="gear-visual">
-            <img src="gear/earphones.png" alt="Truthear Gate earphones" width="400" height="300" loading="lazy">
-          </div>
-          <h3 class="gear-title">Truthear Gate</h3>
-          <p class="gear-note">IEMs for focus blocks and late partner calls.</p>
-        </article>
+    <!-- Remote Work Readiness Metrics -->
+    <section class="section" id="readiness" data-reveal="5">
+      <div class="section-label">
+        <span class="section-number">04</span>
+        <span class="section-dash">·</span>
+        <span>Remote Work Readiness</span>
       </div>
-    </section>
-
-    <section class="section" id="gear-carry">
-      <p class="cert-category-label">Everyday carry</p>
-      <div class="gear-grid">
-        <article class="gear-card">
-          <div class="gear-visual">
-            <img src="gear/iphone.png" alt="iPhone 15 Pro Max" width="400" height="300" loading="lazy">
-          </div>
-          <h3 class="gear-title">iPhone 15 Pro Max</h3>
-          <p class="gear-note">Always-on alerts for Discord and urgent partner messages away from the desk.</p>
-        </article>
-        <article class="gear-card">
-          <div class="gear-visual">
-            <img src="gear/airpods.png" alt="AirPods Pro 2" width="400" height="300" loading="lazy">
-          </div>
-          <h3 class="gear-title">AirPods Pro 2</h3>
-          <p class="gear-note">Quick wireless for calls when I am not at the main headset.</p>
-        </article>
-        <article class="gear-card">
-          <div class="gear-visual">
-            <img src="gear/anker-20k.jpg" alt="Anker PowerCore Essential 20000 mAh" width="400" height="300" loading="lazy">
-          </div>
-          <h3 class="gear-title">Anker PowerCore Essential</h3>
-          <p class="gear-note">20,000 mAh PD power bank.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="readiness">
-      <p class="cert-category-label">Readiness</p>
       <div class="setup-grid setup-grid--cards">
         <div class="setup-item setup-item--card">
           <span class="setup-label">Connection</span>
@@ -285,7 +293,7 @@
         </div>
         <div class="setup-item setup-item--card">
           <span class="setup-label">Availability</span>
-          <span class="setup-value">Flexible · open to night shifts and other time zones</span>
+          <span class="setup-value">Flexible · open to night shifts &amp; all timezones</span>
         </div>
         <div class="setup-item setup-item--card">
           <span class="setup-label">Location</span>

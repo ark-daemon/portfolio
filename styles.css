@@ -4479,8 +4479,106 @@ body.overlay-open { overflow: hidden; }
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
 }
+
+/* ================================================================
+   Interactive 3D Workstation (setup.html)
+   ================================================================ */
+
+.workstation-3d-card {
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  background: var(--bg);
+  overflow: hidden;
+  box-shadow: 0 12px 32px -16px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2rem;
+}
+
+.workstation-3d-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.workstation-3d-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.workstation-3d-hints {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hint-pill-3d {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-3);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 0.15rem 0.5rem;
+}
+
+.workstation-3d-canvas-container {
+  width: 100%;
+  height: 420px;
+  position: relative;
+  background: var(--bg);
+  cursor: grab;
+}
+
+.workstation-3d-canvas-container:active {
+  cursor: grabbing;
+}
+
+#workstation-3d-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.workstation-3d-overlay {
+  position: absolute;
+  bottom: 0.85rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.screen-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-2);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 0.25rem 0.6rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.indicator-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.dot-cyan { background: #00f0ff; box-shadow: 0 0 8px #00f0ff; }
 
 /* Flagship Hero Cards */
 .flagship-section {
