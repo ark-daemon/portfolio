@@ -478,9 +478,43 @@
     }
 
     search.addEventListener('input', filter);
+
+    /* Keyboard shortcut '/' to focus search */
+    document.addEventListener('keydown', function (e) {
+      if (e.key === '/' && document.activeElement !== search &&
+          document.activeElement.tagName !== 'INPUT' &&
+          document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        search.focus();
+      }
+    });
   }
 
   initGlossaryWidget();
+
+  /* ===== Case Study Drawers (Projects page redesign) ===== */
+  function initCaseStudyDrawers() {
+    document.querySelectorAll('.case-study-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var drawerId = btn.getAttribute('aria-controls');
+        var drawer = drawerId ? document.getElementById(drawerId) : null;
+        if (!drawer) return;
+
+        var isOpen = drawer.classList.contains('open');
+        if (isOpen) {
+          drawer.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+        } else {
+          drawer.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+        if (typeof playClick === 'function') playClick();
+      });
+    });
+  }
+
+  initCaseStudyDrawers();
 
 
   /* ===== Snake: centered board on play page only ===== */
@@ -1030,6 +1064,19 @@
 
     document.addEventListener('click', function (e) {
       var target = e.target;
+      var shell = target ? target.closest('.browser-shell') : null;
+
+      if (shell) {
+        var img = shell.querySelector('img');
+        if (img) {
+          e.preventDefault();
+          e.stopPropagation();
+          var title = shell.getAttribute('data-lightbox') || img.alt || 'Project screenshot';
+          openLightbox(img.src, title);
+          return;
+        }
+      }
+
       if (target && target.tagName === 'IMG') {
         var isScreenshot = target.closest('.project-screenshots') ||
                            target.closest('.featured-shots') ||

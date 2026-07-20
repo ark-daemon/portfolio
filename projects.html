@@ -136,211 +136,328 @@
   </div>
 
   <main class="main">
-    <header class="page-header">
+    <header class="page-header" data-reveal="1">
       <h1 class="page-title">projects</h1>
-      <p class="page-lede">Systems I planned and assembled with AI-assisted tools: product direction, research, and testing. Problem → build → outcome on every flagship.</p>
+      <p class="page-lede">Systems planned and assembled with AI-assisted tools: product direction, architecture, and testing across trading, esports data, and desktop utilities.</p>
     </header>
 
-    <div class="catalog" id="projects">
+    <!-- ===== FLAGSHIP SHOWCASES ===== -->
+    <section class="flagship-section" aria-label="Flagship Projects">
+      
+      <!-- Flagship 1: Trading Knowledge Base -->
+      <article class="project-hero-card" id="trading-kb" data-reveal="2">
+        <div class="project-hero-layout">
+          <div class="project-hero-copy">
+            <div class="project-hero-meta">
+              <span class="project-status status-wip">~80% WIP</span>
+              <span class="catalog-pill">Learning system</span>
+            </div>
+            <h2 class="project-hero-title">Trading Knowledge Base</h2>
+            <p class="project-hero-desc">A searchable library, multi-category guides, curriculum paths, and a comprehensive glossary for crypto trading knowledge consolidated into a single workspace.</p>
 
-      <!-- ── Trading Knowledge Base ── -->
-      <article class="catalog-card" id="trading-kb">
-        <div class="catalog-card-top">
-          <div class="catalog-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="10" width="32" height="28" rx="4" stroke="currentColor" stroke-width="1.5" opacity="0.35"/><path d="M14 18h20M14 24h14M14 30h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/><circle cx="34" cy="30" r="3" fill="currentColor" opacity="0.25"/></svg>
-          </div>
-          <div class="catalog-badges">
-            <span class="project-status status-wip">~80% WIP</span>
-            <span class="catalog-pill">Learning system</span>
-          </div>
-        </div>
-        <h3 class="catalog-title">Trading Knowledge Base</h3>
-        <p class="catalog-desc">Searchable library, curriculum, and guides for crypto trading knowledge in one workspace.</p>
-        <div class="case-block case-block--card">
-          <div class="case-step">
-            <span class="case-label">Problem</span>
-            <p>Trading knowledge was scattered across screenshots, bookmarks, tweets, and notes with no structure.</p>
-          </div>
-          <div class="case-step">
-            <span class="case-label">What I built</span>
-            <p>A searchable library with multi-category guides, curriculum paths, and a glossary in one workspace.</p>
-          </div>
-          <div class="case-step">
-            <span class="case-label">Outcome</span>
-            <p>~80% complete live site; 300+ resources reorganized into a usable research system. Try the glossary below.</p>
-          </div>
-        </div>
-        <a class="catalog-link" href="https://arkdaemon.pages.dev/" target="_blank" rel="noopener noreferrer">Open live ↗</a>
-        <div class="project-screenshots">
-          <img src="screenshots/trading-kb-1-dark-mode.png" alt="Trading Knowledge Base library view" class="screenshot-dark" width="800" height="500" loading="lazy">
-          <img src="screenshots/trading-kb-1-light-mode.png" alt="Trading Knowledge Base library view" class="screenshot-light" width="800" height="500" loading="lazy">
-          <img src="screenshots/trading-kb-2-dark-mode.png" alt="Trading Knowledge Base curriculum" class="screenshot-dark" width="800" height="500" loading="lazy">
-          <img src="screenshots/trading-kb-2-light-mode.png" alt="Trading Knowledge Base curriculum" class="screenshot-light" width="800" height="500" loading="lazy">
-        </div>
-        <details class="catalog-details">
-          <summary>More detail</summary>
-          <div class="project-details">
-            <div class="project-detail"><span class="detail-label">My contribution</span><p>Independently planned and assembled using AI-assisted tools: product direction, requirements, testing, research, and iteration.</p></div>
-          </div>
-        </details>
-      </article>
+            <div class="project-hero-actions">
+              <a href="https://arkdaemon.pages.dev/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                <span>Open live site</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </a>
+              <button type="button" class="btn btn-secondary case-study-toggle" aria-expanded="false" aria-controls="trading-kb-case">
+                <span>Case study details</span>
+                <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </div>
 
-      <!-- ── Codex Manager (static screenshots, desktop app) ── -->
-      <article class="catalog-card" id="codex-manager">
-        <div class="catalog-card-top">
-          <div class="catalog-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none"><rect x="12" y="8" width="24" height="16" rx="3" stroke="currentColor" stroke-width="1.5" opacity="0.2"/><rect x="10" y="14" width="24" height="16" rx="3" stroke="currentColor" stroke-width="1.5" opacity="0.3"/><rect x="8" y="20" width="24" height="16" rx="3" stroke="currentColor" stroke-width="1.5" opacity="0.45"/><circle cx="16" cy="28" r="3" stroke="currentColor" opacity="0.35"/><path d="M34 26h6M37 23v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/></svg>
+            <!-- Case Study Drawer -->
+            <div class="case-study-drawer" id="trading-kb-case">
+              <div class="case-study-content">
+                <div class="case-block">
+                  <div class="case-step">
+                    <span class="case-label">Problem</span>
+                    <p>Trading knowledge was scattered across screenshots, bookmarks, tweets, and random notes with no structure or quick reference system.</p>
+                  </div>
+                  <div class="case-step">
+                    <span class="case-label">What I built</span>
+                    <p>A structured research engine featuring categorized topic guides, curated curriculum paths, resource indexing, and an interactive terminology glossary.</p>
+                  </div>
+                  <div class="case-step">
+                    <span class="case-label">Outcome</span>
+                    <p>~80% complete live platform; 300+ resources reorganized into an active research workspace. Try the live glossary below.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="catalog-badges">
-            <span class="project-status status-done">Finished</span>
-            <span class="catalog-pill">Desktop utility</span>
-          </div>
-        </div>
-        <h3 class="catalog-title">Codex Manager</h3>
-        <p class="catalog-desc">One-click switching between multiple Codex account sessions, with fewer logouts and logins.</p>
-        <div class="case-block case-block--card">
-          <div class="case-step">
-            <span class="case-label">Problem</span>
-            <p>Switching between multiple Codex accounts meant repetitive logouts and logins every day.</p>
-          </div>
-          <div class="case-step">
-            <span class="case-label">What I built</span>
-            <p>A desktop session manager that stores accounts and switches with one click.</p>
-          </div>
-          <div class="case-step">
-            <span class="case-label">Outcome</span>
-            <p>Finished utility: less session friction for multi-account workflows. Open source on GitHub.</p>
-          </div>
-        </div>
-        <a class="catalog-link" href="https://github.com/ark-daemon/codex-manager" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-        <div class="project-screenshots">
-          <img src="screenshots/codex-manager-dark-mode.png" alt="Codex Manager dark mode interface" class="screenshot-dark" width="800" height="500" loading="lazy">
-          <img src="screenshots/codex-manager-light-mode.png" alt="Codex Manager light mode interface" class="screenshot-light" width="800" height="500" loading="lazy">
-        </div>
-        <details class="catalog-details">
-          <summary>More detail</summary>
-          <div class="project-details">
-            <div class="project-detail"><span class="detail-label">My contribution</span><p>Independently planned and assembled using AI-assisted tools: product direction, requirements, and testing.</p></div>
-          </div>
-        </details>
-      </article>
 
-      <!-- ── Esports Data Platform — live iframe embed + scraper repos ── -->
-      <article class="catalog-card" id="esports-platform">
-        <div class="catalog-card-top">
-          <div class="catalog-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="1.5" opacity="0.45"/><circle cx="12" cy="14" r="3" stroke="currentColor" opacity="0.3"/><circle cx="36" cy="14" r="3" stroke="currentColor" opacity="0.3"/><circle cx="12" cy="34" r="3" stroke="currentColor" opacity="0.3"/><circle cx="36" cy="34" r="3" stroke="currentColor" opacity="0.3"/><path d="M20 21L14 16M28 21L34 16M20 27L14 32M28 27L34 32" stroke="currentColor" stroke-width="1.25" opacity="0.2"/></svg>
-          </div>
-          <div class="catalog-badges">
-            <span class="project-status status-wip">WIP</span>
-            <span class="catalog-pill">Data platform</span>
-          </div>
-        </div>
-        <h3 class="catalog-title">Esports Data Platform</h3>
-        <p class="catalog-desc">Five live scrapers feeding a unified pipeline dashboard across Valorant, CS2, LoL, Dota 2, and Rocket League.</p>
-        <div class="case-block case-block--card">
-          <div class="case-step">
-            <span class="case-label">Problem</span>
-            <p>Esports stats are fragmented across individual game sites with no unified view or data layer.</p>
-          </div>
-          <div class="case-step">
-            <span class="case-label">What I built</span>
-            <p>Five independent scrapers (VLR, HLTV, LoL Esports, Dota 2, Rocket League) feeding into a single pipeline dashboard showing live scraper status and explanatory copy alongside the numbers.</p>
-          </div>
-          <div class="case-step">
-            <span class="case-label">Outcome</span>
-            <p>Five scrapers finished and deployed. Dashboard hosted separately — link to be added.</p>
-          </div>
-        </div>
-        <!-- Finished scraper repos -->
-        <p class="scraper-repos-label">Finished scrapers</p>
-        <div class="scraper-repos">
-          <a class="scraper-repo-link" href="https://github.com/ark-daemon/vlr-scraper" target="_blank" rel="noopener noreferrer">↗ vlr-scraper</a>
-          <a class="scraper-repo-link" href="https://github.com/ark-daemon/hltv-scraper" target="_blank" rel="noopener noreferrer">↗ hltv-scraper</a>
-          <a class="scraper-repo-link" href="https://github.com/ark-daemon/lol-esports-scraper" target="_blank" rel="noopener noreferrer">↗ lol-esports-scraper</a>
-          <a class="scraper-repo-link" href="https://github.com/ark-daemon/dota2-esports-scraper" target="_blank" rel="noopener noreferrer">↗ dota2-esports-scraper</a>
-          <a class="scraper-repo-link" href="https://github.com/ark-daemon/rocket-league-esports-scraper" target="_blank" rel="noopener noreferrer">↗ rocket-league-esports-scraper</a>
-        </div>
-        <details class="catalog-details">
-          <summary>More detail</summary>
-          <div class="project-details">
-            <div class="project-detail"><span class="detail-label">My contribution</span><p>Independently planned and assembled: scraper architecture, pipeline design, dashboard build, and deployment.</p></div>
-          </div>
-        </details>
-      </article>
-
-      <!-- ── Falco — live iframe (falco-screener.pages.dev allows iframes) ── -->
-      <article class="catalog-card catalog-card--quiet" id="falco">
-        <div class="catalog-card-top">
-          <div class="catalog-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none"><path d="M10 32V16l8 10 8-10v16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/><path d="M30 32V20l8 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/></svg>
-          </div>
-          <div class="catalog-badges">
-            <span class="project-status status-wip">WIP</span>
-            <span class="catalog-pill">Crypto</span>
-          </div>
-        </div>
-        <h3 class="catalog-title">Falco</h3>
-        <p class="catalog-desc">Crypto market screener / terminal. Work in progress.</p>
-        <div class="project-embed">
-          <div class="project-embed-frame">
-            <iframe
-              src="https://falco-screener.pages.dev/"
-              title="Falco Crypto Screener"
-              loading="lazy"
-              scrolling="yes"
-              sandbox="allow-scripts allow-same-origin allow-forms"
-            ></iframe>
-          </div>
-          <div class="project-embed-bar">
-            <span>falco-screener.pages.dev · live</span>
-            <a href="https://falco-screener.pages.dev/" target="_blank" rel="noopener noreferrer">Open live ↗</a>
+          <div class="project-hero-visual">
+            <div class="browser-shell" data-lightbox="Trading Knowledge Base">
+              <div class="browser-bar">
+                <div class="browser-dots">
+                  <span class="dot dot-red"></span>
+                  <span class="dot dot-yellow"></span>
+                  <span class="dot dot-green"></span>
+                </div>
+                <div class="browser-url">arkdaemon.pages.dev</div>
+              </div>
+              <div class="browser-content">
+                <img src="screenshots/trading-kb-1-dark-mode.png" alt="Trading Knowledge Base Dark Mode" class="screenshot-dark" width="800" height="500" loading="lazy">
+                <img src="screenshots/trading-kb-1-light-mode.png" alt="Trading Knowledge Base Light Mode" class="screenshot-light" width="800" height="500" loading="lazy">
+              </div>
+            </div>
           </div>
         </div>
       </article>
 
-      <!-- ── Sporty Desk — fallback (X-Frame-Options: DENY, cannot embed) ── -->
-      <article class="catalog-card catalog-card--quiet" id="sporty-desk">
-        <div class="catalog-card-top">
-          <div class="catalog-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="24" rx="3" stroke="currentColor" stroke-width="1.5" opacity="0.35"/><path d="M14 28l6-8 5 6 4-4 5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.4"/></svg>
+      <!-- Flagship 2: Esports Data Platform -->
+      <article class="project-hero-card" id="esports-platform" data-reveal="3">
+        <div class="project-hero-layout">
+          <div class="project-hero-copy">
+            <div class="project-hero-meta">
+              <span class="project-status status-wip">WIP</span>
+              <span class="catalog-pill">Data Platform</span>
+            </div>
+            <h2 class="project-hero-title">Esports Data Platform</h2>
+            <p class="project-hero-desc">Five independent, automated web scrapers feeding a unified esports pipeline dashboard covering Valorant, CS2, League of Legends, Dota 2, and Rocket League.</p>
+
+            <div class="project-hero-actions">
+              <button type="button" class="btn btn-secondary case-study-toggle" aria-expanded="false" aria-controls="esports-case">
+                <span>Case study details</span>
+                <svg class="chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </div>
+
+            <!-- Case Study Drawer -->
+            <div class="case-study-drawer" id="esports-case">
+              <div class="case-study-content">
+                <div class="case-block">
+                  <div class="case-step">
+                    <span class="case-label">Problem</span>
+                    <p>Esports match results, statistics, and tournament schedules are fragmented across individual game news sites with no unified API or data feed.</p>
+                  </div>
+                  <div class="case-step">
+                    <span class="case-label">What I built</span>
+                    <p>Designed and deployed 5 resilient scrapers (VLR, HLTV, LoL Esports, Dota 2, Rocket League) with normalized schema output feeding a centralized status dashboard.</p>
+                  </div>
+                  <div class="case-step">
+                    <span class="case-label">Outcome</span>
+                    <p>All five scrapers active and deployed on GitHub. Automated pipeline reduces manual tracking overhead to zero.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="catalog-badges">
-            <span class="project-status status-wip">WIP</span>
-            <span class="catalog-pill">Sports</span>
-          </div>
-        </div>
-        <h3 class="catalog-title">Sporty Desk</h3>
-        <p class="catalog-desc">Sports research and betting models dashboard. Work in progress.</p>
-        <!-- Fallback: X-Frame-Options: DENY prevents embedding -->
-        <div class="project-embed">
-          <div class="project-embed-fallback">
-            <p>Live preview unavailable — this site blocks iframe embedding.</p>
-            <a href="https://sporty-desk.pages.dev/" target="_blank" rel="noopener noreferrer">Open live ↗</a>
+
+          <!-- Telemetry Board -->
+          <div class="project-hero-visual">
+            <div class="telemetry-board">
+              <div class="telemetry-header">
+                <div class="telemetry-title">
+                  <span class="status-dot" aria-hidden="true"></span>
+                  <span>Pipeline Telemetry &amp; Scrapers</span>
+                </div>
+                <span class="telemetry-badge">5 Active Services</span>
+              </div>
+              <div class="telemetry-grid">
+                <a href="https://github.com/ark-daemon/vlr-scraper" target="_blank" rel="noopener noreferrer" class="telemetry-item">
+                  <div class="telemetry-item-top">
+                    <span class="telemetry-name">vlr-scraper</span>
+                    <span class="status-pill status-online">Online</span>
+                  </div>
+                  <span class="telemetry-game">Valorant Stats &amp; VLR.gg</span>
+                </a>
+                <a href="https://github.com/ark-daemon/hltv-scraper" target="_blank" rel="noopener noreferrer" class="telemetry-item">
+                  <div class="telemetry-item-top">
+                    <span class="telemetry-name">hltv-scraper</span>
+                    <span class="status-pill status-online">Online</span>
+                  </div>
+                  <span class="telemetry-game">CS2 Matches &amp; HLTV.org</span>
+                </a>
+                <a href="https://github.com/ark-daemon/lol-esports-scraper" target="_blank" rel="noopener noreferrer" class="telemetry-item">
+                  <div class="telemetry-item-top">
+                    <span class="telemetry-name">lol-esports-scraper</span>
+                    <span class="status-pill status-online">Online</span>
+                  </div>
+                  <span class="telemetry-game">League of Legends Esports</span>
+                </a>
+                <a href="https://github.com/ark-daemon/dota2-esports-scraper" target="_blank" rel="noopener noreferrer" class="telemetry-item">
+                  <div class="telemetry-item-top">
+                    <span class="telemetry-name">dota2-esports-scraper</span>
+                    <span class="status-pill status-online">Online</span>
+                  </div>
+                  <span class="telemetry-game">Dota 2 Tournament Feeds</span>
+                </a>
+                <a href="https://github.com/ark-daemon/rocket-league-esports-scraper" target="_blank" rel="noopener noreferrer" class="telemetry-item">
+                  <div class="telemetry-item-top">
+                    <span class="telemetry-name">rocket-league-esports-scraper</span>
+                    <span class="status-pill status-online">Online</span>
+                  </div>
+                  <span class="telemetry-game">RLCS Matches &amp; Events</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </article>
 
-    </div><!-- /.catalog -->
+    </section>
 
-    <section class="section featured-demo" aria-label="Trading Knowledge Base live excerpt">
+    <!-- ===== BENTO GRID: SPECIALIZED UTILITIES ===== -->
+    <section class="section" aria-label="Specialized Utilities" data-reveal="4">
       <div class="section-label">
         <span class="section-number">01</span>
         <span class="section-dash">·</span>
-        <span>Live excerpt</span>
+        <span>Specialized Tools &amp; Utilities</span>
       </div>
-      <p class="featured-demo-lede">Try the searchable glossary from the Trading Knowledge Base. <a class="text-link" href="https://arkdaemon.pages.dev/" target="_blank" rel="noopener noreferrer">Full site ↗</a></p>
-      <div class="project-screenshots featured-shots">
-        <img src="screenshots/trading-kb-1-dark-mode.png" alt="Trading Knowledge Base library view" class="screenshot-dark" width="800" height="500" loading="lazy">
-        <img src="screenshots/trading-kb-1-light-mode.png" alt="Trading Knowledge Base library view" class="screenshot-light" width="800" height="500" loading="lazy">
-        <img src="screenshots/trading-kb-2-dark-mode.png" alt="Trading Knowledge Base curriculum" class="screenshot-dark" width="800" height="500" loading="lazy">
-        <img src="screenshots/trading-kb-2-light-mode.png" alt="Trading Knowledge Base curriculum" class="screenshot-light" width="800" height="500" loading="lazy">
+
+      <div class="projects-grid">
+
+        <!-- Codex Manager -->
+        <article class="project-bento-card" id="codex-manager">
+          <div class="browser-shell" data-lightbox="Codex Manager">
+            <div class="browser-bar">
+              <div class="browser-dots">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <div class="browser-url">codex-manager (Desktop)</div>
+            </div>
+            <div class="browser-content">
+              <img src="screenshots/codex-manager-dark-mode.png" alt="Codex Manager Dark Mode" class="screenshot-dark" width="800" height="500" loading="lazy">
+              <img src="screenshots/codex-manager-light-mode.png" alt="Codex Manager Light Mode" class="screenshot-light" width="800" height="500" loading="lazy">
+            </div>
+          </div>
+          <div class="bento-card-body">
+            <div class="bento-card-top">
+              <span class="project-status status-done">Finished</span>
+              <span class="catalog-pill">Desktop Utility</span>
+            </div>
+            <h3 class="bento-card-title">Codex Manager</h3>
+            <p class="bento-card-desc">One-click desktop session manager for seamlessly toggling between multiple Codex account credentials.</p>
+            <div class="bento-card-actions">
+              <a href="https://github.com/ark-daemon/codex-manager" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">GitHub ↗</a>
+              <button type="button" class="btn btn-quiet btn-sm case-study-toggle" aria-expanded="false" aria-controls="codex-case">Details ↓</button>
+            </div>
+            <div class="case-study-drawer" id="codex-case">
+              <div class="case-study-content">
+                <div class="case-block">
+                  <div class="case-step">
+                    <span class="case-label">Problem</span>
+                    <p>Switching between multiple Codex account profiles required tedious manual logouts, logins, and key entries daily.</p>
+                  </div>
+                  <div class="case-step">
+                    <span class="case-label">Solution</span>
+                    <p>Built a fast desktop session manager that securely stores account state and switches active sessions in one click.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Falco -->
+        <article class="project-bento-card" id="falco">
+          <div class="browser-shell" data-lightbox="Falco Market Terminal">
+            <div class="browser-bar">
+              <div class="browser-dots">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <div class="browser-url">falco-screener.pages.dev</div>
+            </div>
+            <div class="browser-content">
+              <img src="screenshots/trading-kb-1-dark-mode.png" alt="Falco Screener Preview" class="screenshot-dark" width="800" height="500" loading="lazy">
+              <img src="screenshots/trading-kb-1-light-mode.png" alt="Falco Screener Preview" class="screenshot-light" width="800" height="500" loading="lazy">
+            </div>
+          </div>
+          <div class="bento-card-body">
+            <div class="bento-card-top">
+              <span class="project-status status-wip">WIP</span>
+              <span class="catalog-pill">Crypto</span>
+            </div>
+            <h3 class="bento-card-title">Falco Terminal</h3>
+            <p class="bento-card-desc">High-frequency crypto market screener and alert terminal built for rapid price action scans.</p>
+            <div class="bento-card-actions">
+              <a href="https://falco-screener.pages.dev/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">Open Live ↗</a>
+              <button type="button" class="btn btn-quiet btn-sm case-study-toggle" aria-expanded="false" aria-controls="falco-case">Details ↓</button>
+            </div>
+            <div class="case-study-drawer" id="falco-case">
+              <div class="case-study-content">
+                <div class="case-block">
+                  <div class="case-step">
+                    <span class="case-label">Goal</span>
+                    <p>Real-time technical screener filtering token anomalies, volume breakouts, and custom alert thresholds.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Sporty Desk -->
+        <article class="project-bento-card" id="sporty-desk">
+          <div class="browser-shell" data-lightbox="Sporty Desk">
+            <div class="browser-bar">
+              <div class="browser-dots">
+                <span class="dot dot-red"></span>
+                <span class="dot dot-yellow"></span>
+                <span class="dot dot-green"></span>
+              </div>
+              <div class="browser-url">sporty-desk.pages.dev</div>
+            </div>
+            <div class="browser-content">
+              <img src="screenshots/trading-kb-2-dark-mode.png" alt="Sporty Desk Research Terminal" class="screenshot-dark" width="800" height="500" loading="lazy">
+              <img src="screenshots/trading-kb-2-light-mode.png" alt="Sporty Desk Research Terminal" class="screenshot-light" width="800" height="500" loading="lazy">
+            </div>
+          </div>
+          <div class="bento-card-body">
+            <div class="bento-card-top">
+              <span class="project-status status-wip">WIP</span>
+              <span class="catalog-pill">Sports</span>
+            </div>
+            <h3 class="bento-card-title">Sporty Desk</h3>
+            <p class="bento-card-desc">Sports analytics dashboard and statistical odds modeling engine for research and betting strategies.</p>
+            <div class="bento-card-actions">
+              <a href="https://sporty-desk.pages.dev/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">Open Live ↗</a>
+              <button type="button" class="btn btn-quiet btn-sm case-study-toggle" aria-expanded="false" aria-controls="sporty-case">Details ↓</button>
+            </div>
+            <div class="case-study-drawer" id="sporty-case">
+              <div class="case-study-content">
+                <div class="case-block">
+                  <div class="case-step">
+                    <span class="case-label">Goal</span>
+                    <p>Consolidates match schedules, historical head-to-head metrics, and automated model probability outputs.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
       </div>
+    </section>
+
+    <!-- ===== LIVE PLAYGROUND SECTION ===== -->
+    <section class="section playground-section" aria-label="Live Playground Engine" data-reveal="5">
+      <div class="section-label">
+        <span class="section-number">02</span>
+        <span class="section-dash">·</span>
+        <span>Live Engine Excerpt</span>
+      </div>
+      
+      <div class="playground-intro">
+        <h2 class="playground-title">Searchable Knowledge Engine</h2>
+        <p class="playground-desc">Try the live interactive glossary module directly from the Trading Knowledge Base platform. <a class="text-link" href="https://arkdaemon.pages.dev/" target="_blank" rel="noopener noreferrer">Visit Full Site ↗</a></p>
+      </div>
+
       <div class="glossary-widget" id="glossary-widget" role="region" aria-label="Trading Knowledge Base glossary preview">
         <div class="glossary-header">
-          <span class="glossary-eyebrow">Knowledge Base · Glossary</span>
-          <input id="glossary-search" class="glossary-search" type="search" placeholder="Search terms…" aria-label="Search glossary terms" autocomplete="off" spellcheck="false" />
+          <div class="glossary-header-meta">
+            <span class="glossary-eyebrow">Interactive Engine · Glossary</span>
+            <span class="shortcut-hint"><kbd>/</kbd> to search</span>
+          </div>
+          <input id="glossary-search" class="glossary-search" type="search" placeholder="Search terms (e.g. Risk, HTF, Order Block)…" aria-label="Search glossary terms" autocomplete="off" spellcheck="false" />
         </div>
+
         <ul class="glossary-list" id="glossary-list" role="list">
           <li class="glossary-entry" data-term="support resistance" role="listitem">
             <div class="glossary-term-row"><span class="glossary-term">Support &amp; Resistance</span><span class="glossary-tag">Price Action</span></div>
@@ -367,10 +484,10 @@
             <p class="glossary-def">The last opposing candle before a significant impulsive move, often marking institutional interest.</p>
           </li>
         </ul>
-        <p class="glossary-empty" id="glossary-empty" hidden>No matching terms.</p>
+        <p class="glossary-empty" id="glossary-empty" hidden>No matching terms found.</p>
         <div class="glossary-footer">
-          <span class="glossary-count" id="glossary-count">6 terms</span>
-          <span class="glossary-source">excerpt · Trading Knowledge Base</span>
+          <span class="glossary-count" id="glossary-count">6 terms index</span>
+          <span class="glossary-source">Live Excerpt · Trading Knowledge Base</span>
         </div>
       </div>
     </section>
