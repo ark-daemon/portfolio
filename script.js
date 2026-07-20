@@ -211,6 +211,12 @@
     document.querySelectorAll('.reveal:not(.visible)').forEach(function (el) {
       revealObserver.observe(el);
     });
+
+    requestAnimationFrame(function () {
+      document.documentElement.classList.add('page-loaded');
+    });
+  } else {
+    document.documentElement.classList.add('page-loaded');
   }
 
   /* ===== Support Triage Flow Diagram  -  Capabilities section ===== */

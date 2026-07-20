@@ -138,7 +138,6 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 */
 .main {
   min-height: 100vh;
-  transition: margin var(--t-med);
   padding: 0 1.25rem 5rem;
   box-sizing: border-box;
 }
@@ -336,7 +335,7 @@ body[data-page="experience"] .page-header {
   border-radius: 999px;
   background: var(--ink);
   opacity: 0.5;
-  animation: pulse 2.5s ease-in-out infinite;
+  animation: pulse 2.5s linear infinite;
 }
 
 /* ===== Buttons ===== */
@@ -728,18 +727,19 @@ body[data-page="experience"] .page-header {
   transform: rotate(180deg);
 }
 
-/* Expand/collapse body  -  max-height transition */
+/* Expand/collapse body  -  grid-row trick avoids max-height layout thrash */
 .ticket-body {
-  overflow: hidden;
-  max-height: 0;
+  display: grid;
+  grid-template-rows: 0fr;
   opacity: 0;
   transition:
-    max-height 200ms cubic-bezier(0, 0, 0.2, 1),
-    opacity    200ms cubic-bezier(0, 0, 0.2, 1);
+    grid-template-rows 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity            200ms cubic-bezier(0.16, 1, 0.3, 1);
   /* hidden attribute: display:none bypasses transitions  -  JS removes it */
 }
+.ticket-body > * { overflow: hidden; }
 .ticket-body.open {
-  max-height: 600px;
+  grid-template-rows: 1fr;
   opacity: 1;
 }
 
@@ -925,9 +925,11 @@ body[data-page="experience"] .page-header {
     opacity 200ms cubic-bezier(0, 0, 0.2, 1),
     transform 200ms cubic-bezier(0, 0, 0.2, 1);
 }
-.kanban-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.09);
-  border-color: var(--border-strong);
+@media (hover: hover) and (pointer: fine) {
+  .kanban-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.09);
+    border-color: var(--border-strong);
+  }
 }
 /* Source card fades and scales down while being dragged */
 .kanban-card.is-dragging {
@@ -1004,10 +1006,12 @@ body[data-page="setup"] .section {
   transition: box-shadow var(--t-card), transform var(--t-card), border-color var(--t-card);
   min-width: 0; /* prevent grid blowout */
 }
-.catalog-card:hover {
-  box-shadow: 0 18px 36px -20px rgba(0, 0, 0, 0.4);
-  transform: translateY(-2px);
-  border-color: var(--border-strong);
+@media (hover: hover) and (pointer: fine) {
+  .catalog-card:hover {
+    box-shadow: 0 18px 36px -20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+    border-color: var(--border-strong);
+  }
 }
 .catalog-card:active {
   transform: translateY(0) scale(0.99);
@@ -1640,10 +1644,12 @@ body[data-page="setup"] .section {
   color: inherit;
   min-height: 10.5rem;
 }
-.cert-card:not(.cert-card--pending):hover {
-  box-shadow: 0 18px 36px -20px rgba(0, 0, 0, 0.38);
-  border-color: var(--border-strong);
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .cert-card:not(.cert-card--pending):hover {
+    box-shadow: 0 18px 36px -20px rgba(0, 0, 0, 0.38);
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
 }
 .cert-card:not(.cert-card--pending):active {
   transform: translateY(0) scale(0.99);
@@ -1817,9 +1823,11 @@ body[data-page="setup"] .section {
   transition: transform var(--t-card), border-color var(--t-card), box-shadow var(--t-card);
   height: 100%;
 }
-.gear-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--border-strong);
+@media (hover: hover) and (pointer: fine) {
+  .gear-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-strong);
+  }
 }
 .gear-card:active {
   transform: translateY(0) scale(0.99);
@@ -2175,11 +2183,17 @@ body[data-page="setup"] .section {
   color: var(--text-2);
   text-decoration: none;
   padding: 0.375rem 0;
-  transition: color var(--t-fast), padding-left var(--t-fast);
+  transition: color var(--t-fast), transform var(--t-fast);
 }
-.nav-item:hover, .nav-item.active {
+@media (hover: hover) and (pointer: fine) {
+  .nav-item:hover {
+    color: var(--ink);
+    transform: translateX(0.375rem);
+  }
+}
+.nav-item.active {
   color: var(--ink);
-  padding-left: 0.5rem;
+  transform: translateX(0.375rem);
 }
 .nav-item.active {
   font-weight: 500;
@@ -2492,6 +2506,24 @@ body[data-page="setup"] .section {
   opacity: 1;
   transform: none;
   transition: none;
+}
+
+/* Staggered element reveals (e.g. Hero copy cascade) */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 280ms var(--ease), transform 280ms var(--ease);
+}
+[data-reveal="1"] { transition-delay: 30ms; }
+[data-reveal="2"] { transition-delay: 80ms; }
+[data-reveal="3"] { transition-delay: 130ms; }
+[data-reveal="4"] { transition-delay: 180ms; }
+[data-reveal="5"] { transition-delay: 230ms; }
+
+.page-loaded [data-reveal],
+.reveal.visible [data-reveal] {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ===== Dot-grid overlay ===== */
@@ -2991,12 +3023,12 @@ body[data-page="setup"] .section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  transform: scale(0.96);
-  transition: transform 200ms var(--ease-in);
+  transform: scale(0.92);
+  transition: transform 180ms var(--ease-in);
 }
 .screenshot-modal.is-open .screenshot-modal-content {
   transform: scale(1);
-  transition: transform 220ms var(--ease);
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .screenshot-modal-close {
   position: absolute;
@@ -3841,11 +3873,13 @@ body.overlay-open { overflow: hidden; }
   transition: background 160ms var(--ease), border-color 160ms var(--ease);
   border-radius: var(--r-md);
 }
-.metric--link:hover {
-  text-decoration: none;
-  background: var(--surface);
+@media (hover: hover) and (pointer: fine) {
+  .metric--link:hover {
+    text-decoration: none;
+    background: var(--surface);
+  }
+  .metric--link:hover .metric-value { color: var(--ink); }
 }
-.metric--link:hover .metric-value { color: var(--ink); }
 
 .bento-map {
   display: grid;
@@ -3867,11 +3901,13 @@ body.overlay-open { overflow: hidden; }
   color: inherit;
   transition: transform 200ms var(--ease), border-color 200ms var(--ease), box-shadow 200ms var(--ease);
 }
-.bento-tile:hover {
-  text-decoration: none;
-  transform: translateY(-2px);
-  border-color: var(--border-strong);
-  box-shadow: 3px 3px 0 var(--border);
+@media (hover: hover) and (pointer: fine) {
+  .bento-tile:hover {
+    text-decoration: none;
+    transform: translateY(-2px);
+    border-color: var(--border-strong);
+    box-shadow: 3px 3px 0 var(--border);
+  }
 }
 .bento-kicker {
   font-family: var(--font-mono);
@@ -4058,10 +4094,12 @@ body.overlay-open { overflow: hidden; }
   background: var(--bg);
   transition: transform 200ms var(--ease), border-color 200ms var(--ease), box-shadow 200ms var(--ease);
 }
-.stack-tile:hover {
-  transform: translateY(-2px);
-  border-color: var(--border-strong);
-  box-shadow: 3px 3px 0 var(--border);
+@media (hover: hover) and (pointer: fine) {
+  .stack-tile:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-strong);
+    box-shadow: 3px 3px 0 var(--border);
+  }
 }
 .stack-tile-title {
   margin: 0 0 0.3rem;
@@ -4163,13 +4201,15 @@ body.overlay-open { overflow: hidden; }
 .stack-tile {
   transition: transform var(--t-card), border-color var(--t-card), box-shadow var(--t-card);
 }
-.catalog-card:hover,
-.gear-card:hover,
-.teaser-card:hover,
-.bento-tile:hover,
-.stack-tile:hover {
-  transform: translateY(-2px);
-  border-color: var(--border-strong);
+@media (hover: hover) and (pointer: fine) {
+  .catalog-card:hover,
+  .gear-card:hover,
+  .teaser-card:hover,
+  .bento-tile:hover,
+  .stack-tile:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-strong);
+  }
 }
 .catalog-card:active,
 .gear-card:active,
