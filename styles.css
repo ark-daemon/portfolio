@@ -4047,6 +4047,100 @@ body.overlay-open { overflow: hidden; }
   line-height: 1.5;
 }
 
+/* ===== Featured Project (Home) ===== */
+.featured-project {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+@media (min-width: 768px) {
+  .featured-project {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .featured-project-info {
+    flex: 0 0 14rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  .featured-project-embed {
+    flex: 1;
+    min-width: 0;
+  }
+}
+.featured-project-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+.featured-project-desc {
+  font-size: 0.875rem;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin: 0;
+}
+.featured-project-embed .browser-shell--live {
+  height: 360px;
+}
+@media (max-width: 767px) {
+  .featured-project-embed .browser-shell--live {
+    height: 280px;
+  }
+}
+
+/* ===== Other Projects Compact List (Home) ===== */
+.other-projects {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.other-projects-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin: 0 0 0.75rem;
+}
+.other-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem;
+}
+.other-project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--bg);
+  text-decoration: none;
+  transition: border-color var(--t-fast), transform var(--t-fast);
+}
+.other-project-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+.other-project-card:active {
+  transform: scale(0.98);
+}
+.other-project-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.other-project-desc {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  line-height: 1.4;
+}
+
 .site-changelog {
   max-width: var(--content-max);
   margin: 3rem auto 0;
