@@ -4410,6 +4410,9 @@ body.overlay-open { overflow: hidden; }
 .project-panel.active {
   border-top-left-radius: 0;
 }
+.project-panel[hidden] {
+  display: none !important;
+}
 
 /* ===== Large Browser Shell (for tabbed project embeds) ===== */
 .browser-shell--large {
