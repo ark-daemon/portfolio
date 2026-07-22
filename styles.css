@@ -2240,8 +2240,8 @@ body[data-page="setup"] .section {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   border-radius: 999px;
   background: transparent;
   border: 1px solid transparent;
