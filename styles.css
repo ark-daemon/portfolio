@@ -4337,11 +4337,72 @@ body.overlay-open { overflow: hidden; }
    ================================================================ */
 
 .projects-wrapper {
-  max-width: 44rem;
+  max-width: var(--content-wide);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 2.75rem;
+  gap: 1.5rem;
+}
+
+/* ===== Project Tab Switcher ===== */
+.project-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.project-tab {
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--t-fast), border-color var(--t-fast);
+}
+.project-tab:hover {
+  color: var(--ink);
+}
+.project-tab.active {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+.project-tab:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+/* ===== Project Panel (tab content) ===== */
+.project-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  background: var(--bg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: 0 8px 24px -16px rgba(0, 0, 0, 0.18);
+}
+
+/* ===== Large Browser Shell (for tabbed project embeds) ===== */
+.browser-shell--large {
+  width: 100%;
+}
+.browser-shell--large.browser-shell--live {
+  height: 600px;
+}
+@media (max-width: 768px) {
+  .browser-shell--large.browser-shell--live {
+    height: 400px;
+  }
 }
 
 .project-pillar-group {

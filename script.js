@@ -1163,6 +1163,38 @@
     });
   }
 
+  /* ===== Project Tab Switcher ===== */
+  function initProjectTabs() {
+    var tabList = document.getElementById('project-tabs');
+    if (!tabList) return;
+    var tabs = tabList.querySelectorAll('.project-tab');
+    var panels = document.querySelectorAll('.project-panel');
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var target = tab.getAttribute('data-tab');
+
+        tabs.forEach(function (t) {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+
+        panels.forEach(function (panel) {
+          if (panel.id === 'panel-' + target) {
+            panel.hidden = false;
+            panel.classList.add('active');
+          } else {
+            panel.hidden = true;
+            panel.classList.remove('active');
+          }
+        });
+      });
+    });
+  }
+
+  initProjectTabs();
   initEmailModal();
   initScreenshotLightbox();
   initSoundEffects();
