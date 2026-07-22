@@ -1114,7 +1114,13 @@
       var shell = target ? target.closest('.browser-shell') : null;
 
       if (shell) {
-        var img = shell.querySelector('img');
+        var img = shell.querySelector('img:not(.screenshot-dark):not(.screenshot-light)') || (function() {
+          var imgs = shell.querySelectorAll('img');
+          for (var i = 0; i < imgs.length; i++) {
+            if (imgs[i].offsetParent !== null) return imgs[i];
+          }
+          return imgs[0];
+        })();
         if (img) {
           e.preventDefault();
           e.stopPropagation();
