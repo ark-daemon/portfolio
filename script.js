@@ -56,6 +56,12 @@
   var menuToggle = document.getElementById('menu-toggle');
   var mobileMenu = document.getElementById('mobile-menu');
 
+  var lastFocused = null;
+
+  function getFocusable(container) {
+    return container.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])');
+  }
+
   function toggleMobileMenu(open) {
     if (typeof open !== 'boolean') {
       open = !menuToggle.classList.contains('open');
@@ -65,6 +71,14 @@
     menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
     document.body.style.overflow = open ? 'hidden' : '';
+    if (open) {
+      lastFocused = document.activeElement;
+      var focusable = getFocusable(mobileMenu);
+      if (focusable.length) setTimeout(function () { focusable[0].focus(); }, 50);
+    } else if (lastFocused) {
+      lastFocused.focus();
+      lastFocused = null;
+    }
   }
 
   if (menuToggle && mobileMenu) {
@@ -73,8 +87,21 @@
       item.addEventListener('click', function () { toggleMobileMenu(false); });
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+      if (!mobileMenu.classList.contains('open')) return;
+      if (e.key === 'Escape') {
         toggleMobileMenu(false);
+      } else if (e.key === 'Tab') {
+        var focusable = getFocusable(mobileMenu);
+        if (focusable.length === 0) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     });
   }
@@ -306,6 +333,9 @@
 
     /* --- wire cards (event delegation would re-bind on drop; direct is simpler here) --- */
     function wireCard(card) {
+      /* Make cards keyboard-focusable if they aren't already */
+      if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+
       card.addEventListener('dragstart', function (e) {
         draggedCard = card;
         e.dataTransfer.effectAllowed = 'move';
@@ -320,6 +350,23 @@
           z.classList.remove('drag-over');
         });
         draggedCard = null;
+      });
+
+      /* Keyboard support: arrow left/right moves card between columns */
+      card.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        e.preventDefault();
+        var currentZone = card.closest('.kanban-cards');
+        if (!currentZone) return;
+        var allZones = Array.from(board.querySelectorAll('.kanban-cards'));
+        var idx = allZones.indexOf(currentZone);
+        var targetZone = null;
+        if (e.key === 'ArrowLeft' && idx > 0) targetZone = allZones[idx - 1];
+        if (e.key === 'ArrowRight' && idx < allZones.length - 1) targetZone = allZones[idx + 1];
+        if (!targetZone) return;
+        targetZone.appendChild(card);
+        updateColCounts();
+        card.focus();
       });
     }
 
@@ -701,10 +748,10 @@
         osc.type = 'sine';
         osc.frequency.setValueAtTime(2200, time);
         osc.frequency.exponentialRampToValueAtTime(800, time + 0.008);
-        
+
         gainNode.gain.setValueAtTime(0.015, time); // extremely quiet touch tick
         gainNode.gain.exponentialRampToValueAtTime(0.0001, time + 0.008);
-        
+
         osc.connect(gainNode);
         gainNode.connect(ctx.destination);
         osc.start(time);
@@ -726,10 +773,10 @@
         osc.type = 'sine';
         osc.frequency.setValueAtTime(1400, time);
         osc.frequency.exponentialRampToValueAtTime(120, time + 0.02);
-        
+
         gainOsc.gain.setValueAtTime(0.04, time);
         gainOsc.gain.exponentialRampToValueAtTime(0.0001, time + 0.02);
-        
+
         osc.connect(gainOsc);
         gainOsc.connect(ctx.destination);
         osc.start(time);
@@ -774,8 +821,8 @@
         var tag = target.tagName;
         var cl  = target.classList;
         if (
-          tag === 'A' || 
-          tag === 'BUTTON' || 
+          tag === 'A' ||
+          tag === 'BUTTON' ||
           cl.contains('nav-item') ||
           cl.contains('mobile-nav-item') ||
           cl.contains('theme-btn') ||
@@ -839,7 +886,7 @@
       var isMuted = localStorage.getItem('sound-muted') !== 'false';
       btn.setAttribute('aria-checked', isMuted ? 'false' : 'true');
 
-      btn.innerHTML = 
+      btn.innerHTML =
         '<svg class="sound-icon-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="' + (isMuted ? 'display: block;' : 'display: none;') + '">' +
           '<path d="M11 5L6 9H2v6h4l5 4V5z"/>' +
           '<line x1="23" y1="9" x2="17" y2="15"/>' +
@@ -885,7 +932,7 @@
     if (!stack) return;
 
     var cards = stack.querySelectorAll('.stack-card');
-    
+
     cards.forEach(function (card, index) {
       if (card.classList.contains('stack-card--left')) {
         card.classList.remove('stack-card--left');
@@ -910,7 +957,7 @@
           var centerCard = stack.querySelector('.stack-card.is-center');
           if (centerCard) {
             var myClass = card.classList.contains('is-left') ? 'is-left' : 'is-right';
-            
+
             centerCard.classList.remove('is-center');
             centerCard.classList.add(myClass);
 
@@ -936,8 +983,8 @@
     overlay.setAttribute('role', 'dialog');
     overlay.setAttribute('aria-modal', 'true');
     overlay.setAttribute('aria-labelledby', 'email-overlay-title');
-    
-    overlay.innerHTML = 
+
+    overlay.innerHTML =
       '<div class="overlay-panel" style="position: relative; width: min(28rem, 100%);">' +
         '<button class="overlay-close" id="email-overlay-close" aria-label="Close modal">✕</button>' +
         '<div style="margin-bottom: 1.5rem;">' +
@@ -951,7 +998,7 @@
         '</div>' +
         '<a href="mailto:carpisonoah@gmail.com" id="email-mail-app-btn" class="email-mail-app-btn">Open mail app</a>' +
       '</div>';
-      
+
     document.body.appendChild(overlay);
 
     var closeBtn = document.getElementById('email-overlay-close');
@@ -965,7 +1012,7 @@
       overlay.setAttribute('aria-hidden', 'false');
       document.body.classList.add('overlay-open');
     }
-    
+
     function closeModal() {
       overlay.classList.remove('is-open');
       overlay.setAttribute('aria-hidden', 'true');
@@ -977,7 +1024,7 @@
     overlay.addEventListener('click', function (e) {
       if (e.target === overlay) closeModal();
     });
-    
+
     // Copy logic
     copyBtn.addEventListener('click', function (e) {
       e.stopPropagation();
@@ -1024,7 +1071,7 @@
       modal.setAttribute('aria-hidden', 'true');
       modal.setAttribute('role', 'dialog');
       modal.setAttribute('aria-label', 'Enlarged screenshot view');
-      modal.innerHTML = 
+      modal.innerHTML =
         '<div class="screenshot-modal-backdrop" data-dismiss="modal"></div>' +
         '<div class="screenshot-modal-content">' +
           '<button class="screenshot-modal-close" id="screenshot-modal-close" aria-label="Close modal" data-dismiss="modal">' +
