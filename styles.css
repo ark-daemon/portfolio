@@ -4936,8 +4936,13 @@ body.overlay-open { overflow: hidden; }
 
 /* ===== Now Strip ===== */
 .now-strip {
-  padding: 0;
+  max-width: var(--content-max);
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
 }
 .now-strip-inner {
   display: flex;
