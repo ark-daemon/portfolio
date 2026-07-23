@@ -3971,34 +3971,7 @@ body.overlay-open { overflow: hidden; }
   }
 }
 
-.demo-teaser {
-  margin: 1rem 0 0.85rem;
-  padding: 0.85rem 1rem;
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--r-lg);
-}
-.demo-teaser-label {
-  margin: 0 0 0.45rem;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-.demo-teaser-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 0.65rem;
-}
-.demo-chip {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  padding: 0.25rem 0.55rem;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  color: var(--text-2);
-}
+
 .demo-frame-label {
   margin: 1.5rem 0 0.65rem;
   font-family: var(--font-mono);

@@ -288,184 +288,7 @@
 
   initFlowDiagram();
 
-  /* ===== Partnership Kanban Board  -  drag-and-drop (HTML5 drag API) ===== */
-  function initKanbanBoard() {
-    var board = document.getElementById('kanban-board');
-    if (!board) return;
 
-    var draggedCard = null;
-    var dropLine    = null; /* the 2px insertion indicator */
-
-    /* --- helpers --- */
-    function createDropLine() {
-      var line = document.createElement('div');
-      line.className = 'kanban-drop-line';
-      return line;
-    }
-
-    function removeDropLine() {
-      if (dropLine && dropLine.parentNode) dropLine.parentNode.removeChild(dropLine);
-      dropLine = null;
-    }
-
-    /* Returns the card that the cursor is above, or null (= append to end) */
-    function getInsertBefore(zone, clientY) {
-      var cards = Array.from(zone.querySelectorAll('.kanban-card:not(.is-dragging)'));
-      var closest = null;
-      var closestOffset = Infinity;
-      cards.forEach(function (card) {
-        var rect   = card.getBoundingClientRect();
-        var offset = clientY - (rect.top + rect.height / 2);
-        if (offset < 0 && Math.abs(offset) < closestOffset) {
-          closestOffset = Math.abs(offset);
-          closest       = card;
-        }
-      });
-      return closest;
-    }
-
-    function updateColCounts() {
-      board.querySelectorAll('.kanban-col').forEach(function (col) {
-        var count = col.querySelector('.kanban-col-count');
-        if (count) count.textContent = col.querySelectorAll('.kanban-card').length;
-      });
-    }
-
-    /* --- wire cards (event delegation would re-bind on drop; direct is simpler here) --- */
-    function wireCard(card) {
-      /* Make cards keyboard-focusable if they aren't already */
-      if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
-
-      card.addEventListener('dragstart', function (e) {
-        draggedCard = card;
-        e.dataTransfer.effectAllowed = 'move';
-        /* Delay the visual change so the drag ghost renders first */
-        setTimeout(function () { card.classList.add('is-dragging'); }, 0);
-      });
-
-      card.addEventListener('dragend', function () {
-        card.classList.remove('is-dragging');
-        removeDropLine();
-        board.querySelectorAll('.kanban-cards').forEach(function (z) {
-          z.classList.remove('drag-over');
-        });
-        draggedCard = null;
-      });
-
-      /* Keyboard support: arrow left/right moves card between columns */
-      card.addEventListener('keydown', function (e) {
-        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-        e.preventDefault();
-        var currentZone = card.closest('.kanban-cards');
-        if (!currentZone) return;
-        var allZones = Array.from(board.querySelectorAll('.kanban-cards'));
-        var idx = allZones.indexOf(currentZone);
-        var targetZone = null;
-        if (e.key === 'ArrowLeft' && idx > 0) targetZone = allZones[idx - 1];
-        if (e.key === 'ArrowRight' && idx < allZones.length - 1) targetZone = allZones[idx + 1];
-        if (!targetZone) return;
-        targetZone.appendChild(card);
-        updateColCounts();
-        card.focus();
-      });
-    }
-
-    board.querySelectorAll('.kanban-card').forEach(wireCard);
-
-    /* --- wire drop zones --- */
-    board.querySelectorAll('.kanban-cards').forEach(function (zone) {
-
-      zone.addEventListener('dragover', function (e) {
-        if (!draggedCard) return;
-        e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
-        zone.classList.add('drag-over');
-
-        /* Position the drop-line cursor */
-        removeDropLine();
-        dropLine = createDropLine();
-        var before = getInsertBefore(zone, e.clientY);
-        if (before) {
-          zone.insertBefore(dropLine, before);
-        } else {
-          zone.appendChild(dropLine);
-        }
-      });
-
-      zone.addEventListener('dragleave', function (e) {
-        /* Only clear if truly leaving the zone (not entering a child) */
-        if (!zone.contains(e.relatedTarget)) {
-          zone.classList.remove('drag-over');
-          removeDropLine();
-        }
-      });
-
-      zone.addEventListener('drop', function (e) {
-        e.preventDefault();
-        if (!draggedCard) return;
-
-        var before = getInsertBefore(zone, e.clientY);
-        removeDropLine();
-        zone.classList.remove('drag-over');
-
-        if (before) {
-          zone.insertBefore(draggedCard, before);
-        } else {
-          zone.appendChild(draggedCard);
-        }
-
-        updateColCounts();
-      });
-    });
-  }
-
-  initKanbanBoard();
-
-  /* ===== Support Ticket Simulator  -  Experience section ===== */
-  function initTicketSim() {
-    var sim = document.getElementById('ticket-sim');
-    if (!sim) return;
-
-    sim.querySelectorAll('.ticket-row').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var isOpen  = btn.getAttribute('aria-expanded') === 'true';
-        var bodyId  = btn.getAttribute('aria-controls');
-        var body    = bodyId ? document.getElementById(bodyId) : null;
-        var badge   = btn.querySelector('.ticket-badge');
-        if (!body) return;
-
-        if (isOpen) {
-          /* Collapse */
-          body.classList.remove('open');
-          btn.setAttribute('aria-expanded', 'false');
-          if (badge) {
-            badge.textContent = 'Open';
-            badge.className   = 'ticket-badge ticket-badge--open';
-          }
-          /* Re-hide after transition so it's removed from tab order */
-          body.addEventListener('transitionend', function onEnd() {
-            body.removeEventListener('transitionend', onEnd);
-            if (!body.classList.contains('open')) body.hidden = true;
-          });
-        } else {
-          /* Expand  -  two-frame trick: remove hidden → rAF → add .open */
-          body.hidden = false;
-          requestAnimationFrame(function () {
-            requestAnimationFrame(function () {
-              body.classList.add('open');
-            });
-          });
-          btn.setAttribute('aria-expanded', 'true');
-          if (badge) {
-            badge.textContent = 'Resolved';
-            badge.className   = 'ticket-badge ticket-badge--resolved';
-          }
-        }
-      });
-    });
-  }
-
-  initTicketSim();
 
   /* ===== Experience skill pills - expand/collapse +N ===== */
   function initSkillExpand() {
@@ -1114,13 +937,16 @@
       var shell = target ? target.closest('.browser-shell') : null;
 
       if (shell) {
-        var img = shell.querySelector('img:not(.screenshot-dark):not(.screenshot-light)') || (function() {
-          var imgs = shell.querySelectorAll('img');
-          for (var i = 0; i < imgs.length; i++) {
-            if (imgs[i].offsetParent !== null) return imgs[i];
-          }
-          return imgs[0];
-        })();
+        var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        var img = (isDark ? shell.querySelector('img.screenshot-dark') : shell.querySelector('img.screenshot-light')) ||
+                  shell.querySelector('img:not(.screenshot-dark):not(.screenshot-light)') ||
+                  (function() {
+                    var imgs = shell.querySelectorAll('img');
+                    for (var i = 0; i < imgs.length; i++) {
+                      if (imgs[i].offsetParent !== null) return imgs[i];
+                    }
+                    return imgs[0];
+                  })();
         if (img) {
           e.preventDefault();
           e.stopPropagation();
