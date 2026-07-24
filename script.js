@@ -1026,11 +1026,34 @@
     });
   }
 
+  /* ===== Horizontal Project Showcase Carousel Controls ===== */
+  function initProjectCarousel() {
+    var carousel = document.getElementById('project-carousel');
+    var prevBtn = document.getElementById('carousel-prev');
+    var nextBtn = document.getElementById('carousel-next');
+
+    if (!carousel || !prevBtn || !nextBtn) return;
+
+    prevBtn.addEventListener('click', function () {
+      var cardWidth = carousel.querySelector('.carousel-card')?.offsetWidth || 400;
+      carousel.scrollBy({ left: -cardWidth * 0.85, behavior: 'smooth' });
+      if (typeof playClick === 'function') playClick();
+    });
+
+    nextBtn.addEventListener('click', function () {
+      var cardWidth = carousel.querySelector('.carousel-card')?.offsetWidth || 400;
+      carousel.scrollBy({ left: cardWidth * 0.85, behavior: 'smooth' });
+      if (typeof playClick === 'function') playClick();
+    });
+  }
+
   initProjectTabs();
   initEmailModal();
   initScreenshotLightbox();
   initSoundEffects();
   initProjectsSwapper();
+  initProjectCarousel();
+
 
 })();
 

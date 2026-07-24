@@ -43,97 +43,42 @@
 
   <div class="dot-grid" aria-hidden="true"></div>
 
-  <aside class="sidebar" role="complementary" aria-label="Profile and navigation">
-    <div class="sidebar-top">
-      <div class="sidebar-identity">
-        <div class="sidebar-identity-meta">
-          <a href="index.html" class="sidebar-name" aria-label="Noah Carpiso, home">Noah Carpiso</a>
-          <p class="sidebar-role">Remote Ops · Automation</p>
+    <header class="site-header">
+    <div class="header-container">
+      <div class="header-top">
+        <a href="index.html" class="header-identity" aria-label="Noah Carpiso, home">
+          <img src="final-final.png" alt="Noah Carpiso" class="header-avatar" width="32" height="32">
+          <span class="header-name">Noah Carpiso</span>
+          <span class="header-role">· Metro Manila, PH</span>
+        </a>
+        <div class="header-actions">
+          <div class="header-status">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>Available for work</span>
+          </div>
+          <div class="theme-switch" id="theme-switch-header" role="group" aria-label="Color theme">
+            <button class="theme-btn" data-theme-val="system" aria-label="System theme" title="System">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </button>
+            <button class="theme-btn" data-theme-val="light" aria-label="Light theme" title="Light">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            </button>
+            <button class="theme-btn" data-theme-val="dark" aria-label="Dark theme" title="Dark">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+          </div>
         </div>
       </div>
-      <div class="sidebar-status">
-        <span class="status-dot" aria-hidden="true"></span>
-        <span>Available for work</span>
-      </div>
+      <nav class="header-nav" aria-label="Main Navigation">
+        <a href="index.html" class="header-nav-item" data-nav="home"><span class="nav-num">00</span> Overview</a>
+        <a href="experience.html" class="header-nav-item" data-nav="experience"><span class="nav-num">01</span> Experience</a>
+        <a href="projects.html" class="header-nav-item" data-nav="projects"><span class="nav-num">02</span> Projects</a>
+        <a href="stack.html" class="header-nav-item" data-nav="toolkit"><span class="nav-num">03</span> Toolkit</a>
+        <a href="setup.html" class="header-nav-item" data-nav="setup"><span class="nav-num">04</span> Setup</a>
+        <a href="certifications.html" class="header-nav-item active" aria-current="page" data-nav="certifications"><span class="nav-num">05</span> Certifications</a>
+      </nav>
     </div>
-
-    <nav class="sidebar-nav" aria-label="Site">
-      <a href="experience.html" class="nav-item" data-nav="experience">Experience</a>
-      <a href="projects.html" class="nav-item" data-nav="projects">Projects</a>
-      <a href="stack.html" class="nav-item" data-nav="toolkit">Toolkit</a>
-      <a href="setup.html" class="nav-item" data-nav="setup">Setup</a>
-      <a href="certifications.html" class="nav-item active" data-nav="certifications" aria-current="page">Certifications</a>
-    </nav>
-
-        <div class="sidebar-utils" aria-label="Snake">
-      <a href="play.html" class="util-btn">
-      <span>Snake</span>
-    </a>
-    </div>
-
-<div class="sidebar-footer">
-      <p class="sidebar-meta-label">Links</p>
-      <a href="Noah-David-Carpiso-Resume.pdf" download class="sidebar-link">Resume ↓</a>
-      <a href="https://www.linkedin.com/in/noah-carpiso" target="_blank" rel="noopener noreferrer" class="sidebar-link">LinkedIn ↗</a>
-      <a href="https://github.com/ark-daemon" target="_blank" rel="noopener noreferrer" class="sidebar-link">GitHub ↗</a>
-      <div class="theme-switch" id="theme-switch-desktop" role="group" aria-label="Color theme">
-        <button class="theme-btn" data-theme-val="system" aria-label="System theme" title="System">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        </button>
-        <button class="theme-btn" data-theme-val="light" aria-label="Light theme" title="Light">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        </button>
-        <button class="theme-btn" data-theme-val="dark" aria-label="Dark theme" title="Dark">
-          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-      </div>
-      <div class="sidebar-reach">
-        <p class="sidebar-reach-label">For work or questions, email me</p>
-        <a href="mailto:carpisonoah@gmail.com" class="sidebar-email">
-          <svg class="sidebar-email-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>carpisonoah@gmail.com</span>
-        </a>
-      </div>
-    </div>
-  </aside>
-
-  <header class="mobile-header">
-    <a href="index.html" class="mobile-brand" aria-label="Noah Carpiso, home">
-      <span class="mobile-name">Noah Carpiso</span>
-    </a>
-    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false">
-      <span class="menu-bar"></span>
-      <span class="menu-bar"></span>
-      <span class="menu-bar"></span>
-    </button>
   </header>
-
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-    <nav class="mobile-nav" aria-label="Site">
-      <a href="experience.html" class="mobile-nav-item" data-nav="experience">Experience</a>
-      <a href="projects.html" class="mobile-nav-item" data-nav="projects">Projects</a>
-      <a href="stack.html" class="mobile-nav-item" data-nav="toolkit">Toolkit</a>
-      <a href="setup.html" class="mobile-nav-item" data-nav="setup">Setup</a>
-      <a href="certifications.html" class="mobile-nav-item active" data-nav="certifications" aria-current="page">Certifications</a>
-      <a href="play.html" class="mobile-nav-item" data-nav="play">Snake</a>
-    </nav>
-    <div class="mobile-menu-footer">
-      <a href="Noah-David-Carpiso-Resume.pdf" download class="mobile-link">Resume ↓</a>
-      <a href="https://www.linkedin.com/in/noah-carpiso" target="_blank" rel="noopener noreferrer" class="mobile-link">LinkedIn ↗</a>
-      <a href="https://github.com/ark-daemon" target="_blank" rel="noopener noreferrer" class="mobile-link">GitHub ↗</a>
-      <div class="theme-switch" id="theme-switch-mobile" role="group" aria-label="Color theme">
-        <button class="theme-btn" data-theme-val="system" aria-label="System theme" title="System">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        </button>
-        <button class="theme-btn" data-theme-val="light" aria-label="Light theme" title="Light">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        </button>
-        <button class="theme-btn" data-theme-val="dark" aria-label="Dark theme" title="Dark">
-          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
 
   <main class="main">
     <header class="page-header">
