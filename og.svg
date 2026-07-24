@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#09090b"/>
+  <!-- 1px Inset Border -->
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#27272a" stroke-width="1" rx="8"/>
+  
+  <!-- Top-left small mono label -->
+  <text x="80" y="140" fill="#a1a1aa" font-family="monospace, system-ui, sans-serif" font-size="20" font-weight="600" letter-spacing="0.1em">NOAH CARPISO</text>
+  
+  <!-- Large display text -->
+  <text x="80" y="240" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="700" letter-spacing="-0.02em">Remote Operations &amp; Automation</text>
+  
+  <!-- Muted subline -->
+  <text x="80" y="320" fill="#a1a1aa" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="400">I run community workflows and build the tools that make them repeatable.</text>
+  
+  <!-- Footer line -->
+  <text x="80" y="520" fill="#71717a" font-family="monospace, system-ui, sans-serif" font-size="20">noah-carpiso.pages.dev · Metro Manila, PH · GMT+8</text>
+</svg>

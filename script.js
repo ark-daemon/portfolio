@@ -801,22 +801,8 @@
   function initEmailModal() {
     var modal = document.getElementById('email-modal');
     var form = document.querySelector('.email-form');
-    var triggerElement = null;
-
-    if (modal) {
-      var closeBtn = document.getElementById('email-modal-close');
-
-      function openModal(trigger) {
-        triggerElement = trigger || document.activeElement;
-        if (typeof modal.showModal === 'function') {
-          modal.showModal();
-        } else {
-          modal.setAttribute('open', 'true');
-        }
-        document.body.style.overflow = 'hidden';
-        if (closeBtn) closeBtn.focus();
-        if (typeof playClick === 'function') playClick();
-      }
+    if (!modal && !form) return;
+  }
 
       function closeModal() {
         if (typeof modal.close === 'function') {
