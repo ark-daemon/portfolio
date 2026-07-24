@@ -1195,33 +1195,79 @@
     });
   }
 
-  /* ===== Horizontal Project Showcase Carousel Controls & Keyboard Nav ===== */
+  /* ===== Horizontal Project Showcase Carousel Controls & 3-Card Stage ===== */
   function initProjectCarousel() {
     var carousel = document.getElementById('project-carousel');
     var prevBtn = document.getElementById('carousel-prev');
     var nextBtn = document.getElementById('carousel-next');
 
-    if (!carousel || !prevBtn || !nextBtn) return;
+    if (!carousel) return;
 
-    prevBtn.addEventListener('click', function () {
-      var cardWidth = carousel.querySelector('.carousel-card')?.offsetWidth || 400;
-      carousel.scrollBy({ left: -cardWidth * 0.85, behavior: 'smooth' });
-      if (typeof playClick === 'function') playClick();
+    var cards = Array.from(carousel.querySelectorAll('.carousel-card--abelarde'));
+    if (!cards.length) return;
+
+    function updateCenterCard() {
+      var carouselCenter = carousel.scrollLeft + carousel.clientWidth / 2;
+      var closestCard = null;
+      var closestDistance = Infinity;
+
+      cards.forEach(function (card) {
+        var cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        var distance = Math.abs(carouselCenter - cardCenter);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestCard = card;
+        }
+      });
+
+      cards.forEach(function (card) {
+        if (card === closestCard) {
+          card.classList.add('is-center');
+        } else {
+          card.classList.remove('is-center');
+        }
+      });
+    }
+
+    // Initial positioning and scroll listener
+    updateCenterCard();
+    carousel.addEventListener('scroll', updateCenterCard, { passive: true });
+
+    // Click side card to center it
+    cards.forEach(function (card) {
+      card.addEventListener('click', function (e) {
+        if (!card.classList.contains('is-center')) {
+          e.preventDefault();
+          card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      });
     });
 
-    nextBtn.addEventListener('click', function () {
-      var cardWidth = carousel.querySelector('.carousel-card')?.offsetWidth || 400;
-      carousel.scrollBy({ left: cardWidth * 0.85, behavior: 'smooth' });
-      if (typeof playClick === 'function') playClick();
-    });
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function () {
+        var centerIdx = cards.findIndex(function (c) { return c.classList.contains('is-center'); });
+        var targetIdx = Math.max(0, centerIdx - 1);
+        cards[targetIdx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        if (typeof playClick === 'function') playClick();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function () {
+        var centerIdx = cards.findIndex(function (c) { return c.classList.contains('is-center'); });
+        var targetIdx = Math.min(cards.length - 1, centerIdx + 1);
+        cards[targetIdx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        if (typeof playClick === 'function') playClick();
+      });
+    }
 
     carousel.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowLeft') {
         e.preventDefault();
-        prevBtn.click();
+        if (prevBtn) prevBtn.click();
       } else if (e.key === 'ArrowRight') {
         e.preventDefault();
-        nextBtn.click();
+        if (nextBtn) nextBtn.click();
       }
     });
   }

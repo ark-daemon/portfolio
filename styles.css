@@ -5613,9 +5613,35 @@ a:hover .slide-arrow-icon {
   color: var(--text-2);
 }
 
-/* ===== Abelarde Media-First Carousel Styling ===== */
+/* ===== Abelarde 3-Card Stage Carousel Styling ===== */
+.carousel-fullbleed-wrapper {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow: hidden;
+  padding: 1.5rem 0 2.5rem;
+}
+
+.carousel-fullbleed-track {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-left: calc(50vw - 320px);
+  padding-right: calc(50vw - 320px);
+  scrollbar-width: none;
+}
+
+.carousel-fullbleed-track::-webkit-scrollbar {
+  display: none;
+}
+
 .carousel-card--abelarde {
-  width: 580px;
+  width: 640px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -5624,13 +5650,16 @@ a:hover .slide-arrow-icon {
   border: none;
   box-shadow: none;
   padding: 0;
+  scroll-snap-align: center;
+  transform: scale(0.88);
+  opacity: 0.6;
+  transition: transform 400ms var(--ease-emil-out), opacity 400ms ease;
+  transform-origin: center center;
 }
 
-@media (max-width: 768px) {
-  .carousel-card--abelarde {
-    width: 88vw;
-    max-width: 480px;
-  }
+.carousel-card--abelarde.is-center {
+  transform: scale(1.04);
+  opacity: 1;
 }
 
 .carousel-canvas-link {
@@ -5641,28 +5670,32 @@ a:hover .slide-arrow-icon {
   background: var(--surface-2);
   border: 1px solid var(--border);
   padding: 1.25rem;
-  transition: transform 300ms var(--ease-emil-out), box-shadow 300ms var(--ease-emil-out), border-color 300ms ease;
+  transition: box-shadow 300ms var(--ease-emil-out), border-color 300ms ease;
 }
 
-.carousel-canvas-link:hover {
-  border-color: var(--text-3);
-  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.18);
+.carousel-card--abelarde.is-center .carousel-canvas-link {
+  border-color: var(--border-strong, var(--text-3));
+  box-shadow: 0 24px 50px -16px rgba(0, 0, 0, 0.22);
 }
 
 .carousel-canvas-media {
   width: 100%;
+  height: 320px;
+  aspect-ratio: 16 / 10;
   border-radius: var(--r-md);
   overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--border-subtle);
+  position: relative;
 }
 
 .carousel-canvas-media img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
   display: block;
   transition: transform 600ms var(--ease-emil-out);
-  transform-origin: center center;
 }
 
 .carousel-canvas-link:hover .carousel-canvas-media img {
@@ -5673,7 +5706,7 @@ a:hover .slide-arrow-icon {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  padding: 0 0.25rem;
+  padding: 0.25rem 0.5rem 0;
 }
 
 .carousel-label-top {
@@ -5704,46 +5737,23 @@ a:hover .slide-arrow-icon {
   gap: 1.25rem;
 }
 
-/* ===== Full-Bleed Edge-to-Edge Carousel Track (Abelarde Layout) ===== */
-.carousel-fullbleed-wrapper {
-  position: relative;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  overflow: hidden;
-  padding: 1rem 0 2rem;
-}
-
-.carousel-fullbleed-track {
-  display: flex;
-  gap: 2rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  padding-left: max(1.5rem, calc((100vw - 1100px) / 2));
-  padding-right: max(1.5rem, calc((100vw - 1100px) / 2));
-  scrollbar-width: none;
-}
-
-.carousel-fullbleed-track::-webkit-scrollbar {
-  display: none;
-}
-
-.carousel-fullbleed-track .carousel-card--abelarde {
-  scroll-snap-align: start;
-  width: clamp(340px, 55vw, 680px);
-  flex-shrink: 0;
-}
-
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .carousel-fullbleed-track {
     gap: 1rem;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    padding-left: calc(50vw - 40vw);
+    padding-right: calc(50vw - 40vw);
   }
-  .carousel-fullbleed-track .carousel-card--abelarde {
-    width: 84vw;
+  .carousel-card--abelarde {
+    width: 80vw;
+    transform: scale(0.92);
+    opacity: 0.7;
+  }
+  .carousel-card--abelarde.is-center {
+    transform: scale(1.0);
+    opacity: 1;
+  }
+  .carousel-canvas-media {
+    height: 230px;
   }
 }
 
