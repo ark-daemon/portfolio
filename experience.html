@@ -379,6 +379,7 @@
           action="https://formspree.io/f/xbjnqvgw"
           method="POST"
           class="email-form"
+          id="email-form"
         >
           <div class="form-group">
             <label for="email-input" class="form-label">Your email</label>
@@ -406,14 +407,15 @@
               id="message-help"
               style="
                 font-size: 0.75rem;
-                color: var(--gray-500);
+                color: var(--text-3);
                 margin-top: 0.25rem;
               "
             >
               For ops, community, support, partnerships, or automation roles.
             </p>
           </div>
-          <button type="submit" class="btn btn-primary form-submit">
+          <div id="form-status-msg" class="form-status-msg" aria-live="polite" role="status" style="margin-bottom: 1rem; font-family: var(--font-mono); font-size: 12px;"></div>
+          <button type="submit" class="btn btn-primary form-submit" id="form-submit-btn">
             Send message ↗
           </button>
         </form>

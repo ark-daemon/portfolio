@@ -797,92 +797,117 @@
     });
   }
 
-  /* ===== Email Contact Modal Overlay ===== */
+  /* ===== Email Contact Form & Modal (Formspree AJAX POST) ===== */
   function initEmailModal() {
-    // 1. Create and inject email overlay HTML dynamically at the end of the body
-    var overlay = document.createElement('div');
-    overlay.className = 'overlay';
-    overlay.id = 'email-overlay';
-    overlay.setAttribute('aria-hidden', 'true');
-    overlay.setAttribute('role', 'dialog');
-    overlay.setAttribute('aria-modal', 'true');
-    overlay.setAttribute('aria-labelledby', 'email-overlay-title');
+    var modal = document.getElementById('email-modal');
+    var form = document.querySelector('.email-form');
+    var triggerElement = null;
 
-    overlay.innerHTML =
-      '<div class="overlay-panel" style="position: relative; width: min(28rem, 100%);">' +
-        '<button type="button" class="overlay-close" id="email-overlay-close" aria-label="Close modal">✕</button>' +
-        '<div style="margin-bottom: 1.5rem;">' +
-          '<p class="email-modal-eyebrow">GET IN TOUCH</p>' +
-          '<h2 id="email-overlay-title" class="email-modal-heading">say hello</h2>' +
-          '<p style="font-size: 13px; color: var(--text-2); line-height: 1.5;">For work, collabs, or just to say hi — drop me a line.</p>' +
-        '</div>' +
-        '<div class="email-copy-row">' +
-          '<input type="text" readonly value="carpisonoah@gmail.com" id="email-copy-input" class="email-copy-input" aria-label="Email address">' +
-          '<button type="button" id="email-copy-btn" class="email-copy-btn">Copy</button>' +
-        '</div>' +
-        '<a href="mailto:carpisonoah@gmail.com" id="email-mail-app-btn" class="email-mail-app-btn">Open mail app</a>' +
-      '</div>';
+    if (modal) {
+      var closeBtn = document.getElementById('email-modal-close');
 
-    document.body.appendChild(overlay);
-
-    var closeBtn = document.getElementById('email-overlay-close');
-    var copyInput = document.getElementById('email-copy-input');
-    var copyBtn = document.getElementById('email-copy-btn');
-    var mailAppBtn = document.getElementById('email-mail-app-btn');
-
-    // 2. Open / Close helper functions
-    function openModal() {
-      overlay.classList.add('is-open');
-      overlay.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('overlay-open');
-    }
-
-    function closeModal() {
-      overlay.classList.remove('is-open');
-      overlay.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('overlay-open');
-    }
-
-    // 3. Event listeners
-    closeBtn.addEventListener('click', closeModal);
-    overlay.addEventListener('click', function (e) {
-      if (e.target === overlay) closeModal();
-    });
-
-    // Copy logic
-    copyBtn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      navigator.clipboard.writeText(copyInput.value).then(function () {
-        copyBtn.textContent = 'Copied!';
-        setTimeout(function () {
-          copyBtn.textContent = 'Copy';
-        }, 1500);
-      });
-    });
-
-    // Close when clicking main action
-    mailAppBtn.addEventListener('click', function () {
-      closeModal();
-    });
-
-    // 4. Global email link interceptor
-    document.addEventListener('click', function (e) {
-      var target = e.target;
-      while (target && target !== document.body) {
-        if (target.nodeType !== 1) {
-          target = target.parentNode;
-          continue;
+      function openModal(trigger) {
+        triggerElement = trigger || document.activeElement;
+        if (typeof modal.showModal === 'function') {
+          modal.showModal();
+        } else {
+          modal.setAttribute('open', 'true');
         }
-        var href = target.getAttribute('href') || '';
-        // If clicked any mailto link or email trigger, open the modal instead
-        if (href.indexOf('mailto:carpisonoah@gmail.com') === 0 || target.classList.contains('email-modal-trigger')) {
-          e.preventDefault();
-          openModal();
-          break;
-        }
-        target = target.parentNode;
+        document.body.style.overflow = 'hidden';
+        if (closeBtn) closeBtn.focus();
+        if (typeof playClick === 'function') playClick();
       }
-    });
+
+      function closeModal() {
+        if (typeof modal.close === 'function') {
+          modal.close();
+        } else {
+          modal.removeAttribute('open');
+        }
+        document.body.style.overflow = '';
+        if (triggerElement && typeof triggerElement.focus === 'function') {
+          triggerElement.focus();
+        }
+        if (typeof playClick === 'function') playClick();
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+      }
+
+      modal.addEventListener('cancel', function (e) {
+        e.preventDefault();
+        closeModal();
+      });
+
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+
+      document.querySelectorAll('.email-modal-trigger').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          openModal(btn);
+        });
+      });
+    }
+
+    if (form) {
+      var statusMsg = document.getElementById('form-status-msg');
+      if (!statusMsg) {
+        statusMsg = document.createElement('div');
+        statusMsg.id = 'form-status-msg';
+        statusMsg.className = 'form-status-msg';
+        statusMsg.setAttribute('aria-live', 'polite');
+        statusMsg.setAttribute('role', 'status');
+        statusMsg.style.marginBottom = '1rem';
+        statusMsg.style.fontFamily = 'var(--font-mono)';
+        statusMsg.style.fontSize = '12px';
+        form.appendChild(statusMsg);
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var submitBtn = form.querySelector('.form-submit');
+        var originalBtnText = submitBtn ? submitBtn.innerHTML : 'Send message ↗';
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = 'Sending...';
+        }
+        statusMsg.textContent = '';
+        statusMsg.style.color = 'var(--text-2)';
+
+        var formData = new FormData(form);
+
+        fetch(form.action, {
+          method: form.method || 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        }).then(function (response) {
+          if (response.ok) {
+            statusMsg.style.color = '#10b981';
+            statusMsg.textContent = "Message sent — I'll reply within 24h.";
+            form.reset();
+          } else {
+            statusMsg.style.color = '#ef4444';
+            statusMsg.textContent = "Something went wrong. Please email carpisonoah@gmail.com instead.";
+          }
+        }).catch(function () {
+          statusMsg.style.color = '#ef4444';
+          statusMsg.textContent = "Something went wrong. Please email carpisonoah@gmail.com instead.";
+        }).finally(function () {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+          }
+        });
+      });
+    }
   }
 
   /* ===== Screenshot Lightbox Modal (Site-Wide) ===== */
