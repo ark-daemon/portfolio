@@ -5613,3 +5613,94 @@ a:hover .slide-arrow-icon {
   color: var(--text-2);
 }
 
+/* ===== Abelarde Media-First Carousel Styling ===== */
+.carousel-card--abelarde {
+  width: 580px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .carousel-card--abelarde {
+    width: 88vw;
+    max-width: 480px;
+  }
+}
+
+.carousel-canvas-link {
+  display: block;
+  text-decoration: none;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 1.25rem;
+  transition: transform 300ms var(--ease-emil-out), box-shadow 300ms var(--ease-emil-out), border-color 300ms ease;
+}
+
+.carousel-canvas-link:hover {
+  border-color: var(--text-3);
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.18);
+}
+
+.carousel-canvas-media {
+  width: 100%;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+}
+
+.carousel-canvas-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 600ms var(--ease-emil-out);
+  transform-origin: center center;
+}
+
+.carousel-canvas-link:hover .carousel-canvas-media img {
+  transform: scale(1.025);
+}
+
+.carousel-label-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0 0.25rem;
+}
+
+.carousel-label-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.carousel-label-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0;
+}
+
+.carousel-label-desc {
+  font-size: 0.9375rem;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin: 0.2rem 0 0.5rem;
+}
+
+.carousel-label-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
