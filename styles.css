@@ -5696,9 +5696,6 @@ a:hover .slide-arrow-icon {
 .carousel-canvas-media img {
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  object-position: top center;
   display: block;
   transition: transform 600ms var(--ease-emil-out);
 }
