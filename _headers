@@ -2,3 +2,9 @@
   Content-Security-Policy: frame-ancestors 'self' https://noah-carpiso.pages.dev https://*.pages.dev
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
+
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/projects/*.html
+  Cache-Control: no-cache, no-store, must-revalidate
