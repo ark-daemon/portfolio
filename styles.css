@@ -23,6 +23,28 @@
 
 /* ===== Reset ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Accessible Skip Link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 1000;
+  padding: 0.5rem 1rem;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  transition: top 120ms var(--ease);
+}
+.skip-link:focus {
+  top: 1rem;
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -2322,8 +2344,9 @@ body[data-page="setup"] .section {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
+  position: relative;
   border-radius: 999px;
   background: transparent;
   border: 1px solid transparent;
@@ -2332,7 +2355,18 @@ body[data-page="setup"] .section {
   transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast), transform var(--t-fast);
   padding: 0;
 }
-.theme-btn svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+/* Touch target expansion to min 44px hit area */
+.theme-btn::before,
+.sound-toggle-btn::before,
+.carousel-btn::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  left: -8px;
+  right: -8px;
+}
+.theme-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .theme-btn:hover { color: var(--ink); background: var(--surface-2); }
 .theme-btn:active { transform: scale(0.96); }
 .theme-btn.active {
@@ -2351,8 +2385,9 @@ body[data-page="setup"] .section {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
+  position: relative;
   border-radius: 999px;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -2361,6 +2396,46 @@ body[data-page="setup"] .section {
   transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast);
   padding: 0;
   vertical-align: middle;
+}
+
+/* ===== Toast Notification System ===== */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+.toast {
+  pointer-events: auto;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--bg);
+  background: var(--ink);
+  padding: 0.65rem 1.15rem;
+  border-radius: var(--r-md);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 160ms var(--ease), transform 160ms var(--ease);
+}
+.toast.toast--show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== CSP Iframe Fallback Rules ===== */
+.browser-content--iframe.has-fallback iframe {
+  display: none !important;
+}
+.browser-content--iframe.has-fallback img {
+  display: block !important;
 }
 .sound-toggle-btn svg {
   width: 12px;
@@ -5061,5 +5136,19 @@ body.overlay-open { overflow: hidden; }
 .catalog-pill--live .status-dot {
   background: var(--bg);
   opacity: 1;
+}
+
+/* ===== Accessibility: Prefers Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 

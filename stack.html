@@ -32,6 +32,7 @@
   </script>
 </head>
 <body data-page="toolkit">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
   <div class="dot-grid" aria-hidden="true"></div>
 
@@ -49,13 +50,13 @@
             <span>Available for work</span>
           </div>
           <div class="theme-switch" id="theme-switch-header" role="group" aria-label="Color theme">
-            <button class="theme-btn" data-theme-val="system" aria-label="System theme" title="System">
+            <button type="button" class="theme-btn" data-theme-val="system" aria-label="System theme" title="System">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
             </button>
-            <button class="theme-btn" data-theme-val="light" aria-label="Light theme" title="Light">
+            <button type="button" class="theme-btn" data-theme-val="light" aria-label="Light theme" title="Light">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
             </button>
-            <button class="theme-btn" data-theme-val="dark" aria-label="Dark theme" title="Dark">
+            <button type="button" class="theme-btn" data-theme-val="dark" aria-label="Dark theme" title="Dark">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
           </div>
@@ -72,7 +73,7 @@
     </div>
   </header>
 
-  <main class="main">
+  <main class="main" id="main-content">
     <header class="page-header" data-reveal="1">
       <h1 class="page-title">toolkit</h1>
       <p class="page-lede">Tools I use to build things and run operations. Some I know well, some I'm still learning.</p>
@@ -174,22 +175,22 @@
           </svg>
 
           <!-- Node 1 -->
-          <button class="flow-node flow-node--active" data-node="1" aria-pressed="true" aria-describedby="flow-desc-text">
+          <button type="button" class="flow-node flow-node--active" data-node="1" aria-pressed="true" aria-describedby="flow-desc-text">
             <span class="flow-node-label">New member joins</span>
           </button>
 
           <!-- Node 2 -->
-          <button class="flow-node" data-node="2" aria-pressed="false" aria-describedby="flow-desc-text">
+          <button type="button" class="flow-node" data-node="2" aria-pressed="false" aria-describedby="flow-desc-text">
             <span class="flow-node-label">Auto-FAQ triggers</span>
           </button>
 
           <!-- Node 3  -  decision step -->
-          <button class="flow-node flow-node--decision" data-node="3" aria-pressed="false" aria-describedby="flow-desc-text">
+          <button type="button" class="flow-node flow-node--decision" data-node="3" aria-pressed="false" aria-describedby="flow-desc-text">
             <span class="flow-node-label">Still unresolved?</span>
           </button>
 
           <!-- Node 4 -->
-          <button class="flow-node" data-node="4" aria-pressed="false" aria-describedby="flow-desc-text">
+          <button type="button" class="flow-node" data-node="4" aria-pressed="false" aria-describedby="flow-desc-text">
             <span class="flow-node-label">Human review</span>
           </button>
         </div>
@@ -208,8 +209,9 @@
         <p class="cta-headline">Available for remote ops, support, partnerships, and junior automation-adjacent roles.</p>
         <div class="cta-actions">
           <a href="mailto:carpisonoah@gmail.com" class="btn btn-cta-primary">Email me about a role</a>
+          <button type="button" class="btn btn-cta-outline" data-copy-email="carpisonoah@gmail.com" aria-label="Copy email address carpisonoah@gmail.com">Copy email 📋</button>
           <a href="https://www.linkedin.com/in/noah-carpiso" target="_blank" rel="noopener noreferrer" class="btn btn-cta-outline">LinkedIn &nearr;</a>
-          <a href="Noah-David-Carpiso-Resume.pdf" download class="btn btn-cta-outline">Resume &darr;</a>
+          <a href="Noah-David-Carpiso-Resume.pdf" download="Noah_Carpiso_Resume.pdf" class="btn btn-cta-outline">Resume &darr;</a>
         </div>
       </div>
     </section>

@@ -700,6 +700,7 @@
       var idSuffix = isMobile ? 'mobile' : 'desktop';
 
       var btn = document.createElement('button');
+      btn.type = 'button';
       btn.className = 'sound-toggle-btn';
       btn.id = 'sound-toggle-' + idSuffix;
       btn.title = 'Toggle sound effects';
@@ -809,7 +810,7 @@
 
     overlay.innerHTML =
       '<div class="overlay-panel" style="position: relative; width: min(28rem, 100%);">' +
-        '<button class="overlay-close" id="email-overlay-close" aria-label="Close modal">✕</button>' +
+        '<button type="button" class="overlay-close" id="email-overlay-close" aria-label="Close modal">✕</button>' +
         '<div style="margin-bottom: 1.5rem;">' +
           '<p class="email-modal-eyebrow">GET IN TOUCH</p>' +
           '<h2 id="email-overlay-title" class="email-modal-heading">say hello</h2>' +
@@ -817,7 +818,7 @@
         '</div>' +
         '<div class="email-copy-row">' +
           '<input type="text" readonly value="carpisonoah@gmail.com" id="email-copy-input" class="email-copy-input" aria-label="Email address">' +
-          '<button id="email-copy-btn" class="email-copy-btn">Copy</button>' +
+          '<button type="button" id="email-copy-btn" class="email-copy-btn">Copy</button>' +
         '</div>' +
         '<a href="mailto:carpisonoah@gmail.com" id="email-mail-app-btn" class="email-mail-app-btn">Open mail app</a>' +
       '</div>';
@@ -893,11 +894,12 @@
       modal.id = 'screenshot-modal';
       modal.setAttribute('aria-hidden', 'true');
       modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
       modal.setAttribute('aria-label', 'Enlarged screenshot view');
       modal.innerHTML =
         '<div class="screenshot-modal-backdrop" data-dismiss="modal"></div>' +
         '<div class="screenshot-modal-content">' +
-          '<button class="screenshot-modal-close" id="screenshot-modal-close" aria-label="Close modal" data-dismiss="modal">' +
+          '<button type="button" class="screenshot-modal-close" id="screenshot-modal-close" aria-label="Close modal" data-dismiss="modal">' +
             '<svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><path d="M18 6L6 18M6 6l12 12"/></svg>' +
           '</button>' +
           '<img class="screenshot-modal-img" id="screenshot-modal-img" src="" alt="Enlarged project screenshot">' +
@@ -910,9 +912,11 @@
     var modalCaption = document.getElementById('screenshot-modal-caption');
     var closeBtn = document.getElementById('screenshot-modal-close');
     var backdrop = modal.querySelector('.screenshot-modal-backdrop');
+    var triggerElement = null;
 
-    function openLightbox(src, alt) {
+    function openLightbox(src, alt, trigger) {
       if (!modalImg) return;
+      triggerElement = trigger || document.activeElement;
       modalImg.src = src;
       modalImg.alt = alt || 'Enlarged project screenshot';
       if (modalCaption) {
@@ -921,6 +925,7 @@
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      if (closeBtn) closeBtn.focus();
       if (typeof playClick === 'function') playClick();
     }
 
@@ -929,6 +934,9 @@
       modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      if (triggerElement && typeof triggerElement.focus === 'function') {
+        triggerElement.focus();
+      }
       if (typeof playClick === 'function') playClick();
     }
 
@@ -951,7 +959,7 @@
           e.preventDefault();
           e.stopPropagation();
           var title = shell.getAttribute('data-lightbox') || img.alt || 'Project screenshot';
-          openLightbox(img.src, title);
+          openLightbox(img.src, title, shell);
           return;
         }
       }
@@ -965,7 +973,7 @@
         if (isScreenshot) {
           e.preventDefault();
           e.stopPropagation();
-          openLightbox(target.src, target.alt);
+          openLightbox(target.src, target.alt, target);
         }
       }
     });
@@ -991,6 +999,76 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && modal.classList.contains('is-open')) {
         closeLightbox();
+      }
+    });
+  }
+
+  /* ===== Toast Notification System & Copy Email Helper ===== */
+  function showToast(message) {
+    var container = document.getElementById('toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.className = 'toast-container';
+      container.id = 'toast-container';
+      container.setAttribute('aria-live', 'polite');
+      document.body.appendChild(container);
+    }
+    var toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span>' + message + '</span>';
+    container.appendChild(toast);
+    
+    requestAnimationFrame(function () {
+      toast.classList.add('toast--show');
+    });
+
+    setTimeout(function () {
+      toast.classList.remove('toast--show');
+      toast.addEventListener('transitionend', function () {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      });
+    }, 2800);
+  }
+
+  function initEmailCopy() {
+    document.querySelectorAll('[data-copy-email]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        var email = btn.getAttribute('data-copy-email') || 'carpisonoah@gmail.com';
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(email).then(function () {
+            showToast('Email copied to clipboard!');
+          }).catch(function () {
+            showToast('carpisonoah@gmail.com');
+          });
+        } else {
+          showToast('carpisonoah@gmail.com');
+        }
+      });
+    });
+  }
+
+  /* ===== CSP Iframe Fallback Detector ===== */
+  function initIframeFallbackDetector() {
+    document.querySelectorAll('.browser-content--iframe iframe').forEach(function (iframe) {
+      var shell = iframe.closest('.browser-content--iframe');
+      if (!shell) return;
+
+      iframe.addEventListener('error', function () {
+        shell.classList.add('has-fallback');
+      });
+
+      if (iframe.src.indexOf('sporty-desk.pages.dev') !== -1) {
+        setTimeout(function() {
+          try {
+            var doc = iframe.contentDocument || iframe.contentWindow.document;
+            if (!doc || !doc.body || doc.body.innerHTML === '') {
+              shell.classList.add('has-fallback');
+            }
+          } catch(e) {
+            shell.classList.add('has-fallback');
+          }
+        }, 1000);
       }
     });
   }
@@ -1053,7 +1131,8 @@
   initSoundEffects();
   initProjectsSwapper();
   initProjectCarousel();
-
+  initEmailCopy();
+  initIframeFallbackDetector();
 
 })();
 
