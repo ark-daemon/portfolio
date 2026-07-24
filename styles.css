@@ -5704,3 +5704,46 @@ a:hover .slide-arrow-icon {
   gap: 1.25rem;
 }
 
+/* ===== Full-Bleed Edge-to-Edge Carousel Track (Abelarde Layout) ===== */
+.carousel-fullbleed-wrapper {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  overflow: hidden;
+  padding: 1rem 0 2rem;
+}
+
+.carousel-fullbleed-track {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-left: max(1.5rem, calc((100vw - 1100px) / 2));
+  padding-right: max(1.5rem, calc((100vw - 1100px) / 2));
+  scrollbar-width: none;
+}
+
+.carousel-fullbleed-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-fullbleed-track .carousel-card--abelarde {
+  scroll-snap-align: start;
+  width: clamp(340px, 55vw, 680px);
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .carousel-fullbleed-track {
+    gap: 1rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .carousel-fullbleed-track .carousel-card--abelarde {
+    width: 84vw;
+  }
+}
+

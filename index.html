@@ -170,8 +170,8 @@
         <a href="projects.html" class="all-projects-link">ALL PROJECTS &rarr;</a>
       </div>
 
-      <div class="project-carousel-wrapper">
-        <div class="project-carousel" id="project-carousel" aria-label="Selected Projects Carousel">
+      <div class="carousel-fullbleed-wrapper">
+        <div class="carousel-fullbleed-track" id="project-carousel" aria-label="Selected Projects Carousel">
 
           <!-- Card 1: Codex Manager (Finished) -->
           <article class="carousel-card carousel-card--abelarde">
@@ -247,12 +247,71 @@
             </div>
           </article>
 
-        </div>
+          <!-- Card 4: Sporty Desk (Live) -->
+          <article class="carousel-card carousel-card--abelarde">
+            <a href="projects/sporty-desk.html" class="carousel-canvas-link" aria-label="Sporty Desk case study" style="padding: 0.75rem;">
+              <div class="carousel-canvas-media" style="height: 310px;">
+                <div class="browser-shell browser-shell--live" style="height: 100%; border: none; border-radius: 0; box-shadow: none;">
+                  <div class="browser-bar">
+                    <div class="browser-dots">
+                      <span class="dot dot-red"></span>
+                      <span class="dot dot-yellow"></span>
+                      <span class="dot dot-green"></span>
+                    </div>
+                    <div class="browser-url">sporty-desk.pages.dev</div>
+                    <span class="browser-external-link">Open live ↗</span>
+                  </div>
+                  <div class="browser-content browser-content--iframe" style="flex: 1; height: calc(100% - 29px);">
+                    <iframe src="https://sporty-desk.pages.dev/" title="Sporty Desk Live Embed" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms" style="width: 100%; height: 100%; border: none;"></iframe>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <div class="carousel-label-block">
+              <div class="carousel-label-top">
+                <h3 class="carousel-label-title">Sporty Desk</h3>
+                <span class="catalog-pill catalog-pill--live"><span class="status-dot" aria-hidden="true"></span> Live</span>
+              </div>
+              <p class="carousel-label-desc">Customer support ticket triage desk built for handling member requests and status tracking.</p>
+              <div class="carousel-label-actions">
+                <a href="https://sporty-desk.pages.dev/" target="_blank" rel="noopener noreferrer" class="text-link">Open live ↗</a>
+                <a href="projects/sporty-desk.html" class="text-link">View case study <span class="slide-arrow-icon">→</span></a>
+              </div>
+            </div>
+          </article>
 
-        <div class="carousel-controls">
-          <a href="projects.html" class="text-link">View all 5 projects →</a>
-          <div class="carousel-arrows">
-            <button type="button" class="carousel-btn" id="carousel-prev" aria-label="Previous project">
+          <!-- Card 5: Esports Automation (Finished) -->
+          <article class="carousel-card carousel-card--abelarde">
+            <a href="projects/esports-automation.html" class="carousel-canvas-link" aria-label="Esports Scrapers & Automation case study">
+              <div class="carousel-canvas-media" style="padding: 1.5rem; background: var(--surface-2);">
+                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-2); text-align: left; background: var(--bg); padding: 1rem; border-radius: var(--r-sm); border: 1px solid var(--border); overflow: hidden;">
+                  <div style="color: var(--text-3); margin-bottom: 0.4rem;">// esports_pipeline.py — Match Collector</div>
+                  <div><span style="color: #e06c75;">import</span> requests, bs4, json</div>
+                  <div><span style="color: #c678dd;">def</span> <span style="color: #61afef;">fetch_tournament_standings</span>(url):</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;res = requests.get(url)</div>
+                  <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #c678dd;">return</span> export_to_sheets(res)</div>
+                </div>
+              </div>
+            </a>
+            <div class="carousel-label-block">
+              <div class="carousel-label-top">
+                <h3 class="carousel-label-title">Esports Scrapers &amp; Automation</h3>
+                <span class="project-status status-done">Finished</span>
+              </div>
+              <p class="carousel-label-desc">Python data collectors and n8n pipelines for extracting esports match data automatically.</p>
+              <div class="carousel-label-actions">
+                <a href="projects/esports-automation.html" class="text-link">View case study <span class="slide-arrow-icon">→</span></a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <div class="carousel-controls">
+        <a href="projects.html" class="text-link">View all 5 projects →</a>
+        <div class="carousel-arrows">
+          <button type="button" class="carousel-btn" id="carousel-prev" aria-label="Previous project">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
             </button>
             <button type="button" class="carousel-btn" id="carousel-next" aria-label="Next project">
