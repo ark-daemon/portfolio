@@ -37,7 +37,7 @@
   font-size: 13px;
   border-radius: var(--r-sm);
   text-decoration: none;
-  transition: top 120ms var(--ease);
+  transition: top 300ms var(--ease);
 }
 .skip-link:focus {
   top: 1rem;
@@ -83,12 +83,16 @@ html {
   --r-lg: 12px;
   --r-xl: 16px;
 
-  /* Motion */
+  /* Motion - Smooth 0.3s (300ms) fluid transitions */
   --ease: cubic-bezier(0.16, 1, 0.3, 1); /* ease-out settle */
   --ease-in: cubic-bezier(0.4, 0, 1, 1);  /* exit depart */
-  --t-fast: 120ms var(--ease);
-  --t-med: 250ms var(--ease);
-  --t-card: 200ms var(--ease); /* shared card hover clock */
+  --ease-out: ease-out;
+  --ease-in-out: ease-in-out;
+  --ease-emil-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --t-fast: 300ms ease-out;
+  --t-med: 300ms ease-out;
+  --t-card: 300ms ease-out;
+  --t-smooth: 300ms ease-out;
 }
 
 /* ===== Dark Theme  -  re-mapped, not redesigned ===== */
@@ -111,7 +115,7 @@ body {
   line-height: 1.6;
   color: var(--ink);
   background-color: var(--bg);
-  transition: background-color 180ms var(--ease), color 180ms var(--ease);
+  transition: background-color 300ms var(--ease), color 300ms var(--ease);
 }
 
 /* Instant multipage swaps in supporting browsers (Chrome/Edge) */
@@ -734,7 +738,7 @@ body[data-page="experience"] .page-header {
   display: flex;
   align-items: center;
   color: var(--text-3);
-  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
   flex-shrink: 0;
 }
 .ticket-chevron svg {
@@ -752,8 +756,8 @@ body[data-page="experience"] .page-header {
   grid-template-rows: 0fr;
   opacity: 0;
   transition:
-    grid-template-rows 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    opacity            200ms cubic-bezier(0.16, 1, 0.3, 1);
+    grid-template-rows 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity            300ms cubic-bezier(0.16, 1, 0.3, 1);
   /* hidden attribute: display:none bypasses transitions  -  JS removes it */
 }
 .ticket-body > * { overflow: hidden; }
@@ -907,7 +911,7 @@ body[data-page="experience"] .page-header {
   gap: 0.4rem;
   min-height: 72px;       /* always has a drop target even when empty */
   flex: 1;
-  transition: background 200ms cubic-bezier(0, 0, 0.2, 1);
+  transition: background 300ms cubic-bezier(0, 0, 0.2, 1);
 }
 /* Visual feedback while dragging over */
 .kanban-cards.drag-over {
@@ -939,10 +943,10 @@ body[data-page="experience"] .page-header {
   gap: 0.3rem;
   /* 200ms micro-interaction timing per skill spec */
   transition:
-    box-shadow 200ms cubic-bezier(0, 0, 0.2, 1),
-    border-color 200ms cubic-bezier(0, 0, 0.2, 1),
-    opacity 200ms cubic-bezier(0, 0, 0.2, 1),
-    transform 200ms cubic-bezier(0, 0, 0.2, 1);
+    box-shadow 300ms cubic-bezier(0, 0, 0.2, 1),
+    border-color 300ms cubic-bezier(0, 0, 0.2, 1),
+    opacity 300ms cubic-bezier(0, 0, 0.2, 1),
+    transform 300ms cubic-bezier(0, 0, 0.2, 1);
 }
 @media (hover: hover) and (pointer: fine) {
   .kanban-card:hover {
@@ -1108,7 +1112,7 @@ body[data-page="setup"] .section {
   text-decoration: underline;
   text-decoration-color: color-mix(in srgb, var(--ink) 25%, transparent);
   text-underline-offset: 2px;
-  transition: text-decoration-color 200ms var(--ease);
+  transition: text-decoration-color 300ms var(--ease);
 }
 .catalog-link:hover {
   text-decoration-color: var(--ink);
@@ -1543,9 +1547,9 @@ body[data-page="setup"] .section {
   font-family: inherit;
   color: var(--text-2);
   transition:
-    background     200ms cubic-bezier(0, 0, 0.2, 1),
-    border-color   200ms cubic-bezier(0, 0, 0.2, 1),
-    box-shadow     200ms cubic-bezier(0, 0, 0.2, 1);
+    background     300ms cubic-bezier(0, 0, 0.2, 1),
+    border-color   300ms cubic-bezier(0, 0, 0.2, 1),
+    box-shadow     300ms cubic-bezier(0, 0, 0.2, 1);
 }
 .flow-node:hover {
   background: var(--bg);
@@ -2130,7 +2134,7 @@ body[data-page="setup"] .section {
   z-index: 100;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
-  transition: background-color 180ms var(--ease), border-color 180ms var(--ease);
+  transition: background-color 300ms var(--ease), border-color 300ms var(--ease);
 }
 
 @supports (backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px)) {
@@ -2500,7 +2504,7 @@ body[data-page="setup"] .section {
   gap: 0.5rem;
   opacity: 0;
   transform: translateY(8px);
-  transition: opacity 160ms var(--ease), transform 160ms var(--ease);
+  transition: opacity 300ms var(--ease), transform 300ms var(--ease);
 }
 .toast.toast--show {
   opacity: 1;
@@ -2724,7 +2728,7 @@ body[data-page="setup"] .section {
 .reveal {
   opacity: 0;
   transform: translateY(4px);
-  transition: opacity 160ms var(--ease), transform 160ms var(--ease);
+  transition: opacity 300ms var(--ease), transform 300ms var(--ease);
 }
 .reveal.visible {
   opacity: 1;
@@ -2743,7 +2747,7 @@ body[data-page="setup"] .section {
 [data-reveal] {
   opacity: 0;
   transform: translateY(6px);
-  transition: opacity 280ms var(--ease), transform 280ms var(--ease);
+  transition: opacity 300ms var(--ease), transform 300ms var(--ease);
 }
 [data-reveal="1"] { transition-delay: 30ms; }
 [data-reveal="2"] { transition-delay: 80ms; }
@@ -2921,9 +2925,9 @@ body[data-page="setup"] .section {
   transform-origin: center bottom;
   will-change: transform;
   transition:
-    transform 250ms var(--ease),
-    box-shadow 200ms var(--ease),
-    border-color 200ms var(--ease);
+    transform 300ms var(--ease),
+    box-shadow 300ms var(--ease),
+    border-color 300ms var(--ease);
 }
 
 /* Dimming overlay using ::after */
@@ -2934,7 +2938,7 @@ body[data-page="setup"] .section {
   inset: 0;
   border-radius: inherit;
   background: color-mix(in srgb, var(--bg) 40%, transparent);
-  transition: background 180ms var(--ease);
+  transition: background 300ms var(--ease);
   pointer-events: none;
   z-index: 5;
 }
@@ -3026,8 +3030,8 @@ body[data-page="setup"] .section {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     cursor: default;
     transition:
-      box-shadow 200ms var(--ease),
-      border-color 200ms var(--ease);
+      box-shadow 300ms var(--ease),
+      border-color 300ms var(--ease);
   }
   .stack-card:hover {
     border-color: var(--border-strong);
@@ -3201,7 +3205,7 @@ body[data-page="setup"] .section {
   border: 1px solid var(--border);
   display: block;
   cursor: zoom-in;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .project-screenshots img:hover,
 .catalog-card img[src*="screenshots"]:hover,
@@ -3231,12 +3235,12 @@ body[data-page="setup"] .section {
   opacity: 0;
   pointer-events: none;
   /* Exit: ease-in; open state overrides to ease-out */
-  transition: opacity 200ms var(--ease-in);
+  transition: opacity 300ms var(--ease-in);
 }
 .screenshot-modal.is-open {
   opacity: 1;
   pointer-events: auto;
-  transition: opacity 200ms var(--ease);
+  transition: opacity 300ms var(--ease);
 }
 .screenshot-modal-backdrop {
   position: absolute;
@@ -3255,11 +3259,11 @@ body[data-page="setup"] .section {
   flex-direction: column;
   align-items: center;
   transform: scale(0.92);
-  transition: transform 180ms var(--ease-in);
+  transition: transform 300ms var(--ease-in);
 }
 .screenshot-modal.is-open .screenshot-modal-content {
   transform: scale(1);
-  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 .screenshot-modal-close {
   position: absolute;
@@ -3787,7 +3791,7 @@ a.util-btn { color: var(--text-2); }
   -webkit-backdrop-filter: blur(10px);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 200ms var(--ease-in);
+  transition: opacity 300ms var(--ease-in);
 }
 [data-theme="dark"] .overlay {
   background: rgba(12, 12, 15, 0.78);
@@ -3795,7 +3799,7 @@ a.util-btn { color: var(--text-2); }
 .overlay.is-open {
   opacity: 1;
   pointer-events: auto;
-  transition: opacity 200ms var(--ease);
+  transition: opacity 300ms var(--ease);
 }
 .overlay-panel {
   width: min(32rem, 100%);
@@ -3807,11 +3811,11 @@ a.util-btn { color: var(--text-2); }
   padding: 1.75rem 1.5rem;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.08);
   transform: scale(0.97);
-  transition: transform 200ms var(--ease-in);
+  transition: transform 300ms var(--ease-in);
 }
 .overlay.is-open .overlay-panel {
   transform: scale(1);
-  transition: transform 220ms var(--ease);
+  transition: transform 300ms var(--ease);
 }
 .overlay-title {
   font-family: var(--font-display);
@@ -4101,7 +4105,7 @@ body.overlay-open { overflow: hidden; }
   text-decoration: none;
   color: inherit;
   display: block;
-  transition: background 160ms var(--ease), border-color 160ms var(--ease);
+  transition: background 300ms var(--ease), border-color 300ms var(--ease);
   border-radius: var(--r-md);
 }
 @media (hover: hover) and (pointer: fine) {
@@ -4130,7 +4134,7 @@ body.overlay-open { overflow: hidden; }
   background: var(--bg);
   text-decoration: none;
   color: inherit;
-  transition: transform 200ms var(--ease), border-color 200ms var(--ease), box-shadow 200ms var(--ease);
+  transition: transform 300ms var(--ease), border-color 300ms var(--ease), box-shadow 300ms var(--ease);
 }
 @media (hover: hover) and (pointer: fine) {
   .bento-tile:hover {
@@ -4395,7 +4399,7 @@ body.overlay-open { overflow: hidden; }
   border-radius: var(--r-lg);
   padding: 0.9rem 1rem;
   background: var(--bg);
-  transition: transform 200ms var(--ease), border-color 200ms var(--ease), box-shadow 200ms var(--ease);
+  transition: transform 300ms var(--ease), border-color 300ms var(--ease), box-shadow 300ms var(--ease);
 }
 @media (hover: hover) and (pointer: fine) {
   .stack-tile:hover {
@@ -4490,7 +4494,7 @@ body.overlay-open { overflow: hidden; }
   background-position: 0 100%;
   background-repeat: no-repeat;
   background-size: 0% 1px;
-  transition: background-size 200ms var(--ease), text-decoration-color 200ms var(--ease);
+  transition: background-size 300ms var(--ease), text-decoration-color 300ms var(--ease);
 }
 .text-link:hover {
   background-size: 100% 1px;
@@ -4922,7 +4926,7 @@ body.overlay-open { overflow: hidden; }
   display: grid;
   grid-template-rows: 0fr;
   opacity: 0;
-  transition: grid-template-rows 260ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: grid-template-rows 260ms cubic-bezier(0.16, 1, 0.3, 1), opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
   margin-top: 1rem;
 }
 .case-study-drawer.open {
@@ -4933,7 +4937,7 @@ body.overlay-open { overflow: hidden; }
   overflow: hidden;
 }
 .case-study-toggle .chevron-icon {
-  transition: transform 200ms var(--ease);
+  transition: transform 300ms var(--ease);
 }
 .case-study-toggle[aria-expanded="true"] .chevron-icon {
   transform: rotate(180deg);
@@ -5441,7 +5445,7 @@ button:active,
 .carousel-card:active,
 .teaser-card:active {
   transform: scale(0.97) !important;
-  transition: transform 160ms var(--ease-emil-out) !important;
+  transition: transform 300ms var(--ease-emil-out) !important;
 }
 
 /* Trailing Slide Arrow Animation */
@@ -5449,7 +5453,7 @@ button:active,
   display: inline-block;
   opacity: 0.6;
   transform: translateX(-3px);
-  transition: transform 250ms var(--ease-emil-out), opacity 250ms ease;
+  transition: transform 300ms var(--ease-emil-out), opacity 300ms ease;
 }
 :hover > .slide-arrow-icon,
 .group:hover .slide-arrow-icon,
