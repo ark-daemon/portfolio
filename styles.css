@@ -2234,17 +2234,29 @@ body[data-page="setup"] .section {
   gap: 0.35rem;
   padding: 0.25rem 0.4rem;
   border-radius: 2px;
+  position: relative;
   transition: color var(--t-fast);
 }
 .header-nav-item:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: -2px;
 }
-.header-nav-item:hover,
+.header-nav-item:hover {
+  color: var(--ink);
+}
 .header-nav-item.active {
   color: var(--ink);
   font-weight: 500;
-  text-decoration: none;
+}
+.header-nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0.4rem;
+  right: 0.4rem;
+  height: 1.5px;
+  background: var(--ink);
+  border-radius: 999px;
 }
 .header-nav-item .nav-num {
   font-size: 10px;
@@ -5133,17 +5145,139 @@ body.overlay-open { overflow: hidden; }
 }
 
 /* ===== Live Catalog Pill ===== */
-.catalog-pill--live {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: var(--ink);
-  color: var(--bg);
-  border-color: var(--ink);
-}
 .catalog-pill--live .status-dot {
   background: var(--bg);
   opacity: 1;
+}
+
+/* ===== Calmer Now Status Line ===== */
+.now-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-2);
+  margin-top: 1.5rem;
+  margin-bottom: 4rem;
+  text-align: center;
+  flex-wrap: wrap;
+}
+.now-dot {
+  color: var(--text-3);
+}
+
+/* ===== Confidence Metric Bar (Bryl-style) ===== */
+.confidence-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+}
+.confidence-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  text-align: center;
+}
+.confidence-metric:first-child { text-align: left; }
+.confidence-metric:last-child { text-align: right; }
+.confidence-num {
+  font-family: var(--font-mono);
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.confidence-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+.confidence-divider {
+  width: 1px;
+  height: 2.5rem;
+  background: var(--border);
+  flex-shrink: 0;
+}
+.trust-statement-light {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  text-align: center;
+  margin-top: 0.75rem;
+}
+@media (max-width: 640px) {
+  .confidence-bar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem 1rem;
+    padding: 1.5rem 0;
+  }
+  .confidence-metric,
+  .confidence-metric:first-child,
+  .confidence-metric:last-child { text-align: left; }
+  .confidence-divider { display: none; }
+}
+
+/* ===== Cleaner Project Cards (Adrian-style Restraint) ===== */
+.carousel-card--clean {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.75rem;
+}
+.card-clean-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.card-clean-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.card-clean-media {
+  width: 100%;
+  height: 280px;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  cursor: pointer;
+}
+.clean-shot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform var(--t-fast);
+}
+.card-clean-media:hover .clean-shot {
+  transform: scale(1.02);
+}
+.card-clean-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+/* Increased Vertical Rhythm */
+@media (min-width: 1024px) {
+  .section {
+    margin-bottom: 6.5rem;
+  }
 }
 
 /* ===== Accessibility: Prefers Reduced Motion ===== */

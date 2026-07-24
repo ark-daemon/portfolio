@@ -81,9 +81,7 @@
     </div>
   </header>
 
-  <main class="main" id="main-content">
-
-    <section id="hero" class="hero">
+  <main class="main" id="main-content">    <section id="hero" class="hero">
       <div class="hero-layout">
         <div class="hero-monogram" data-reveal="1">
           <img src="final-final.png" alt="Noah Carpiso portrait" class="hero-photo-img" width="640" height="800" decoding="async" fetchpriority="high">
@@ -102,56 +100,42 @@
       </div>
     </section>
 
-    <section id="now" class="now-strip" data-reveal="4">
-      <div class="now-strip-inner">
-        <span class="now-label">
-          <span class="status-dot" aria-hidden="true"></span>
-          Now
-        </span>
-        <div class="now-items">
-          <span class="now-item">
-            <span class="now-item-key">Building</span>
-            <span class="now-item-val">Trading Knowledge Base · In Progress</span>
-          </span>
-          <span class="now-item">
-            <span class="now-item-key">Studying</span>
-            <span class="now-item-val">n8n workflow automation</span>
-          </span>
-          <span class="now-item">
-            <span class="now-item-key">Taking</span>
-            <span class="now-item-val">HubSpot Service Hub cert</span>
-          </span>
+    <!-- Calmer Now Status Line -->
+    <div class="now-line" data-reveal="4">
+      <span>Shipping Trading Knowledge Base</span>
+      <span class="now-dot" aria-hidden="true">·</span>
+      <span>Building with n8n</span>
+      <span class="now-dot" aria-hidden="true">·</span>
+      <span>Completing HubSpot Service Hub cert</span>
+    </div>
+
+    <!-- Confidence Metric Bar (Bryl-style) -->
+    <section id="proof" class="section">
+      <div class="confidence-bar" data-reveal="4">
+        <div class="confidence-metric">
+          <span class="confidence-num">500+</span>
+          <span class="confidence-label">COMMUNITY MEMBERS MANAGED</span>
+        </div>
+        <div class="confidence-divider" aria-hidden="true"></div>
+        <div class="confidence-metric">
+          <span class="confidence-num">100+</span>
+          <span class="confidence-label">PARTNERSHIPS COORDINATED</span>
+        </div>
+        <div class="confidence-divider" aria-hidden="true"></div>
+        <div class="confidence-metric">
+          <span class="confidence-num">6</span>
+          <span class="confidence-label">TOOLS SHIPPED</span>
+        </div>
+        <div class="confidence-divider" aria-hidden="true"></div>
+        <div class="confidence-metric">
+          <span class="confidence-num">2+</span>
+          <span class="confidence-label">YEARS REMOTE OPS</span>
         </div>
       </div>
+      <p class="trust-statement-light">Ops track record in Experience · shipped tools in Projects · stack &amp; setup on Setup.</p>
     </section>
 
-    <section id="proof" class="section">
-      <div class="section-label">
-        <span class="section-number">01</span>
-        <span class="section-dash">·</span>
-        <span>Proof</span>
-      </div>
-      <div class="metrics">
-        <a href="experience.html" class="metric metric--link">
-          <span class="metric-value">500+</span>
-          <span class="metric-label">active members (Degen Homes)</span>
-        </a>
-        <a href="experience.html" class="metric metric--link">
-          <span class="metric-value">5+</span>
-          <span class="metric-label">Web3 projects managed</span>
-        </a>
-        <a href="projects.html" class="metric metric--link">
-          <span class="metric-value">6</span>
-          <span class="metric-label">custom tools &amp; scrapers built</span>
-        </a>
-        <a href="projects.html" class="metric metric--link">
-          <span class="metric-value">In Progress</span>
-          <span class="metric-label">trading knowledge base live</span>
-        </a>
-      </div>
-      <p class="trust-statement">Ops track record in Experience · shipped tools in Projects · stack &amp; setup on Stack.</p>
-    </section>
-<section id="about" class="section">
+    <section id="about" class="section">
       <div class="section-label">
         <span class="section-number">02</span>
         <span class="section-dash">·</span>
@@ -163,102 +147,75 @@
       </div>
     </section>
 
+    <!-- Selected Work (Adrian-style Curation) -->
     <section id="projects-teaser" class="section section-wide">
       <div class="section-label section-label--projects">
         <div style="display: flex; align-items: baseline; gap: 0.35rem;">
           <span class="section-number">03</span>
           <span class="section-dash">·</span>
-          <span>Projects</span>
+          <span>Selected work</span>
         </div>
         <a href="projects.html" class="all-projects-link">ALL PROJECTS &rarr;</a>
       </div>
 
       <div class="project-carousel-wrapper">
         <div class="project-carousel" id="project-carousel" aria-label="Selected Projects Carousel">
-          <!-- Card 1: Trading Knowledge Base -->
-          <article class="carousel-card">
-            <div class="project-card-meta">
-              <span class="project-status status-progress">In Progress</span>
-              <span class="catalog-pill">Knowledge system</span>
-              <span class="catalog-pill catalog-pill--live"><span class="status-dot" aria-hidden="true"></span> Live</span>
+
+          <!-- Card 1: Codex Manager (Finished) -->
+          <article class="carousel-card carousel-card--clean">
+            <div class="card-clean-header">
+              <div class="card-clean-title-row">
+                <h3 class="featured-project-title">Codex Manager</h3>
+                <span class="project-status status-done">Finished</span>
+              </div>
+              <p class="featured-project-desc">Desktop utility for managing active OpenAI Codex API sessions and automated quota rotation.</p>
             </div>
-            <h3 class="featured-project-title" style="margin-top:0.5rem; margin-bottom:0.4rem">Trading Knowledge Base</h3>
-            <p class="featured-project-desc" style="margin-bottom:1rem">Crypto trading notes reorganized into a searchable library with curriculum paths and interactive glossary.</p>
-            <div class="browser-shell browser-shell--live" data-lightbox="Trading Knowledge Base">
-              <div class="browser-bar">
-                <div class="browser-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
-                <div class="browser-url">arkdaemon.pages.dev</div>
-                <a href="https://arkdaemon.pages.dev/" target="_blank" rel="noopener noreferrer" class="browser-external-link">Open live ↗</a>
-              </div>
-              <div class="browser-content browser-content--iframe" style="height: 320px;">
-                <iframe src="https://arkdaemon.pages.dev/" title="Trading Knowledge Base" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
-              </div>
+            <div class="card-clean-media" data-lightbox="Codex Manager">
+              <img src="screenshots/codex-manager-dark-mode.png" alt="Codex Manager Dark Mode" class="screenshot-dark clean-shot" width="800" height="500" loading="lazy">
+              <img src="screenshots/codex-manager-light-mode.png" alt="Codex Manager Light Mode" class="screenshot-light clean-shot" width="800" height="500" loading="lazy">
+            </div>
+            <div class="card-clean-actions">
+              <a href="projects.html#tab-codex-manager" class="text-link">Case study →</a>
             </div>
           </article>
 
-          <!-- Card 2: Falco Crypto Screener -->
-          <article class="carousel-card">
-            <div class="project-card-meta">
-              <span class="project-status status-progress">In Progress</span>
-              <span class="catalog-pill">Market Screener</span>
-              <span class="catalog-pill catalog-pill--live"><span class="status-dot" aria-hidden="true"></span> Live</span>
+          <!-- Card 2: Trading Knowledge Base (In Progress) -->
+          <article class="carousel-card carousel-card--clean">
+            <div class="card-clean-header">
+              <div class="card-clean-title-row">
+                <h3 class="featured-project-title">Trading Knowledge Base</h3>
+                <span class="project-status status-progress">In Progress</span>
+              </div>
+              <p class="featured-project-desc">Searchable library and curriculum paths reorganizing crypto trading research into one live workspace.</p>
             </div>
-            <h3 class="featured-project-title" style="margin-top:0.5rem; margin-bottom:0.4rem">Falco Terminal</h3>
-            <p class="featured-project-desc" style="margin-bottom:1rem">Real-time crypto market screener and liquidity alert dashboard built for active trader research.</p>
-            <div class="browser-shell browser-shell--live" data-lightbox="Falco Screener">
-              <div class="browser-bar">
-                <div class="browser-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
-                <div class="browser-url">falco-screener.pages.dev</div>
-                <a href="https://falco-screener.pages.dev/" target="_blank" rel="noopener noreferrer" class="browser-external-link">Open live ↗</a>
-              </div>
-              <div class="browser-content browser-content--iframe" style="height: 320px;">
-                <iframe src="https://falco-screener.pages.dev/" title="Falco Screener" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
-              </div>
+            <div class="card-clean-media" data-lightbox="Trading Knowledge Base">
+              <img src="screenshots/codex-manager-dark-mode.png" alt="Trading Knowledge Base Preview" class="clean-shot" width="800" height="500" loading="lazy">
+            </div>
+            <div class="card-clean-actions">
+              <a href="https://arkdaemon.pages.dev/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Open live ↗</a>
+              <a href="projects.html#tab-trading-kb" class="text-link">Case study →</a>
             </div>
           </article>
 
-          <!-- Card 3: Codex Manager -->
-          <article class="carousel-card">
-            <div class="project-card-meta">
-              <span class="project-status status-done">Finished</span>
-              <span class="catalog-pill">Desktop App</span>
+          <!-- Card 3: Falco Terminal (Live) -->
+          <article class="carousel-card carousel-card--clean">
+            <div class="card-clean-header">
+              <div class="card-clean-title-row">
+                <h3 class="featured-project-title">Falco Terminal</h3>
+                <span class="catalog-pill catalog-pill--live"><span class="status-dot" aria-hidden="true"></span> Live</span>
+              </div>
+              <p class="featured-project-desc">Real-time crypto market screener and liquidity alert dashboard built for active trader research.</p>
             </div>
-            <h3 class="featured-project-title" style="margin-top:0.5rem; margin-bottom:0.4rem">Codex Manager</h3>
-            <p class="featured-project-desc" style="margin-bottom:1rem">Desktop utility for managing active OpenAI Codex API sessions, account quotas, and automated session rotation.</p>
-            <div class="browser-shell" data-lightbox="Codex Manager">
-              <div class="browser-bar">
-                <div class="browser-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
-                <div class="browser-url">Codex Manager v1.2</div>
-              </div>
-              <div class="browser-content" style="height: 320px; overflow: hidden;">
-                <img src="screenshots/codex-manager-dark-mode.png" alt="Codex Manager Dark Mode" class="screenshot-dark" width="800" height="500" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top;">
-                <img src="screenshots/codex-manager-light-mode.png" alt="Codex Manager Light Mode" class="screenshot-light" width="800" height="500" loading="lazy" style="width:100%; height:100%; object-fit:cover; object-position:top;">
-              </div>
+            <div class="card-clean-media" data-lightbox="Falco Terminal">
+              <img src="screenshots/sporty-desk-dark-mode.png" alt="Falco Terminal Preview" class="screenshot-dark clean-shot" width="800" height="500" loading="lazy">
+              <img src="screenshots/sporty-desk-light-mode.png" alt="Falco Terminal Preview" class="screenshot-light clean-shot" width="800" height="500" loading="lazy">
+            </div>
+            <div class="card-clean-actions">
+              <a href="https://falco-screener.pages.dev/" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Open live ↗</a>
+              <a href="projects.html#tab-falco" class="text-link">Case study →</a>
             </div>
           </article>
 
-          <!-- Card 4: Sporty Desk -->
-          <article class="carousel-card">
-            <div class="project-card-meta">
-              <span class="project-status status-progress">In Progress</span>
-              <span class="catalog-pill">Sports Analytics</span>
-              <span class="catalog-pill catalog-pill--live"><span class="status-dot" aria-hidden="true"></span> Live</span>
-            </div>
-            <h3 class="featured-project-title" style="margin-top:0.5rem; margin-bottom:0.4rem">Sporty Desk</h3>
-            <p class="featured-project-desc" style="margin-bottom:1rem">Sports analytics dashboard and statistical odds modeling engine for research and betting strategies.</p>
-            <div class="browser-shell browser-shell--live" data-lightbox="Sporty Desk">
-              <div class="browser-bar">
-                <div class="browser-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
-                <div class="browser-url">sporty-desk.pages.dev</div>
-                <a href="https://sporty-desk.pages.dev/" target="_blank" rel="noopener noreferrer" class="browser-external-link">Open live ↗</a>
-              </div>
-              <div class="browser-content browser-content--iframe" style="height: 320px;">
-                <iframe src="https://sporty-desk.pages.dev/" title="Sporty Desk" loading="lazy" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
-                <img src="screenshots/sporty-desk-dark-mode.png" alt="Sporty Desk Dark Mode" class="screenshot-dark" width="800" height="500" loading="lazy">
-                <img src="screenshots/sporty-desk-light-mode.png" alt="Sporty Desk Light Mode" class="screenshot-light" width="800" height="500" loading="lazy">
-              </div>
-            </div>
-          </article>
         </div>
 
         <div class="carousel-controls">
@@ -273,6 +230,7 @@
           </div>
         </div>
       </div>
+    </section></div>
     </section>
 
     <section id="experience-teaser" class="section">
