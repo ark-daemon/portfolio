@@ -5681,9 +5681,10 @@ a:hover .slide-arrow-icon {
 
 .carousel-canvas-media {
   width: 100%;
+  aspect-ratio: 2 / 1;
   border-radius: var(--r-xl);
   overflow: hidden;
-  background: var(--surface-2);
+  background: transparent;
   border: 1px solid var(--border);
   position: relative;
   transition: box-shadow 350ms var(--ease-emil-out), border-color 350ms ease;
@@ -5696,7 +5697,9 @@ a:hover .slide-arrow-icon {
 
 .carousel-canvas-media img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
   display: block;
   transition: transform 600ms var(--ease-emil-out);
 }
