@@ -5635,9 +5635,9 @@ a:hover .slide-arrow-icon {
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  /* Centers a min(85vw, 1180px) card: half the remaining viewport space on each side */
-  padding-left: max(2rem, calc((100vw - min(85vw, 1180px)) / 2));
-  padding-right: max(2rem, calc((100vw - min(85vw, 1180px)) / 2));
+  /* Centers a min(90vw, 1500px) card: half the remaining viewport space on each side */
+  padding-left: max(1.5rem, calc((100vw - min(90vw, 1500px)) / 2));
+  padding-right: max(1.5rem, calc((100vw - min(90vw, 1500px)) / 2));
   scrollbar-width: none;
 }
 
@@ -5646,8 +5646,9 @@ a:hover .slide-arrow-icon {
 }
 
 .carousel-card--abelarde {
-  width: min(85vw, 1180px);
-  flex-shrink: 0;
+  width: min(90vw, 1500px);
+  max-width: none;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -5742,22 +5743,22 @@ a:hover .slide-arrow-icon {
 @media (max-width: 1024px) {
   .carousel-fullbleed-track {
     gap: 1.5rem;
-    padding-left: max(1.5rem, calc((100vw - 76vw) / 2));
-    padding-right: max(1.5rem, calc((100vw - 76vw) / 2));
+    padding-left: max(1.5rem, calc((100vw - 90vw) / 2));
+    padding-right: max(1.5rem, calc((100vw - 90vw) / 2));
   }
   .carousel-card--abelarde {
-    width: 76vw;
+    width: 90vw;
   }
 }
 
 @media (max-width: 640px) {
   .carousel-fullbleed-track {
     gap: 1rem;
-    padding-left: max(1rem, calc((100vw - 82vw) / 2));
-    padding-right: max(1rem, calc((100vw - 82vw) / 2));
+    padding-left: max(1rem, calc((100vw - 92vw) / 2));
+    padding-right: max(1rem, calc((100vw - 92vw) / 2));
   }
   .carousel-card--abelarde {
-    width: 82vw;
+    width: 92vw;
   }
 }
 
