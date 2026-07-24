@@ -2218,7 +2218,7 @@ body[data-page="setup"] .section {
   gap: 1.25rem;
   overflow-x: auto;
   white-space: nowrap;
-  padding-top: 0.4rem;
+  padding: 0.5rem 0.25rem 0.35rem 0.25rem;
   border-top: 1px solid var(--border);
   scrollbar-width: none;
 }
@@ -2232,8 +2232,13 @@ body[data-page="setup"] .section {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.25rem 0;
+  padding: 0.25rem 0.4rem;
+  border-radius: 2px;
   transition: color var(--t-fast);
+}
+.header-nav-item:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
 }
 .header-nav-item:hover,
 .header-nav-item.active {
@@ -2304,8 +2309,11 @@ body[data-page="setup"] .section {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  position: relative;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--surface);
