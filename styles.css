@@ -5669,21 +5669,15 @@ a:hover .slide-arrow-icon {
   text-decoration: none;
   border-radius: var(--r-xl);
   overflow: hidden;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  padding: 1.25rem;
-  transition: box-shadow 350ms var(--ease-emil-out), border-color 350ms ease;
-}
-
-.carousel-card--abelarde.is-center .carousel-canvas-link {
-  border-color: var(--border-strong, var(--text-3));
-  box-shadow: 0 32px 64px -20px rgba(0, 0, 0, 0.28);
+  background: transparent;
+  border: none;
+  padding: 0;
 }
 
 .carousel-canvas-media {
   width: 100%;
   height: clamp(280px, 55vh, 560px);
-  border-radius: var(--r-md);
+  border-radius: var(--r-xl);
   overflow: hidden;
   background: var(--surface-2);
   border: 1px solid var(--border-subtle);
@@ -5691,6 +5685,12 @@ a:hover .slide-arrow-icon {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: box-shadow 350ms var(--ease-emil-out), border-color 350ms ease;
+}
+
+.carousel-card--abelarde.is-center .carousel-canvas-media {
+  border-color: var(--border);
+  box-shadow: 0 32px 64px -20px rgba(0, 0, 0, 0.28);
 }
 
 .carousel-canvas-media img {
@@ -5766,9 +5766,6 @@ a:hover .slide-arrow-icon {
   }
   .carousel-canvas-media {
     height: 240px;
-  }
-  .carousel-canvas-link {
-    padding: 0.85rem;
   }
 }
 
