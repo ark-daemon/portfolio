@@ -5635,8 +5635,9 @@ a:hover .slide-arrow-icon {
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  padding-left: calc(50vw - 590px);
-  padding-right: calc(50vw - 590px);
+  /* Centers a min(85vw, 1180px) card: half the remaining viewport space on each side */
+  padding-left: max(2rem, calc((100vw - min(85vw, 1180px)) / 2));
+  padding-right: max(2rem, calc((100vw - min(85vw, 1180px)) / 2));
   scrollbar-width: none;
 }
 
@@ -5679,8 +5680,6 @@ a:hover .slide-arrow-icon {
 
 .carousel-canvas-media {
   width: 100%;
-  height: clamp(320px, 58vh, 640px);
-  aspect-ratio: 16 / 10;
   border-radius: var(--r-xl);
   overflow: hidden;
   background: var(--surface-2);
@@ -5696,7 +5695,8 @@ a:hover .slide-arrow-icon {
 
 .carousel-canvas-media img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
   object-position: top center;
   display: block;
@@ -5745,28 +5745,22 @@ a:hover .slide-arrow-icon {
 @media (max-width: 1024px) {
   .carousel-fullbleed-track {
     gap: 1.5rem;
-    padding-left: calc(50vw - 38vw);
-    padding-right: calc(50vw - 38vw);
+    padding-left: max(1.5rem, calc((100vw - 76vw) / 2));
+    padding-right: max(1.5rem, calc((100vw - 76vw) / 2));
   }
   .carousel-card--abelarde {
     width: 76vw;
-  }
-  .carousel-canvas-media {
-    height: 380px;
   }
 }
 
 @media (max-width: 640px) {
   .carousel-fullbleed-track {
     gap: 1rem;
-    padding-left: calc(50vw - 41vw);
-    padding-right: calc(50vw - 41vw);
+    padding-left: max(1rem, calc((100vw - 82vw) / 2));
+    padding-right: max(1rem, calc((100vw - 82vw) / 2));
   }
   .carousel-card--abelarde {
     width: 82vw;
-  }
-  .carousel-canvas-media {
-    height: 240px;
   }
 }
 
