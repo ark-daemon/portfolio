@@ -53,14 +53,14 @@
         "url": "https://noah-carpiso.pages.dev/experience.html"
       }
     </script>
-      <meta property="og:type" content="website">
-  <meta property="og:url" content="https://noah-carpiso.pages.dev/experience.html">
+    <meta property="og:type" content="website">
   <meta property="og:title" content="Experience | Noah Carpiso">
-  <meta property="og:description" content="Community operations, partnership coordination, and support triage — with the problem, the work, and the outcome for each role.">
+  <meta property="og:description" content="Community operations, partnership management, ticket triage, and AI-assisted automation tooling track record.">
+  <meta property="og:url" content="https://noah-carpiso.pages.dev/experience.html">
   <meta property="og:image" content="https://noah-carpiso.pages.dev/og.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Experience | Noah Carpiso">
-  <meta name="twitter:description" content="Community operations, partnership coordination, and support triage — with the problem, the work, and the outcome for each role.">
+  <meta name="twitter:description" content="Community operations, partnership management, ticket triage, and AI-assisted automation tooling track record.">
   <meta name="twitter:image" content="https://noah-carpiso.pages.dev/og.png">
 </head>
   <body data-page="experience">
@@ -360,7 +360,69 @@
     </footer>
   </main>
 
-    
+    <!-- Email Modal -->
+    <dialog id="email-modal" class="email-modal">
+      <div class="email-modal-content">
+        <div class="email-modal-header">
+          <h2 class="email-modal-title">Get in touch</h2>
+          <button
+            type="button"
+            class="email-modal-close"
+            id="email-modal-close"
+            aria-label="Close modal"
+          >
+            ×
+          </button>
+        </div>
+        <p class="email-modal-desc">
+          Send me a direct message for job opportunities or questions.
+        </p>
+        <form
+          action="https://formspree.io/f/xbjnqvgw"
+          method="POST"
+          class="email-form"
+          id="email-form"
+        >
+          <div class="form-group">
+            <label for="email-input" class="form-label">Your email</label>
+            <input
+              type="email"
+              id="email-input"
+              name="email"
+              required
+              placeholder="you@example.com"
+              class="form-input"
+            />
+          </div>
+          <div class="form-group">
+            <label for="message-input" class="form-label">Message</label>
+            <textarea
+              id="message-input"
+              name="message"
+              required
+              rows="4"
+              placeholder="Hi Noah, we have a remote ops role..."
+              class="form-textarea"
+              aria-describedby="message-help"
+            ></textarea>
+            <p
+              id="message-help"
+              style="
+                font-size: 0.75rem;
+                color: var(--text-3);
+                margin-top: 0.25rem;
+              "
+            >
+              For ops, community, support, partnerships, or automation roles.
+            </p>
+          </div>
+          <div id="form-status-msg" class="form-status-msg" aria-live="polite" role="status" style="margin-bottom: 1rem; font-family: var(--font-mono); font-size: 12px;"></div>
+          <button type="submit" class="btn btn-primary form-submit" id="form-submit-btn">
+            Send message ↗
+          </button>
+        </form>
+      </div>
+    </dialog>
 
     <script src="script.js"></script>
   </body>
