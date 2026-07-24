@@ -1011,6 +1011,7 @@
       container.className = 'toast-container';
       container.id = 'toast-container';
       container.setAttribute('aria-live', 'polite');
+      container.setAttribute('role', 'status');
       document.body.appendChild(container);
     }
     var toast = document.createElement('div');
@@ -1037,13 +1038,59 @@
         var email = btn.getAttribute('data-copy-email') || 'carpisonoah@gmail.com';
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(email).then(function () {
-            showToast('Email copied to clipboard!');
+            showToast('Email copied');
+            if (typeof btn.focus === 'function') btn.focus();
           }).catch(function () {
-            showToast('carpisonoah@gmail.com');
+            showToast('Copy failed — carpisonoah@gmail.com');
+            if (typeof btn.focus === 'function') btn.focus();
           });
         } else {
-          showToast('carpisonoah@gmail.com');
+          showToast('Copy failed — carpisonoah@gmail.com');
+          if (typeof btn.focus === 'function') btn.focus();
         }
+      });
+    });
+  }
+
+  /* ===== +6 Skills Disclosure Expander ===== */
+  function initSkillExpander() {
+    document.querySelectorAll('[data-skill-more]').forEach(function (btn) {
+      var controlsId = btn.getAttribute('aria-controls');
+      var target = controlsId ? document.getElementById(controlsId) : null;
+      if (!target) return;
+
+      function toggleSkills() {
+        var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+        var newExpanded = !isExpanded;
+        btn.setAttribute('aria-expanded', newExpanded ? 'true' : 'false');
+        target.hidden = !newExpanded;
+        btn.textContent = newExpanded ? 'Show fewer skills' : '+6 skills';
+        if (typeof playClick === 'function') playClick();
+      }
+
+      btn.addEventListener('click', toggleSkills);
+      btn.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleSkills();
+        }
+      });
+    });
+  }
+
+  /* ===== Case Study Accordions ===== */
+  function initCaseStudyAccordions() {
+    document.querySelectorAll('.case-study-toggle').forEach(function (btn) {
+      var controlsId = btn.getAttribute('aria-controls');
+      var target = controlsId ? document.getElementById(controlsId) : null;
+      if (!target) return;
+
+      btn.addEventListener('click', function () {
+        var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+        var newExpanded = !isExpanded;
+        btn.setAttribute('aria-expanded', newExpanded ? 'true' : 'false');
+        target.hidden = !newExpanded;
+        if (typeof playClick === 'function') playClick();
       });
     });
   }
@@ -1073,38 +1120,57 @@
     });
   }
 
-  /* ===== Project Tab Switcher ===== */
+  /* ===== Project Tab Switcher with Arrow Key Support ===== */
   function initProjectTabs() {
     var tabList = document.getElementById('project-tabs');
     if (!tabList) return;
-    var tabs = tabList.querySelectorAll('.project-tab');
+    var tabs = Array.from(tabList.querySelectorAll('.project-tab'));
     var panels = document.querySelectorAll('.project-panel');
 
-    tabs.forEach(function (tab) {
-      tab.addEventListener('click', function () {
-        var target = tab.getAttribute('data-tab');
+    function activateTab(index) {
+      if (index < 0) index = tabs.length - 1;
+      if (index >= tabs.length) index = 0;
 
-        tabs.forEach(function (t) {
+      tabs.forEach(function (t, i) {
+        if (i === index) {
+          t.classList.add('active');
+          t.setAttribute('aria-selected', 'true');
+          t.focus();
+        } else {
           t.classList.remove('active');
           t.setAttribute('aria-selected', 'false');
-        });
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
+        }
+      });
 
-        panels.forEach(function (panel) {
-          if (panel.id === 'panel-' + target) {
-            panel.hidden = false;
-            panel.classList.add('active');
-          } else {
-            panel.hidden = true;
-            panel.classList.remove('active');
-          }
-        });
+      var target = tabs[index].getAttribute('data-tab');
+      panels.forEach(function (panel) {
+        if (panel.id === 'panel-' + target) {
+          panel.hidden = false;
+          panel.classList.add('active');
+        } else {
+          panel.hidden = true;
+          panel.classList.remove('active');
+        }
+      });
+    }
+
+    tabs.forEach(function (tab, idx) {
+      tab.addEventListener('click', function () {
+        activateTab(idx);
+      });
+      tab.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          activateTab(idx - 1);
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          activateTab(idx + 1);
+        }
       });
     });
   }
 
-  /* ===== Horizontal Project Showcase Carousel Controls ===== */
+  /* ===== Horizontal Project Showcase Carousel Controls & Keyboard Nav ===== */
   function initProjectCarousel() {
     var carousel = document.getElementById('project-carousel');
     var prevBtn = document.getElementById('carousel-prev');
@@ -1123,6 +1189,16 @@
       carousel.scrollBy({ left: cardWidth * 0.85, behavior: 'smooth' });
       if (typeof playClick === 'function') playClick();
     });
+
+    carousel.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevBtn.click();
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        nextBtn.click();
+      }
+    });
   }
 
   initProjectTabs();
@@ -1132,6 +1208,8 @@
   initProjectsSwapper();
   initProjectCarousel();
   initEmailCopy();
+  initSkillExpander();
+  initCaseStudyAccordions();
   initIframeFallbackDetector();
 
 })();

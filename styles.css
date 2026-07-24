@@ -2263,11 +2263,68 @@ body[data-page="setup"] .section {
   color: var(--text-3);
 }
 
-/* ===== Horizontal Project Showcase Carousel ===== */
-.project-carousel-wrapper {
-  position: relative;
-  width: 100%;
-  margin-top: 1.5rem;
+/* ===== Responsive Grid Rules ===== */
+.case-block {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+@media (max-width: 768px) {
+  .case-block {
+    grid-template-columns: 1fr;
+  }
+}
+
+.setup-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+@media (max-width: 1024px) {
+  .setup-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .setup-grid { grid-template-columns: 1fr; }
+}
+
+/* Mobile Tabs Fade Mask */
+.project-tabs {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 0.25rem;
+  -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  mask-image: linear-gradient(to right, black 85%, transparent 100%);
+}
+.project-tabs::-webkit-scrollbar { display: none; }
+
+/* Workflow Diagram Vertical Mobile Stacking */
+@media (max-width: 640px) {
+  .flow-stage-wrap {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .flow-svg { display: none; }
+  .flow-node {
+    width: 100%;
+    text-align: center;
+    position: relative;
+  }
+  .flow-node::after {
+    content: '↓';
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-3);
+    margin-top: 0.5rem;
+  }
+  .flow-node:last-child::after { display: none; }
+  .stack-tiles {
+    grid-template-columns: 1fr !important;
+  }
 }
 .project-carousel {
   display: flex;
