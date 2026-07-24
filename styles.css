@@ -5669,6 +5669,14 @@ a:hover .slide-arrow-icon {
   opacity: 1;
 }
 
+/* The abelarde card is borderless/transparent, so suppress the base .carousel-card
+   hover shadow/border that would frame the whole article (image + text) as a panel. */
+.carousel-card--abelarde:hover {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
 .carousel-canvas-link {
   display: block;
   text-decoration: none;
