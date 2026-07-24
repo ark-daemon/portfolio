@@ -5613,14 +5613,14 @@ a:hover .slide-arrow-icon {
   color: var(--text-2);
 }
 
-/* ===== Abelarde 3-Card Stage Carousel Styling (Massive Center + ~1/4 Peeking Sides) ===== */
+/* ===== Abelarde 3-Card Stage Carousel Styling (Uncropped Screenshots + Massive Center) ===== */
 .carousel-fullbleed-wrapper {
   position: relative;
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   overflow: hidden;
-  padding: 1.5rem 0 3rem;
+  padding: 1.5rem 0 3.5rem;
 }
 
 .carousel-fullbleed-track {
@@ -5631,8 +5631,8 @@ a:hover .slide-arrow-icon {
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  padding-left: calc(50vw - 460px);
-  padding-right: calc(50vw - 460px);
+  padding-left: calc(50vw - 550px);
+  padding-right: calc(50vw - 550px);
   scrollbar-width: none;
 }
 
@@ -5641,7 +5641,7 @@ a:hover .slide-arrow-icon {
 }
 
 .carousel-card--abelarde {
-  width: clamp(340px, 78vw, 920px);
+  width: clamp(340px, 86vw, 1100px);
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -5651,10 +5651,10 @@ a:hover .slide-arrow-icon {
   box-shadow: none;
   padding: 0;
   scroll-snap-align: center;
-  transform: scale(0.92);
-  opacity: 0.40;
-  filter: brightness(0.92);
-  transition: transform 400ms var(--ease-emil-out), opacity 400ms ease, filter 400ms ease;
+  transform: scale(0.78);
+  opacity: 0.28;
+  filter: brightness(0.85);
+  transition: transform 450ms var(--ease-emil-out), opacity 450ms ease, filter 450ms ease;
   transform-origin: center center;
 }
 
@@ -5671,37 +5671,39 @@ a:hover .slide-arrow-icon {
   overflow: hidden;
   background: var(--surface-2);
   border: 1px solid var(--border);
-  padding: 1.5rem;
-  transition: box-shadow 300ms var(--ease-emil-out), border-color 300ms ease;
+  padding: 1.25rem;
+  transition: box-shadow 350ms var(--ease-emil-out), border-color 350ms ease;
 }
 
 .carousel-card--abelarde.is-center .carousel-canvas-link {
   border-color: var(--border-strong, var(--text-3));
-  box-shadow: 0 28px 60px -20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 32px 64px -20px rgba(0, 0, 0, 0.28);
 }
 
 .carousel-canvas-media {
   width: 100%;
-  height: clamp(260px, 46vh, 500px);
-  aspect-ratio: 16 / 9.5;
+  height: clamp(280px, 55vh, 560px);
   border-radius: var(--r-md);
   overflow: hidden;
-  background: var(--surface);
+  background: var(--surface-2);
   border: 1px solid var(--border-subtle);
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carousel-canvas-media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top center;
+  object-fit: contain;
+  object-position: center;
   display: block;
   transition: transform 600ms var(--ease-emil-out);
 }
 
 .carousel-canvas-link:hover .carousel-canvas-media img {
-  transform: scale(1.02);
+  transform: scale(1.015);
 }
 
 .carousel-label-block {
